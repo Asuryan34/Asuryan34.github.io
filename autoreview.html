@@ -947,11 +947,11 @@
                 "code": "FIELD0002",
                 "severityLabel": "Critical",
                 "severity": 3,
-                "meaning": "The auto-review detected that the \"font\" for the \"value\" text of this field needs to be set to \"Helvetica\".",
-                "suggestedFix": "With this field selected on the form, open the \"Font\" window. Make sure that the \"Currently Editing ... properties\" setting is set to \"Value\" only. Once that is done, click on the \"Font\" setting and select \"Helvetica\" from the drop down list.",
+                "meaning": "The auto-review detected that the \"font\" for the \"value\" text of this field needs to be set to \"Helvetica LT Std\".",
+                "suggestedFix": "With this field selected on the form, open the \"Font\" window. Make sure that the \"Currently Editing ... properties\" setting is set to \"Value\" only. Once that is done, click on the \"Font\" setting and select \"Helvetica LT Std\" from the drop down list.",
                 "additionalDetail": "",
-                "shortSummary": "The \"font\" for the \"value\" text of this field needs to be set to \"Helvetica\".",
-                "name": "FIELD0002 \u2013 The \"font\" for the \"value\" text of this field needs to be set to \"Helvetica\"."
+                "shortSummary": "The \"font\" for the \"value\" text of this field needs to be set to \"Helvetica LT Std\".",
+                "name": "FIELD0002 \u2013 The \"font\" for the \"value\" text of this field needs to be set to \"Helvetica LT Std\"."
             },
             "FIELD0003": {
                 "code": "FIELD0003",
@@ -1288,7 +1288,7 @@
                 "severityLabel": "Warning",
                 "severity": 2,
                 "meaning": "The auto-review detected that the object's font is not valid.",
-                "suggestedFix": "Change the object's font to either \"Helvetica\" or \"Helvetica-Narrow\", as required.",
+                "suggestedFix": "Change the object's font to \"Helvetica LT Std\" (including bold/italic styles of that family where applicable).",
                 "additionalDetail": "",
                 "shortSummary": "The object's font is not valid.",
                 "name": "FONT001 \u2013 The object's font is not valid."
@@ -1298,7 +1298,7 @@
                 "severityLabel": "Warning",
                 "severity": 2,
                 "meaning": "The auto-review detected that the object's font is not valid.",
-                "suggestedFix": "Change the object's font to \"Times New Roman\". Normally the font would be \"Helvetica\", but since this is a special character, the former is used.",
+                "suggestedFix": "Change the object's font to \"Times New Roman\". Normally the font would be \"Helvetica LT Std\", but since this is a special character, the former is used.",
                 "additionalDetail": "",
                 "shortSummary": "The object's font is not valid.",
                 "name": "FONT002 \u2013 The object's font is not valid."
@@ -1328,7 +1328,7 @@
                 "severityLabel": "Critical",
                 "severity": 3,
                 "meaning": "The auto-review detected that this text or caption uses \"Horizontal scaling\" that is set to less than 90%.",
-                "suggestedFix": "Although it is preferable not to use \u2018horizontal scaling\u2019 on text or captions, exceptions can be made when there is not enough room on a form . Having said this, \u2018horizontal scaling\u2019 must be set to 90% or above. Anything less than 90% will be rejected by DDPD.<p>To Change this setting, select this object in the hierarchy and look for the \u2018horizontal scale\u2019 option in the \"FONT\" window.</p><p>Alternatively, you can use the \"Helvetica-Narrow\" font instead of \"Helvetica\" when you need more horizontal space.</p>",
+                "suggestedFix": "Although it is preferable not to use \u2018horizontal scaling\u2019 on text or captions, exceptions can be made when there is not enough room on a form . Having said this, \u2018horizontal scaling\u2019 must be set to 90% or above. Anything less than 90% will be rejected by DDPD.<p>To Change this setting, select this object in the hierarchy and look for the \u2018horizontal scale\u2019 option in the \"FONT\" window.</p><p>Alternatively, revise wording or layout so text fits without relying on excessive compression.</p>",
                 "additionalDetail": "",
                 "shortSummary": "This text or caption uses \"Horizontal scaling\" that is set to less than 90%.",
                 "name": "FONT006a \u2013 This text or caption uses \"Horizontal scaling\" that is set to less than 90%."
@@ -1338,7 +1338,7 @@
                 "severityLabel": "Warning",
                 "severity": 2,
                 "meaning": "The auto-review detected that this text or caption uses \"Horizontal scaling\".",
-                "suggestedFix": "Although \"Horizontal Scaling\" can be used in certain circumstances, it should be avoided whenever possible.<p>To Change this setting, select this object in the hierarchy and look for the \u2018horizontal scale\u2019 option in the \"FONT\" window.</p><p>Alternatively, you can use the \"Helvetica-Narrow\" font instead of \"Helvetica\" when you need more horizontal space.</p><p style=\"font-style: italic;\"><strong>NOTE:</strong> \"Horizontal Scaling\" cannot be set lower than 90%. Anything below this amount will be rejected by DDPD.</p>",
+                "suggestedFix": "Although \"Horizontal Scaling\" can be used in certain circumstances, it should be avoided whenever possible.<p>To Change this setting, select this object in the hierarchy and look for the \u2018horizontal scale\u2019 option in the \"FONT\" window.</p><p>Alternatively, revise wording or layout so text fits without relying on excessive compression.</p><p style=\"font-style: italic;\"><strong>NOTE:</strong> \"Horizontal Scaling\" cannot be set lower than 90%. Anything below this amount will be rejected by DDPD.</p>",
                 "additionalDetail": "",
                 "shortSummary": "This text or caption uses \"Horizontal scaling\".",
                 "name": "FONT006b \u2013 This text or caption uses \"Horizontal scaling\"."
@@ -1718,10 +1718,10 @@
                 "severityLabel": "Critical",
                 "severity": 3,
                 "meaning": "The auto-review did not find the required formServer processing instruction that sets the target Acrobat PDF render format to 10.0 (static). Without it, the template does not declare Acrobat 10.0 or later as the rendering target.",
-                "suggestedFix": "At the very beginning of the XDP (immediately after any XML declaration and render-cache instructions if present), add exactly: <?formServer defaultPDFRenderFormat acrobat10.0static?> Save the file and reload.",
+                "suggestedFix": "Add exactly: <?formServer defaultPDFRenderFormat acrobat10.0static?> (Adobe Designer usually places this inside the &lt;template&gt; section). Save the file and reload.",
                 "additionalDetail": "",
-                "shortSummary": "Missing <?formServer defaultPDFRenderFormat acrobat10.0static?> at the start of the XDP (Acrobat 10.0+ target).",
-                "name": "FORM0025 \u2013 Missing <?formServer defaultPDFRenderFormat acrobat10.0static?> at the start of the XDP (Acrobat 10.0+ target)."
+                "shortSummary": "Missing <?formServer defaultPDFRenderFormat acrobat10.0static?> (Acrobat 10.0+ static target).",
+                "name": "FORM0025 \u2013 Missing <?formServer defaultPDFRenderFormat acrobat10.0static?> (Acrobat 10.0+ static target)."
             },
             "GRAPH001": {
                 "code": "GRAPH001",
@@ -5469,7 +5469,8 @@
         const LINE_HEIGHT_SYMBOL_EXCEPTIONS = new Set('±><√≤≥<>–+÷×=≠►▼◄▲▪•✓'.split(''));
         const DOT_LEADER_FAKE_PATTERN = /(\.\s?){4,}/;
         const FONT_SPECIAL_GLYPHS = new Set(['►', '▼', '◄', '▲']);
-        const FONT_APPROVED_TYPEFACE_CODES = new Set(['helvetica', 'helveticanarrow']);
+        /** Matches Designer/XFA names like "Helvetica LT Std", including bold/italic variants. */
+        const HELVETICA_LT_STD_NORMALIZED_PREFIX = 'helveticaltst';
         const PAGE_SIZE_STOCK_FALLBACKS = Object.freeze({
             letter: { width: 612, height: 792 },
             legal: { width: 612, height: 1008 }
@@ -5835,7 +5836,7 @@
             window.expectedValues = expectedValuesState;
         }
 
-        const EXPECTED_LIBRARY_RELEASE = 'Release 6.0.3';
+        const EXPECTED_LIBRARY_RELEASE = 'Release 7.0';
         const ERROR_CATEGORY_STRUCTURE = Object.freeze([
             {
                 label: '1. Form infrastructure & metadata',
@@ -5969,13 +5970,15 @@
                 idPrefix: 'custom-functions',
                 label: 'Custom Functions',
                 library: 'CustomFunctions',
-                codes: { presence: 'FORM0005', version: 'FORM0006' }
+                codes: { presence: 'FORM0005', version: 'FORM0006' },
+                activeByDefault: false
             },
             {
                 idPrefix: 'custom-messages',
                 label: 'Custom Messages',
                 library: 'CustomMessages',
-                codes: { presence: 'FORM0007', version: 'FORM0008' }
+                codes: { presence: 'FORM0007', version: 'FORM0008' },
+                activeByDefault: false
             }
         ]);
 
@@ -5984,8 +5987,9 @@
                 return [];
             }
             return descriptors.flatMap(descriptor => {
-                const { idPrefix, label, library, codes } = descriptor;
+                const { idPrefix, label, library, codes, activeByDefault } = descriptor;
                 const baseId = idPrefix || library;
+                const optionalInactive = activeByDefault === false ? { activeByDefault: false } : {};
                 return [
                     {
                         id: `${baseId}-present`,
@@ -5994,7 +5998,8 @@
                         label: `${label} library is present`,
                         library,
                         type: 'presence',
-                        subform: 'form1'
+                        subform: 'form1',
+                        ...optionalInactive
                     },
                     {
                         id: `${baseId}-version`,
@@ -6004,7 +6009,8 @@
                         library,
                         type: 'version',
                         expectedVersion: EXPECTED_LIBRARY_RELEASE,
-                        subform: 'form1'
+                        subform: 'form1',
+                        ...optionalInactive
                     }
                 ];
             });
@@ -6430,7 +6436,7 @@
                 id: 'acrobat-pdf-render-pi',
                 category: 'form-infrastructure-core',
                 code: 'FORM0025',
-                label: 'XDP begins with Acrobat 10.0 static PDF render processing instruction',
+                label: 'XDP includes Acrobat 10.0 static PDF render processing instruction (<?formServer defaultPDFRenderFormat ...?>)',
                 type: 'acrobat-pdf-render-pi',
                 severity: 3,
                 subform: 'form1'
@@ -7205,7 +7211,7 @@
             FORM0022: 'Place Language Availability bottom center page 1',
             FORM0023: 'Place PPU text after last fillable field',
             FORM0024: 'Page number trio within 3 pt of page bottom',
-            FORM0025: 'Acrobat 10.0 static PDF render PI at XDP start',
+            FORM0025: 'Acrobat 10.0 static PDF render PI present',
             GRAPH001: 'Use 7pt CRA signature on 8pt forms',
             GRAPH002: 'Use 9pt CRA signature on 10pt forms',
             GRAPH003: 'Use 25mm wordmark on 8pt forms',
@@ -8697,7 +8703,10 @@
                 if (hPts <= LANGUAGE_AVAILABILITY_LAYOUT_EPSILON_PT) {
                     return;
                 }
-                const bottom = yAccum + hPts;
+                const bottom = getEffectiveExtentBottomPts(objectElement, yAccum, hPts);
+                if (!Number.isFinite(bottom)) {
+                    return;
+                }
                 maxBottom = maxBottom === null ? bottom : Math.max(maxBottom, bottom);
             });
             if (maxBottom === null) {
@@ -8754,6 +8763,53 @@
             return Number.isFinite(pts) ? pts : null;
         }
 
+        /**
+         * Effective bottom edge of an element's extent along Y, in points relative to the placement ancestor.
+         * XFA (x,y) refer to the anchor point; default / top-left anchors behave like top edge at y.
+         */
+        function getEffectiveExtentBottomPts(element, yAccumPts, hPts) {
+            if (!Number.isFinite(yAccumPts) || !Number.isFinite(hPts)) {
+                return null;
+            }
+            const anchorRaw = element && typeof element.getAttribute === 'function'
+                ? getAttributeCaseInsensitive(element, 'anchorType')
+                : '';
+            const a = typeof anchorRaw === 'string' ? anchorRaw.trim().toLowerCase() : '';
+            if (!a || a === 'topleft') {
+                return yAccumPts + hPts;
+            }
+            if (a.startsWith('bottom')) {
+                return yAccumPts;
+            }
+            if (a.startsWith('middle')) {
+                return yAccumPts + hPts / 2;
+            }
+            return yAccumPts + hPts;
+        }
+
+        /**
+         * Horizontal center of extent along X, in points relative to the placement ancestor.
+         */
+        function getEffectiveHorizontalCenterPts(element, xAccumPts, wPts) {
+            if (!Number.isFinite(xAccumPts) || !Number.isFinite(wPts)) {
+                return null;
+            }
+            const anchorRaw = element && typeof element.getAttribute === 'function'
+                ? getAttributeCaseInsensitive(element, 'anchorType')
+                : '';
+            const a = typeof anchorRaw === 'string' ? anchorRaw.trim().toLowerCase() : '';
+            if (!a || a === 'topleft') {
+                return xAccumPts + wPts / 2;
+            }
+            if (a.endsWith('center')) {
+                return xAccumPts;
+            }
+            if (a.endsWith('right')) {
+                return xAccumPts - wPts / 2;
+            }
+            return xAccumPts + wPts / 2;
+        }
+
         function describeLanguageAvailabilityLayoutFailure(objectElement, boundaryElement, pageWidthPts, pageHeightPts) {
             const yAccum = sumAxisOffsetFromElementToAncestor(objectElement, boundaryElement, 'y');
             const xAccum = sumAxisOffsetFromElementToAncestor(objectElement, boundaryElement, 'x');
@@ -8769,21 +8825,30 @@
             if (!Number.isFinite(pageHeightPts) || pageHeightPts <= 0) {
                 reasons.push('First page height could not be read from the page fragment subform (h/minH).');
             } else {
-                const bottomGap = pageHeightPts - (yAccum + hPts);
-                if (
-                    bottomGap < -LANGUAGE_AVAILABILITY_LAYOUT_EPSILON_PT
-                    || bottomGap > LANGUAGE_AVAILABILITY_FIRST_PAGE_BOTTOM_MAX_PT + LANGUAGE_AVAILABILITY_LAYOUT_EPSILON_PT
-                ) {
-                    reasons.push(`Bottom gap is ${bottomGap.toFixed(1)} pt from the fragment bottom (required 0–${LANGUAGE_AVAILABILITY_FIRST_PAGE_BOTTOM_MAX_PT} pt from the bottom margin).`);
+                const extentBottom = getEffectiveExtentBottomPts(objectElement, yAccum, hPts);
+                if (!Number.isFinite(extentBottom)) {
+                    reasons.push('Language Availability vertical placement could not be computed (missing geometry or anchor handling).');
+                } else {
+                    const bottomGap = pageHeightPts - extentBottom;
+                    if (
+                        bottomGap < -LANGUAGE_AVAILABILITY_LAYOUT_EPSILON_PT
+                        || bottomGap > LANGUAGE_AVAILABILITY_FIRST_PAGE_BOTTOM_MAX_PT + LANGUAGE_AVAILABILITY_LAYOUT_EPSILON_PT
+                    ) {
+                        reasons.push(`Bottom gap is ${bottomGap.toFixed(1)} pt from the fragment bottom (required 0–${LANGUAGE_AVAILABILITY_FIRST_PAGE_BOTTOM_MAX_PT} pt from the bottom margin).`);
+                    }
                 }
             }
             if (!Number.isFinite(pageWidthPts) || pageWidthPts <= 0) {
                 reasons.push('First page width could not be read from the page fragment subform (w/minW).');
             } else {
-                const centerX = xAccum + (wPts / 2);
-                const centerDelta = Math.abs(centerX - (pageWidthPts / 2));
-                if (centerDelta > LANGUAGE_AVAILABILITY_FIRST_PAGE_CENTER_TOLERANCE_PT + LANGUAGE_AVAILABILITY_LAYOUT_EPSILON_PT) {
-                    reasons.push(`About ${centerDelta.toFixed(1)} pt off horizontal center (±${LANGUAGE_AVAILABILITY_FIRST_PAGE_CENTER_TOLERANCE_PT} pt).`);
+                const centerX = getEffectiveHorizontalCenterPts(objectElement, xAccum, wPts);
+                if (!Number.isFinite(centerX)) {
+                    reasons.push('Language Availability horizontal placement could not be computed.');
+                } else {
+                    const centerDelta = Math.abs(centerX - (pageWidthPts / 2));
+                    if (centerDelta > LANGUAGE_AVAILABILITY_FIRST_PAGE_CENTER_TOLERANCE_PT + LANGUAGE_AVAILABILITY_LAYOUT_EPSILON_PT) {
+                        reasons.push(`About ${centerDelta.toFixed(1)} pt off horizontal center (±${LANGUAGE_AVAILABILITY_FIRST_PAGE_CENTER_TOLERANCE_PT} pt).`);
+                    }
                 }
             }
             return reasons;
@@ -9138,15 +9203,28 @@
                     message: 'Load an XDP file to run this check.'
                 };
             }
-            if (xdpHasLeadingAcrobat10StaticPdfRenderPi(currentXdpContent)) {
+            const detected = getLeadingDefaultPdfRenderFormatValue(currentXdpContent);
+            if (detected === 'acrobat10.0static') {
                 return {
                     status: 'pass',
-                    message: 'The XDP begins with <?formServer defaultPDFRenderFormat acrobat10.0static?> (after optional XML declaration and render-cache processing instructions).'
+                    message: 'Found <?formServer defaultPDFRenderFormat acrobat10.0static?> (often inside &lt;template&gt;; first matching PI in the file).'
+                };
+            }
+            if (detected === 'acrobat11.0static' || detected === 'acrobat12.0static') {
+                return {
+                    status: 'error',
+                    message: `${formatErrorMessage(definition)}. The processing instruction uses ${detected}; it must be acrobat10.0static (not acrobat11.0static or acrobat12.0static). Replace with <?formServer defaultPDFRenderFormat acrobat10.0static?>.`
+                };
+            }
+            if (detected) {
+                return {
+                    status: 'error',
+                    message: `${formatErrorMessage(definition)}. Found defaultPDFRenderFormat "${detected}" but the required value is acrobat10.0static (<?formServer defaultPDFRenderFormat acrobat10.0static?>).`
                 };
             }
             return {
                 status: 'error',
-                message: `${formatErrorMessage(definition)}. The file must start with <?formServer defaultPDFRenderFormat acrobat10.0static?> (after optional <?xml ...?> and <?renderCache ...?> if present) so the target Acrobat version is 10.0 or later.`
+                message: `${formatErrorMessage(definition)}. No <?formServer defaultPDFRenderFormat acrobat10.0static?> was found in the XDP (Adobe Designer usually puts this inside &lt;template&gt;). Incorrect values include acrobat11.0static and acrobat12.0static.`
             };
         }
 
@@ -11176,7 +11254,8 @@
             const toggle = document.createElement('input');
             toggle.type = 'checkbox';
             toggle.id = `${definition.id}-toggle`;
-            toggle.checked = true;
+            const activeDefault = definition.activeByDefault !== false;
+            toggle.checked = activeDefault;
             toggle.dataset.checkId = definition.id;
 
             const labelText = document.createElement('span');
@@ -11233,7 +11312,7 @@
             });
 
             errorCheckState.set(definition.id, {
-                active: true,
+                active: activeDefault,
                 result: null
             });
 
@@ -12273,9 +12352,9 @@
                     entry.context = buildFontErrorContextMessage(context, 'Times New Roman');
                     results.push(entry);
                 }
-                if (shouldCheckFont001 && !isSpecialGlyph && !isFieldValueContext && !isHelveticaTypefaceCode(typefaceCode)) {
+                if (shouldCheckFont001 && !isSpecialGlyph && !isFieldValueContext && !isHelveticaLtStdTypefaceCode(typefaceCode)) {
                     const entry = createContentErrorEntry('FONT001', 1);
-                    entry.context = buildFontErrorContextMessage(context, 'Helvetica or Helvetica-Narrow');
+                    entry.context = buildFontErrorContextMessage(context, 'Helvetica LT Std');
                     results.push(entry);
                 }
                 const hasItalic = Boolean(context.hasItalic);
@@ -12439,7 +12518,7 @@
                     return;
                 }
                 seen.add(key);
-                if (isHelveticaTypefaceCode(runTypefaceCode)) {
+                if (isHelveticaLtStdTypefaceCode(runTypefaceCode)) {
                     info.inlineApproved.push({ code: runTypefaceCode, display: runTypefaceDisplay });
                 } else {
                     info.inlineNonApproved.push({ code: runTypefaceCode, display: runTypefaceDisplay });
@@ -15389,9 +15468,9 @@
             }
             if (isContentErrorEnabled('FIELD0002')) {
                 const typefaceCode = structural.valueTypefaceCode || '';
-                if (!isHelveticaTypefaceCode(typefaceCode)) {
+                if (!isHelveticaLtStdTypefaceCode(typefaceCode)) {
                     const entry = createErrorEntryFromCode('FIELD0002', {
-                        context: `Detected value typeface '${structural.valueTypefaceDisplay || 'Unspecified'}'; expected Helvetica.`,
+                        context: `Detected value typeface '${structural.valueTypefaceDisplay || 'Unspecified'}'; expected Helvetica LT Std.`,
                         title: 'Field value font'
                     });
                     if (entry) {
@@ -22160,14 +22239,11 @@
             return Number.isFinite(parsed) ? parsed : fallback;
         }
 
-        function isHelveticaTypefaceCode(code) {
-            if (!code) {
+        function isHelveticaLtStdTypefaceCode(code) {
+            if (!code || typeof code !== 'string') {
                 return false;
             }
-            if (FONT_APPROVED_TYPEFACE_CODES.has(code)) {
-                return true;
-            }
-            return false;
+            return code.startsWith(HELVETICA_LT_STD_NORMALIZED_PREFIX);
         }
 
         function isTimesNewRomanTypefaceCode(code) {
@@ -29671,33 +29747,20 @@
             return content.replace(/<\?renderCache[\s\S]*?\?>/g, '');
         }
 
-        function stripLeadingXdpPreambleForFormServerPi(content) {
+        /**
+         * Reads defaultPDFRenderFormat from the first matching formServer PI in the XDP.
+         * Designer often places this inside &lt;template&gt; (after &lt;xdp:xdp&gt;), not beside the XML declaration.
+         */
+        function getLeadingDefaultPdfRenderFormatValue(content) {
             if (typeof content !== 'string') {
-                return '';
+                return null;
             }
-            let s = content.replace(/^\uFEFF/, '').replace(/^\s+/, '');
-            let guard = 0;
-            while (guard < 32) {
-                guard += 1;
-                const xmlMatch = s.match(/^<\?xml\b[\s\S]*?\?>/);
-                if (xmlMatch) {
-                    s = s.slice(xmlMatch[0].length).replace(/^\s+/, '');
-                    continue;
-                }
-                const renderCacheMatch = s.match(/^<\?renderCache[\s\S]*?\?>/);
-                if (renderCacheMatch) {
-                    s = s.slice(renderCacheMatch[0].length).replace(/^\s+/, '');
-                    continue;
-                }
-                break;
+            const formServerPi = /<\?formServer\s+defaultPDFRenderFormat\s+(\S+?)\s*\?>/i;
+            const match = formServerPi.exec(content);
+            if (!match) {
+                return null;
             }
-            return s;
-        }
-
-        function xdpHasLeadingAcrobat10StaticPdfRenderPi(content) {
-            const expectedPi = '<?formServer defaultPDFRenderFormat acrobat10.0static?>';
-            const remainder = stripLeadingXdpPreambleForFormServerPi(content);
-            return remainder.startsWith(expectedPi);
+            return match[1].trim().toLowerCase();
         }
 
         function resetStateAfterFileReadFailure(message, { placeholder } = {}) {
