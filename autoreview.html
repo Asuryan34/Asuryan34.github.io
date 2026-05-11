@@ -12487,11 +12487,17 @@
                     if (typeof context.allBold === 'boolean') {
                         fallbackStructural.valueFontAllBold = context.allBold;
                     }
+                    if (typeof context.allItalic === 'boolean') {
+                        fallbackStructural.valueFontAllItalic = context.allItalic;
+                    }
                 } else if (contextKey === 'caption') {
                     fallbackStructural.captionTypefaceDisplay = baseDisplay;
                     fallbackStructural.captionTypefaceCode = baseCode;
                     if (typeof context.allBold === 'boolean') {
                         fallbackStructural.captionFontAllBold = context.allBold;
+                    }
+                    if (typeof context.allItalic === 'boolean') {
+                        fallbackStructural.captionFontAllItalic = context.allItalic;
                     }
                 } else {
                     return info;
@@ -12549,15 +12555,18 @@
                 const display = context.typefaceDisplay || null;
                 const code = context.typefaceCode || '';
                 const allBold = Boolean(context.allBold);
+                const allItalic = Boolean(context.allItalic);
                 const structural = {};
                 if (key === 'value') {
                     structural.valueTypefaceDisplay = display;
                     structural.valueTypefaceCode = code;
                     structural.valueFontAllBold = allBold;
+                    structural.valueFontAllItalic = allItalic;
                 } else if (key === 'caption') {
                     structural.captionTypefaceDisplay = display;
                     structural.captionTypefaceCode = code;
                     structural.captionFontAllBold = allBold;
+                    structural.captionFontAllItalic = allItalic;
                 }
                 return Object.keys(structural).length ? structural : null;
             })();
@@ -23593,6 +23602,7 @@
             const runs = [];
             const stack = [];
             const defaultBold = Boolean(options && options.defaultBold);
+            const defaultItalic = Boolean(options && options.defaultItalic);
             const defaultTypefaceDisplay = options && options.defaultTypefaceDisplay
                 ? options.defaultTypefaceDisplay
                 : null;
@@ -23605,7 +23615,7 @@
                     stack.push({
                         node: docElement,
                         bold: Boolean(defaultBold),
-                        italic: false,
+                        italic: Boolean(defaultItalic),
                         color: null,
                         typefaceDisplay: defaultTypefaceDisplay,
                         typefaceCode: defaultTypefaceCode,
@@ -23624,7 +23634,7 @@
                 stack.push({
                     node: rootNode,
                     bold: Boolean(defaultBold),
-                    italic: false,
+                    italic: Boolean(defaultItalic),
                     color: null,
                     typefaceDisplay: defaultTypefaceDisplay,
                     typefaceCode: defaultTypefaceCode,
@@ -24133,6 +24143,17 @@
             return false;
         }
 
+        function determineDefaultItalicForContext(metadata, contextKey) {
+            const structural = metadata && metadata.structural ? metadata.structural : {};
+            if (contextKey === 'value') {
+                return Boolean(structural.valueFontAllItalic);
+            }
+            if (contextKey === 'caption') {
+                return Boolean(structural.captionFontAllItalic);
+            }
+            return false;
+        }
+
         function getTextAnalysisForContext(objectId, metadata, contextKey) {
             const cacheKey = `${objectId}::${contextKey}`;
             if (textContextAnalysisCache.has(cacheKey)) {
@@ -24143,6 +24164,7 @@
                 text: '',
                 runs: [],
                 defaultBold: determineDefaultBoldForContext(metadata, contextKey),
+                defaultItalic: determineDefaultItalicForContext(metadata, contextKey),
                 rootNode: null,
                 defaultTypefaceDisplay: defaultTypeface.display,
                 defaultTypefaceCode: defaultTypeface.code
@@ -24154,6 +24176,9 @@
                 if (rootNode) {
                     const runs = collectTextRunsFromNode(rootNode, {
                         defaultBold: contextEntry.defaultBold,
+                        defaultItalic: typeof contextEntry.defaultItalic === 'boolean'
+                            ? contextEntry.defaultItalic
+                            : analysis.defaultItalic,
                         defaultTypefaceDisplay: analysis.defaultTypefaceDisplay,
                         defaultTypefaceCode: analysis.defaultTypefaceCode
                     });
@@ -24162,15 +24187,24 @@
                     analysis.defaultBold = typeof contextEntry.defaultBold === 'boolean'
                         ? contextEntry.defaultBold
                         : analysis.defaultBold;
+                    analysis.defaultItalic = typeof contextEntry.defaultItalic === 'boolean'
+                        ? contextEntry.defaultItalic
+                        : analysis.defaultItalic;
                     analysis.rootNode = rootNode;
                 } else if (contextEntry.type === 'plain') {
                     const normalized = String(contextEntry.markup).replace(/\r\n?/g, '\n');
+                    const resolvedBold = typeof contextEntry.defaultBold === 'boolean'
+                        ? contextEntry.defaultBold
+                        : analysis.defaultBold;
+                    const resolvedItalic = typeof contextEntry.defaultItalic === 'boolean'
+                        ? contextEntry.defaultItalic
+                        : analysis.defaultItalic;
                     analysis.text = normalized;
                     analysis.runs = normalized
                         ? [{
                             text: normalized,
-                            isBold: Boolean(contextEntry.defaultBold),
-                            isItalic: false,
+                            isBold: resolvedBold,
+                            isItalic: resolvedItalic,
                             color: null,
                             typefaceDisplay: analysis.defaultTypefaceDisplay || null,
                             typefaceCode: analysis.defaultTypefaceCode || null,
@@ -24178,7 +24212,8 @@
                             fontSize: null
                         }]
                         : [];
-                    analysis.defaultBold = Boolean(contextEntry.defaultBold);
+                    analysis.defaultBold = resolvedBold;
+                    analysis.defaultItalic = resolvedItalic;
                 }
             }
             if (!analysis.text) {
@@ -24192,7 +24227,7 @@
                         ? [{
                             text: normalized,
                             isBold: analysis.defaultBold,
-                            isItalic: false,
+                            isItalic: analysis.defaultItalic,
                             color: null,
                             typefaceDisplay: analysis.defaultTypefaceDisplay || null,
                             typefaceCode: analysis.defaultTypefaceCode || null,
@@ -28028,9 +28063,11 @@
                 isWithinTableAssistRole: false,
                 tableAncestorRole: null,
                 valueFontAllBold: false,
+                valueFontAllItalic: false,
                 valueFontHasBold: false,
                 valueFontHasNonBold: false,
                 captionFontAllBold: false,
+                captionFontAllItalic: false,
                 captionFontHasBold: false,
                 captionFontHasNonBold: false,
                 valueLineSpacingValues: [],
@@ -28159,6 +28196,7 @@
             } else {
                 const fontInfo = extractFontInfo(element, { excludeCaptionFonts: localName === 'field' });
                 structuralState.valueFontAllBold = Boolean(fontInfo && fontInfo.allBold);
+                structuralState.valueFontAllItalic = Boolean(fontInfo && fontInfo.allItalic);
                 structuralState.valueFontHasBold = Boolean(fontInfo && fontInfo.hasBold);
                 structuralState.valueFontHasNonBold = Boolean(fontInfo && fontInfo.hasNonBold);
                 isField = localName === 'field';
@@ -28173,6 +28211,7 @@
                     : [];
                 const captionFontInfo = captionElement ? extractFontInfo(captionElement) : null;
                 structuralState.captionFontAllBold = Boolean(captionFontInfo && captionFontInfo.allBold);
+                structuralState.captionFontAllItalic = Boolean(captionFontInfo && captionFontInfo.allItalic);
                 structuralState.captionFontHasBold = Boolean(captionFontInfo && captionFontInfo.hasBold);
                 structuralState.captionFontHasNonBold = Boolean(captionFontInfo && captionFontInfo.hasNonBold);
                 valueElement = getDirectChild(element, 'value');
@@ -28342,13 +28381,14 @@
                     }
                     const { element: contextElement, target } = options;
                     const defaultBold = Boolean(options.defaultBold);
+                    const defaultItalic = Boolean(options.defaultItalic);
                     const textNode = getDirectChild(contextElement, 'text');
                     if (textNode) {
                         if (serializer) {
                             try {
                                 const markup = serializer.serializeToString(textNode);
                                 if (markup) {
-                                    return { type: 'text', markup, defaultBold };
+                                    return { type: 'text', markup, defaultBold, defaultItalic };
                                 }
                             } catch (error) {
                                 // fall through to plain text fallback
@@ -28356,21 +28396,21 @@
                         }
                         const fallbackMarkup = textNode.textContent || '';
                         if (fallbackMarkup) {
-                            return { type: 'plain', markup: fallbackMarkup, defaultBold };
+                            return { type: 'plain', markup: fallbackMarkup, defaultBold, defaultItalic };
                         }
                     }
                     const exDataNode = getDirectChild(contextElement, 'exData');
                     if (exDataNode) {
                         const markup = serializer ? assembleExDataMarkup(exDataNode) : (exDataNode.textContent || '');
                         if (markup) {
-                            return { type: 'exData', markup, defaultBold };
+                            return { type: 'exData', markup, defaultBold, defaultItalic };
                         }
                     }
                     if (target === 'value' && valueText) {
-                        return { type: 'plain', markup: valueText, defaultBold };
+                        return { type: 'plain', markup: valueText, defaultBold, defaultItalic };
                     }
                     if (target === 'caption' && captionText) {
-                        return { type: 'plain', markup: captionText, defaultBold };
+                        return { type: 'plain', markup: captionText, defaultBold, defaultItalic };
                     }
                     return null;
                 };
@@ -28379,14 +28419,16 @@
                     richTextEntry.value = captureRichTextForContext({
                         element: valueElement,
                         target: 'value',
-                        defaultBold: structuralState.valueFontAllBold
+                        defaultBold: structuralState.valueFontAllBold,
+                        defaultItalic: structuralState.valueFontAllItalic
                     });
                 }
                 if (structuralState.hasCaption && captionValueElement) {
                     richTextEntry.caption = captureRichTextForContext({
                         element: captionValueElement,
                         target: 'caption',
-                        defaultBold: structuralState.captionFontAllBold
+                        defaultBold: structuralState.captionFontAllBold,
+                        defaultItalic: structuralState.captionFontAllItalic
                     });
                 }
                 if ((richTextEntry.value && richTextEntry.value.markup) || (richTextEntry.caption && richTextEntry.caption.markup)) {
