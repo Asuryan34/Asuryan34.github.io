@@ -997,10 +997,10 @@
                 "code": "FIELD0007",
                 "severityLabel": "Critical",
                 "severity": 3,
-                "meaning": "The auto-review detected that one or more radio button or checkbox options are missing an export value or share the same export value as a sibling. For radios in an exclusion group, each option\u2019s <items><text> value must be unique so only one option can be selected. For checkboxes that share the same name, each option still needs a distinct value.",
-                "suggestedFix": "In XML source or the Object panel, open every option in the exclusion group and set a unique, non-empty string in <items><text>\u2026</text></items> (export value). For checkboxes with the same name, use the Binding or Value tab so each option has a unique value.",
+                "meaning": "The auto-review detected that one or more radio button or checkbox options are missing an export value or share the same export value as a sibling. For radios in an exclusion group, each option\u2019s <items> export value (for example <items><text>\u2026</text></items> or <items><integer>\u2026</integer></items>) must be unique so only one option can be selected. For checkboxes that share the same name, each option still needs a distinct value.",
+                "suggestedFix": "In XML source or the Object panel, open every option in the exclusion group and set a unique, non-empty export value under <items> (for example <text>\u2026</text> or <integer>\u2026</integer>). For checkboxes with the same name, use the Binding or Value tab so each option has a unique value.",
                 "additionalDetail": "",
-                "shortSummary": "A radio or checkbox option is missing a unique export value (<items><text> for radios in a group), or duplicates another option.",
+                "shortSummary": "A radio or checkbox option is missing a unique export value (<items> value for radios in a group), or duplicates another option.",
                 "name": "FIELD0007 \u2013 Radio options in an exclusion group (or same-name checkboxes) need unique <items> export values."
             },
             "FIELD0008": {
@@ -1303,45 +1303,35 @@
                 "shortSummary": "The object's font is not valid.",
                 "name": "FONT002 \u2013 The object's font is not valid."
             },
-            "FONT004": {
-                "code": "FONT004",
-                "severityLabel": "Critical",
-                "severity": 3,
-                "meaning": "The auto-review detected that the entire object's text or caption is in Italics",
-                "suggestedFix": "Select the object and turn off \"Italics\". Italics are usually not permitted on forms.",
-                "additionalDetail": "",
-                "shortSummary": "The entire object's text or caption is in Italics",
-                "name": "FONT004 \u2013 The entire object's text or caption is in Italics"
-            },
             "FONT005": {
                 "code": "FONT005",
                 "severityLabel": "Critical",
                 "severity": 3,
-                "meaning": "The auto-review detected that part of the text or caption is in Italics",
-                "suggestedFix": "Remove all instances of italicised fonts in the object's text or caption. <p style=\"font-style: italic;\"><strong>NOTE: </strong> If no text appears to be in italics, it likely means some random white space has been italicised. To quickly remove these, select all of the text in the object and make it all italicised. Then immediately un-italicise it and exit the object.</p>",
+                "meaning": "The auto-review detected italic formatting on this object's text or caption. That includes cases where the entire text or caption is italic, and cases where only part of it is italic (mixed with non-italic text).",
+                "suggestedFix": "Select the object and remove italic formatting from the text or caption (for example turn off Italics in the Font window, or clear italic styling from individual runs). Italics are usually not permitted on forms. <p style=\"font-style: italic;\"><strong>NOTE: </strong> If nothing looks italic on screen, whitespace or hidden runs may still be italicised. Select all text in the object, apply italic once, then remove italic and exit the object.</p>",
                 "additionalDetail": "",
-                "shortSummary": "Part of the text or caption is in Italics",
-                "name": "FONT005 \u2013 Part of the text or caption is in Italics"
+                "shortSummary": "Italic formatting appears on all or part of this object's text or caption.",
+                "name": "FONT005 \u2013 Italics on all or part of the text or caption"
             },
             "FONT006a": {
                 "code": "FONT006a",
                 "severityLabel": "Critical",
                 "severity": 3,
-                "meaning": "The auto-review detected that this text or caption uses \"Horizontal scaling\" that is set to less than 90%.",
-                "suggestedFix": "Although it is preferable not to use \u2018horizontal scaling\u2019 on text or captions, exceptions can be made when there is not enough room on a form . Having said this, \u2018horizontal scaling\u2019 must be set to 90% or above. Anything less than 90% will be rejected by DDPD.<p>To Change this setting, select this object in the hierarchy and look for the \u2018horizontal scale\u2019 option in the \"FONT\" window.</p><p>Alternatively, revise wording or layout so text fits without relying on excessive compression.</p>",
+                "meaning": "The auto-review detected that this text or caption uses \"Horizontal scaling\" that is set to less than 82%.",
+                "suggestedFix": "Although it is preferable not to use \u2018horizontal scaling\u2019 on text or captions, exceptions can be made when there is not enough room on a form. Horizontal scaling below 82% is treated as a critical issue.<p>To change this setting, select this object in the hierarchy and look for the \u2018horizontal scale\u2019 option in the \"FONT\" window.</p><p>Alternatively, revise wording or layout so text fits without relying on excessive compression.</p>",
                 "additionalDetail": "",
-                "shortSummary": "This text or caption uses \"Horizontal scaling\" that is set to less than 90%.",
-                "name": "FONT006a \u2013 This text or caption uses \"Horizontal scaling\" that is set to less than 90%."
+                "shortSummary": "This text or caption uses \"Horizontal scaling\" that is set to less than 82%.",
+                "name": "FONT006a \u2013 This text or caption uses \"Horizontal scaling\" that is set to less than 82%."
             },
             "FONT006b": {
                 "code": "FONT006b",
                 "severityLabel": "Warning",
                 "severity": 2,
-                "meaning": "The auto-review detected that this text or caption uses \"Horizontal scaling\".",
-                "suggestedFix": "Although \"Horizontal Scaling\" can be used in certain circumstances, it should be avoided whenever possible.<p>To Change this setting, select this object in the hierarchy and look for the \u2018horizontal scale\u2019 option in the \"FONT\" window.</p><p>Alternatively, revise wording or layout so text fits without relying on excessive compression.</p><p style=\"font-style: italic;\"><strong>NOTE:</strong> \"Horizontal Scaling\" cannot be set lower than 90%. Anything below this amount will be rejected by DDPD.</p>",
+                "meaning": "The auto-review detected that this text or caption uses \"Horizontal scaling\" between 82% and 100% (including 82%, excluding 100%).",
+                "suggestedFix": "Although \"Horizontal Scaling\" can be used in certain circumstances, it should be avoided whenever possible. Scaling from 82% up to (but not including) 100% is flagged as a warning; scaling below 82% is flagged as critical.<p>To change this setting, select this object in the hierarchy and look for the \u2018horizontal scale\u2019 option in the \"FONT\" window.</p><p>Alternatively, revise wording or layout so text fits without relying on excessive compression.</p>",
                 "additionalDetail": "",
-                "shortSummary": "This text or caption uses \"Horizontal scaling\".",
-                "name": "FONT006b \u2013 This text or caption uses \"Horizontal scaling\"."
+                "shortSummary": "This text or caption uses \"Horizontal scaling\" between 82% and 100% (including 82%, excluding 100%).",
+                "name": "FONT006b \u2013 Horizontal scaling from 82% to below 100%"
             },
             "FONT007": {
                 "code": "FONT007",
@@ -7175,8 +7165,7 @@
             FIELD0010: 'Read-only access when field has default value',
             FONT001: 'Use approved fonts',
             FONT002: 'Use Times New Roman for special glyphs',
-            FONT004: 'Remove italic formatting',
-            FONT005: 'Clear partial italics',
+            FONT005: 'Remove italic formatting (whole or partial)',
             FONT007: 'Reset vertical scaling',
             FONT008: 'Match default font size',
             FONT008_ln: 'Match line number font size',
@@ -12296,7 +12285,6 @@
             const results = [];
             const shouldCheckFont001 = isContentErrorEnabled('FONT001');
             const shouldCheckFont002 = isContentErrorEnabled('FONT002');
-            const shouldCheckFont004 = isContentErrorEnabled('FONT004');
             const shouldCheckFont005 = isContentErrorEnabled('FONT005');
             const shouldCheckFont006a = isContentErrorEnabled('FONT006a');
             const shouldCheckFont006b = isContentErrorEnabled('FONT006b');
@@ -12305,7 +12293,6 @@
             if (
                 !shouldCheckFont001
                 && !shouldCheckFont002
-                && !shouldCheckFont004
                 && !shouldCheckFont005
                 && !shouldCheckFont006a
                 && !shouldCheckFont006b
@@ -12360,13 +12347,12 @@
                 const hasItalic = Boolean(context.hasItalic);
                 const allItalic = Boolean(context.allItalic);
                 const hasNonItalic = Boolean(context.hasNonItalic);
-                if (shouldCheckFont004 && allItalic) {
-                    const entry = createContentErrorEntry('FONT004', 1);
-                    entry.context = buildFontContextLabelMessage(context, 'Entire text or caption is italicized.');
-                    results.push(entry);
-                } else if (shouldCheckFont005 && hasItalic && hasNonItalic) {
+                if (shouldCheckFont005 && hasItalic) {
+                    const italicDetail = allItalic && !hasNonItalic
+                        ? 'The entire text or caption uses italic formatting.'
+                        : 'Italic formatting is present on part of the text or caption (not everything is italic).';
                     const entry = createContentErrorEntry('FONT005', 1);
-                    entry.context = buildFontContextLabelMessage(context, 'Mixed italic and non-italic text detected.');
+                    entry.context = buildFontContextLabelMessage(context, italicDetail);
                     results.push(entry);
                 }
                 const hasLetterSpacing = Boolean(context.hasLetterSpacing);
@@ -12392,27 +12378,50 @@
                     ? context.horizontalScaleRawValues
                     : [];
                 const horizontalScaleDisplay = formatFontScaleList(horizontalScaleRawValues, horizontalScaleValues);
+                const horizontalScaleCriticalBelow = 82;
+                const horizontalScaleWarnMinInclusive = 82;
+                const horizontalScaleWarnMaxExclusive = 100;
+                const hasHorizontalUnknown = Boolean(context.hasHorizontalUnknown);
+                const horizontalScalingWarnBand =
+                    minHorizontalScale !== null
+                    && minHorizontalScale >= horizontalScaleWarnMinInclusive
+                    && minHorizontalScale < horizontalScaleWarnMaxExclusive;
+                const horizontalScalingUnknownBand =
+                    minHorizontalScale === null
+                    && (
+                        hasHorizontalUnknown
+                        || (Array.isArray(horizontalScaleRawValues) && horizontalScaleRawValues.length > 0)
+                    );
                 if (
                     shouldCheckFont006a
                     && hasHorizontalScaling
                     && minHorizontalScale !== null
-                    && minHorizontalScale < 90
+                    && minHorizontalScale < horizontalScaleCriticalBelow
                 ) {
                     const entry = createContentErrorEntry('FONT006a', 1);
                     const display = horizontalScaleDisplay || `${minHorizontalScale}%`;
                     entry.context = buildFontContextLabelMessage(
                         context,
-                        `Horizontal scaling below 90% detected (${display}).`
+                        `Horizontal scaling below ${horizontalScaleCriticalBelow}% detected (${display}).`
                     );
                     results.push(entry);
-                } else if (shouldCheckFont006b && hasHorizontalScaling) {
+                } else if (
+                    shouldCheckFont006b
+                    && hasHorizontalScaling
+                    && (horizontalScalingWarnBand || horizontalScalingUnknownBand)
+                ) {
                     const entry = createContentErrorEntry('FONT006b', 1);
-                    entry.context = buildFontContextLabelMessage(
-                        context,
-                        horizontalScaleDisplay
-                            ? `Horizontal scaling applied (${horizontalScaleDisplay}).`
-                            : 'Horizontal scaling applied.'
-                    );
+                    let scalingMessage;
+                    if (horizontalScalingWarnBand) {
+                        scalingMessage = horizontalScaleDisplay
+                            ? `Horizontal scaling between ${horizontalScaleWarnMinInclusive}% and below ${horizontalScaleWarnMaxExclusive}% (${horizontalScaleDisplay}).`
+                            : `Horizontal scaling between ${horizontalScaleWarnMinInclusive}% and below ${horizontalScaleWarnMaxExclusive}% (${minHorizontalScale}%).`;
+                    } else {
+                        scalingMessage = horizontalScaleDisplay
+                            ? `Horizontal scaling detected (${horizontalScaleDisplay}); numeric percentage unavailable — verify scale meets guidelines (critical below ${horizontalScaleCriticalBelow}%, warning from ${horizontalScaleWarnMinInclusive}% up to ${horizontalScaleWarnMaxExclusive}%).`
+                            : 'Horizontal scaling detected; numeric percentage unavailable — verify scale meets guidelines.';
+                    }
+                    entry.context = buildFontContextLabelMessage(context, scalingMessage);
                     results.push(entry);
                 }
                 const hasVerticalScaling = Boolean(context.hasVerticalScaling);
@@ -13632,11 +13641,38 @@
             return String(value).replace(/\s+/g, '').toLowerCase();
         }
 
+        function matchesLineNumberValuePattern(trimmedValue) {
+            if (!trimmedValue || typeof trimmedValue !== 'string') {
+                return false;
+            }
+            return /^(?:\d{1,5}|[A-Za-z]\d{1,2}|\d{1,2}[A-Za-z])$/.test(trimmedValue.trim());
+        }
+
+        function resolveCraObjectNameForLineNumberCheck(metadata, structural) {
+            const fromMeta = metadata && typeof metadata.craObjectName === 'string' ? metadata.craObjectName.trim() : '';
+            if (fromMeta && fromMeta !== '—' && fromMeta !== '-') {
+                return fromMeta;
+            }
+            const fromStructural = structural && typeof structural.craNameRaw === 'string' ? structural.craNameRaw.trim() : '';
+            return fromStructural || '';
+        }
+
+        function isCraLibraryLineNumberTemplateName(craName) {
+            if (!craName || typeof craName !== 'string') {
+                return false;
+            }
+            return craName.trim().toLowerCase().startsWith('linenumber_');
+        }
+
         function isLineNumberObjectByCriteria(metadata, structural, objectId) {
             if (!structural) {
                 return false;
             }
             
+            const valueText = (metadata && (metadata.valueText || metadata.content)) || '';
+            const trimmedValue = typeof valueText === 'string' ? valueText.trim() : '';
+            const valueMatchesLineNumberPattern = Boolean(trimmedValue && matchesLineNumberValuePattern(trimmedValue));
+
             // Check if object name ends with _ln, _bn, or _amnt
             const objectName = metadata && typeof metadata.name === 'string' ? metadata.name.toLowerCase() : '';
             const isNamedLineNumber = objectName && (objectName.endsWith('_ln') || objectName.endsWith('_bn') || objectName.endsWith('_amnt'));
@@ -13644,9 +13680,14 @@
             if (isNamedLineNumber) {
                 return true;
             }
+
+            // CRA library objects in <desc> (CRAObjectName), e.g. LineNumber_FillBlack_White100
+            const craObjectNameResolved = resolveCraObjectNameForLineNumberCheck(metadata, structural);
+            if (isCraLibraryLineNumberTemplateName(craObjectNameResolved) && valueMatchesLineNumberPattern) {
+                return true;
+            }
             
-            // Check if it's a field or draw element (static text) with black background, white font, and only digits (max 5)
-            // Must be either a field or a draw element (static text) or already identified as LineNumber
+            // Field or draw (static text) with line-number styling and allowed value pattern
             const isField = Boolean(structural.isField);
             const structuralLocalName = structural.localName ? structural.localName.toLowerCase() : '';
             const metadataLocalName = metadata && metadata.localName ? metadata.localName.toLowerCase() : '';
@@ -13656,22 +13697,13 @@
                 return false;
             }
             
-            // Check for black background and white font
             const hasBlackBgWhiteFont = Boolean(structural.hasBlackBackgroundWhiteFont);
-            if (!hasBlackBgWhiteFont) {
+            const hasWhiteBgBlackFont = Boolean(structural.hasWhiteBackgroundBlackFont);
+            if (!hasBlackBgWhiteFont && !hasWhiteBgBlackFont) {
                 return false;
             }
             
-            // Check if value contains only digits (max 5)
-            const valueText = (metadata && (metadata.valueText || metadata.content)) || '';
-            const trimmedValue = typeof valueText === 'string' ? valueText.trim() : '';
-            if (!trimmedValue) {
-                return false;
-            }
-            
-            // Check if value contains only digits and is max 5 characters
-            const digitsOnlyPattern = /^\d{1,5}$/;
-            if (!digitsOnlyPattern.test(trimmedValue)) {
+            if (!trimmedValue || !valueMatchesLineNumberPattern) {
                 return false;
             }
             
@@ -14463,7 +14495,7 @@
             const defaultStaticFontSize = getExpectedValueNumber('expStaticTxtFontSize', null);
             const defaultCaptionFontSize = getExpectedValueNumber('expCaptionTxtFontSize', null);
 
-            // Check if object is a line number (by name suffix OR field with black bg/white font/digits only)
+            // Check if object is a line number (_ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
             // Use metadataSnapshot if available (created before metadataRecord is registered), otherwise try getMetadataById
             let metadata = (options.metadataSnapshot && typeof options.metadataSnapshot === 'object') ? options.metadataSnapshot : (objectId ? getMetadataById(objectId) : null);
             // If metadata still not available, create minimal metadata from available info
@@ -14952,7 +14984,7 @@
                 geometry: options.geometry || null
             };
 
-            // Check if object is a line number (by name suffix OR field with black bg/white font/digits only)
+            // Check if object is a line number (_ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
             // Use metadataSnapshot if available (created before metadataRecord is registered), otherwise try getMetadataById
             let metadata = (options.metadataSnapshot && typeof options.metadataSnapshot === 'object') ? options.metadataSnapshot : (objectId ? getMetadataById(objectId) : null);
             // If metadata still not available, create minimal metadata from available info
@@ -15948,7 +15980,7 @@
                     : 'this exclusion group';
                 members.forEach(member => {
                     if (!member.normalizedValue) {
-                        const context = `This radio button in ${groupLabel} does not have a non-empty export value in <items><text>. Each option must use a unique value so the exclusion group stays exclusive.`;
+                        const context = `This radio button in ${groupLabel} does not have a non-empty export value under <items> (for example <text> or <integer>). Each option must use a unique value so the exclusion group stays exclusive.`;
                         pushField0007Issue(member.objectId, context, 'Radio button value');
                     }
                 });
@@ -15972,9 +16004,9 @@
                         return;
                     }
                     const valueLabel = sample.rawValue && sample.rawValue.trim()
-                        ? `<items><text>${sample.rawValue}</text></items>`
-                        : 'an empty <items><text>';
-                    const context = `Multiple radio buttons in ${groupLabel} share the same export value (${valueLabel}). Each option must have a distinct <items><text> value.`;
+                        ? `export value "${sample.rawValue}"`
+                        : 'an empty <items> export value';
+                    const context = `Multiple radio buttons in ${groupLabel} share the same ${valueLabel}. Each option must have a distinct <items> export value (for example unique <text> or <integer>).`;
                     bucketMembers.forEach(member => {
                         pushField0007Issue(member.objectId, context, 'Radio button value');
                     });
@@ -22985,6 +23017,38 @@
             return cleanTextContent(text, CLEAN_TEXT_ANALYSIS_OPTIONS);
         }
 
+        /**
+         * XFA <items> may hold the export value in <text>, <integer>, <decimal>, or <float>.
+         * FIELD0007 and related checks need these normalized like legacy <text>-only parsing.
+         */
+        function collectItemsElementExportValues(itemsElement) {
+            if (!itemsElement || typeof itemsElement.getElementsByTagName !== 'function') {
+                return [];
+            }
+            const tagNames = ['text', 'integer', 'decimal', 'float'];
+            const nodes = [];
+            tagNames.forEach(tag => {
+                Array.from(itemsElement.getElementsByTagName(tag) || []).forEach(node => {
+                    if (node) {
+                        nodes.push(node);
+                    }
+                });
+            });
+            if (nodes.length > 1 && typeof nodes[0].compareDocumentPosition === 'function') {
+                nodes.sort((a, b) => {
+                    const pos = a.compareDocumentPosition(b);
+                    if (pos & Node.DOCUMENT_POSITION_FOLLOWING) {
+                        return -1;
+                    }
+                    if (pos & Node.DOCUMENT_POSITION_PRECEDING) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            }
+            return nodes.map(node => cleanTextContent(node && node.textContent ? node.textContent : ''));
+        }
+
         function convertHtmlMarkupToPlainText(content) {
             if (!content) {
                 return '';
@@ -24442,6 +24506,63 @@
             return isWhiteFont;
         }
 
+        /**
+         * CRA line-number style with white/none fill and black text (e.g. LineNumber_FillWhite_Black100):
+         * border/fill with no color or white (255,255,255); font default black or explicit 0,0,0.
+         */
+        function hasWhiteOrEmptyBackgroundBlackFont(element) {
+            if (!element) {
+                return false;
+            }
+            const borderElement = getDirectChild(element, 'border');
+            if (!borderElement) {
+                return false;
+            }
+            const borderFillElement = getDirectChild(borderElement, 'fill');
+            if (!borderFillElement) {
+                return false;
+            }
+            const borderColorElement = getDirectChild(borderFillElement, 'color');
+            let isWhiteOrEmptyBackground = false;
+            if (!borderColorElement) {
+                isWhiteOrEmptyBackground = true;
+            } else {
+                const borderColorValue = getAttributeCaseInsensitive(borderColorElement, 'value') || '';
+                const trimmedBorder = borderColorValue.trim();
+                isWhiteOrEmptyBackground = trimmedBorder === '255,255,255' || trimmedBorder === '';
+            }
+            if (!isWhiteOrEmptyBackground) {
+                return false;
+            }
+
+            let fontElement = getDirectChild(element, 'font');
+            if (!fontElement) {
+                const valueElement = getDirectChild(element, 'value');
+                if (valueElement) {
+                    fontElement = getDirectChild(valueElement, 'font');
+                }
+            }
+            if (!fontElement) {
+                const uiElement = getDirectChild(element, 'ui');
+                if (uiElement) {
+                    fontElement = getDirectChild(uiElement, 'font');
+                }
+            }
+            if (!fontElement) {
+                return false;
+            }
+            const fontFillElement = getDirectChild(fontElement, 'fill');
+            if (!fontFillElement) {
+                return true;
+            }
+            const fontColorElement = getDirectChild(fontFillElement, 'color');
+            if (!fontColorElement) {
+                return true;
+            }
+            const fontColorValue = getAttributeCaseInsensitive(fontColorElement, 'value') || '';
+            return fontColorValue.trim() === '0,0,0';
+        }
+
         function isButtonField(element) {
             if (!element || !element.localName || element.localName.toLowerCase() !== 'field') {
                 return false;
@@ -25860,7 +25981,7 @@
             };
 
             const applyEnglishThousandsSeparatorChecks = () => {
-                // Check if object is a line number (by name suffix OR field with black bg/white font/digits only)
+                // Check if object is a line number (_ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
                     const objectId = options && options.objectId;
                 // Use metadataSnapshot if available (created before metadataRecord is registered), otherwise try getMetadataById
                 let metadata = (options.metadataSnapshot && typeof options.metadataSnapshot === 'object') ? options.metadataSnapshot : (objectId ? getMetadataById(objectId) : null);
@@ -25936,7 +26057,7 @@
             };
 
             const applyFrenchThousandsSeparatorChecks = () => {
-                // Check if object is a line number (by name suffix OR field with black bg/white font/digits only)
+                // Check if object is a line number (_ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
                     const objectId = options && options.objectId;
                 // Use metadataSnapshot if available (created before metadataRecord is registered), otherwise try getMetadataById
                 let metadata = (options.metadataSnapshot && typeof options.metadataSnapshot === 'object') ? options.metadataSnapshot : (objectId ? getMetadataById(objectId) : null);
@@ -27933,6 +28054,7 @@
                 choiceValue: null,
                 choiceValueNormalized: '',
                 hasBlackBackgroundWhiteFont: false,
+                hasWhiteBackgroundBlackFont: false,
                 hasNonEmptyValue: false
             };
 
@@ -28124,8 +28246,7 @@
                     }
                     const itemsElement = getDirectChild(element, 'items');
                     if (itemsElement && typeof itemsElement.getElementsByTagName === 'function') {
-                        const textNodes = Array.from(itemsElement.getElementsByTagName('text') || []);
-                        const itemValues = textNodes.map(node => cleanTextContent(node && node.textContent ? node.textContent : ''));
+                        const itemValues = collectItemsElementExportValues(itemsElement);
                         structuralState.choiceValues = itemValues;
                         const primaryValue = itemValues.length ? itemValues[0] : null;
                         structuralState.choiceValue = primaryValue;
@@ -28349,6 +28470,8 @@
             // Detect black background with white font (for line reference fields)
             const hasBlackBgWhiteFont = hasBlackBackgroundWhiteFont(element);
             structuralState.hasBlackBackgroundWhiteFont = hasBlackBgWhiteFont;
+            const hasWhiteBgBlackFont = hasWhiteOrEmptyBackgroundBlackFont(element);
+            structuralState.hasWhiteBackgroundBlackFont = hasWhiteBgBlackFont;
             
             const craMetadata = extractCraMetadata(element);
             structuralState.craNameRaw = craMetadata && craMetadata.name ? craMetadata.name : null;
