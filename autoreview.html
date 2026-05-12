@@ -23263,6 +23263,17 @@
                         const wrapper = doc.documentElement;
                         return wrapper || null;
                     }
+                    // Designer/XHTML fragments often fail strict XML but parse as HTML (e.g. <br> vs <br/>).
+                    // Without this, getTextAnalysisForContext falls back to plain valueText and loses inline bold.
+                    doc = parser.parseFromString(markup, 'text/html');
+                    if (!isParserErrorDocument(doc) && doc.body) {
+                        const body = doc.body;
+                        const hasNodes = body.childNodes && body.childNodes.length > 0;
+                        const hasChars = body.textContent && body.textContent.replace(/\s+/g, '').length > 0;
+                        if (hasNodes || hasChars) {
+                            return body;
+                        }
+                    }
                     return null;
                 }
                 if (type === 'plain') {
@@ -23328,17 +23339,22 @@
             if (!declarations.has('font-weight')) {
                 return null;
             }
-            const rawValue = String(declarations.get('font-weight')).trim().toLowerCase();
+            let rawValue = String(declarations.get('font-weight')).trim().toLowerCase();
             if (!rawValue) {
                 return null;
             }
-            if (rawValue === 'bold' || rawValue === 'bolder') {
+            rawValue = rawValue.replace(/\s*!important\s*$/i, '').trim();
+            if (!rawValue) {
+                return null;
+            }
+            const primaryToken = (/^\S+/.exec(rawValue) || [rawValue])[0];
+            if (primaryToken === 'bold' || primaryToken === 'bolder') {
                 return 'bold';
             }
-            if (rawValue === 'normal' || rawValue === 'lighter') {
+            if (primaryToken === 'normal' || primaryToken === 'lighter') {
                 return 'normal';
             }
-            const numeric = Number.parseInt(rawValue, 10);
+            const numeric = Number.parseInt(primaryToken, 10);
             if (Number.isFinite(numeric)) {
                 return numeric >= 600 ? 'bold' : 'normal';
             }
@@ -24263,11 +24279,12 @@
                 const segmentStart = Math.max(start, runStart);
                 const segmentEnd = Math.min(end, runEnd);
                 const segmentText = text.slice(segmentStart - runStart, segmentEnd - runStart);
-                if (segmentText.trim()) {
+                const trimmedSegment = segmentText.trim();
+                if (trimmedSegment) {
                     hasContent = true;
-                }
-                if (segmentText && segmentText.length && !run.isBold) {
-                    return false;
+                    if (!run.isBold) {
+                        return false;
+                    }
                 }
                 position = runEnd;
             }
