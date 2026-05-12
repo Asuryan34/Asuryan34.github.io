@@ -26605,14 +26605,29 @@
             return Array.from(texts).join('\n\n');
         }
 
+        function getXmlAttributeLocalName(attrName) {
+            if (!attrName || typeof attrName !== 'string') {
+                return '';
+            }
+            const colon = attrName.indexOf(':');
+            const raw = colon >= 0 ? attrName.slice(colon + 1) : attrName;
+            return raw.toLowerCase();
+        }
+
         function getAttributeCaseInsensitive(element, attributeName) {
             if (!element || !attributeName || !element.attributes) {
                 return '';
             }
-            const target = attributeName.toLowerCase();
+            const targetRaw = attributeName.toLowerCase();
+            const targetLocal = getXmlAttributeLocalName(attributeName);
             for (let index = 0; index < element.attributes.length; index += 1) {
                 const attr = element.attributes[index];
-                if (attr && attr.name && attr.name.toLowerCase() === target) {
+                if (!attr || !attr.name) {
+                    continue;
+                }
+                const nameLower = attr.name.toLowerCase();
+                const attrLocal = getXmlAttributeLocalName(attr.name);
+                if (nameLower === targetRaw || attrLocal === targetRaw || attrLocal === targetLocal) {
                     return attr.value || '';
                 }
             }
@@ -26623,8 +26638,16 @@
             if (!element || !attributeName || !element.attributes) {
                 return false;
             }
-            const target = attributeName.toLowerCase();
-            return Array.from(element.attributes).some(attr => attr && attr.name && attr.name.toLowerCase() === target);
+            const targetRaw = attributeName.toLowerCase();
+            const targetLocal = getXmlAttributeLocalName(attributeName);
+            return Array.from(element.attributes).some(attr => {
+                if (!attr || !attr.name) {
+                    return false;
+                }
+                const nameLower = attr.name.toLowerCase();
+                const attrLocal = getXmlAttributeLocalName(attr.name);
+                return nameLower === targetRaw || attrLocal === targetRaw || attrLocal === targetLocal;
+            });
         }
 
         function parseCssStyles(styleString) {
