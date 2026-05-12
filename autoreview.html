@@ -9387,10 +9387,13 @@
         }
 
         function isFirstListItemContentSibling(element) {
-            if (!element || !element.parentElement) {
+            if (!element || !isElementNode(element)) {
                 return false;
             }
-            const parent = element.parentElement;
+            const parent = element.parentElement || element.parentNode;
+            if (!parent || !isElementNode(parent)) {
+                return false;
+            }
             const kids = parent.children || [];
             for (let index = 0; index < kids.length; index += 1) {
                 const child = kids[index];
@@ -9407,11 +9410,13 @@
         }
 
         /** True when • / – / ▪ acts as a list marker: list-item subform/subformset plus first content sibling in that container. */
-        function objectQualifiesAsListItemLoneMarker(objectId) {
+        function objectQualifiesAsListItemLoneMarker(objectId, domElementHint) {
             if (!objectId) {
                 return false;
             }
-            const el = getElementByObjectId(objectId);
+            const el = (domElementHint && isElementNode(domElementHint))
+                ? domElementHint
+                : getElementByObjectId(objectId);
             const hasLiContext = metadataHasListItemAncestor(objectId) || domAncestorHasListItemAssistRole(el);
             if (!hasLiContext) {
                 return false;
@@ -11497,6 +11502,7 @@
                     : [];
                 const supplemental = applySupplementalSrtChecks({
                     objectId,
+                    domElement: getElementByObjectId(objectId),
                     localName: metadata.localName,
                     typeLabel: metadata.type,
                     name: metadata.name,
@@ -13361,6 +13367,10 @@
                 : '';
             const formLanguageKey = formLanguage === 'french' ? 'french' : 'english';
 
+            const domElementHint = settings.domElement && isElementNode(settings.domElement)
+                ? settings.domElement
+                : null;
+
             if (requiresSrt && !hasMeaningfulSrt) {
                 const isReadOnlyWithDefault = isField && !isButton
                     && structuralInfo
@@ -13387,7 +13397,8 @@
 
             const listMarkerKind = getLoneListMarkerGlyphKind(contentText);
             const isLoneListMarkerStaticText = isStaticText && listMarkerKind;
-            if (isLoneListMarkerStaticText && settings.objectId && objectQualifiesAsListItemLoneMarker(settings.objectId)) {
+            if (isLoneListMarkerStaticText && settings.objectId
+                && objectQualifiesAsListItemLoneMarker(settings.objectId, domElementHint)) {
                 const expectedSrtExact = listMarkerKind === 'bullet'
                     ? (formLanguageKey === 'french' ? 'Puce' : 'Bullet')
                     : (formLanguageKey === 'french' ? 'Tiret' : 'Dash');
@@ -13414,7 +13425,7 @@
             const inListItemLoneMarkerCase = Boolean(
                 listMarkerKind
                 && settings.objectId
-                && objectQualifiesAsListItemLoneMarker(settings.objectId)
+                && objectQualifiesAsListItemLoneMarker(settings.objectId, domElementHint)
             );
             if (isStaticText && isSingleSpecialCharacter && settings.objectId && !inListItemLoneMarkerCase) {
                 const standaloneRule = SPECIAL_CHARACTER_STANDALONE_SRT_RULES[collapsedContent];
@@ -28951,6 +28962,7 @@
             }
             const supplementalSrt = applySupplementalSrtChecks({
                 objectId,
+                domElement: element,
                 localName,
                 typeLabel,
                 name: displayName,
