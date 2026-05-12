@@ -9336,7 +9336,13 @@
                 if (!parentMd) {
                     break;
                 }
-                const roles = Array.isArray(parentMd.assistRoles) ? parentMd.assistRoles : [];
+                const roles = [];
+                if (Array.isArray(parentMd.assistRoles)) {
+                    roles.push(...parentMd.assistRoles);
+                }
+                if (parentMd.advanced && Array.isArray(parentMd.advanced.assistRoles)) {
+                    roles.push(...parentMd.advanced.assistRoles);
+                }
                 const normalized = roles
                     .map(role => (role === undefined || role === null ? '' : String(role)))
                     .map(role => role.replace(/[_\s-]+/g, ' ').trim().toLowerCase())
@@ -9348,6 +9354,69 @@
                 parentId = parentMd.parentObjectId || null;
             }
             return false;
+        }
+
+        const LIST_ITEM_PARENT_CONTENT_LOCAL_NAMES = new Set(['draw', 'field', 'exclgroup', 'subform', 'subformset']);
+
+        function assistsIncludeListItemRole(tokens) {
+            if (!Array.isArray(tokens) || !tokens.length) {
+                return false;
+            }
+            return tokens.some(token => {
+                const norm = String(token === undefined || token === null ? '' : token)
+                    .replace(/[_\s-]+/g, ' ')
+                    .trim()
+                    .toLowerCase();
+                return LIST_ITEM_ROLE_TOKENS.has(norm);
+            });
+        }
+
+        function domAncestorHasListItemAssistRole(element) {
+            let current = element ? (element.parentElement || element.parentNode) : null;
+            while (current && isElementNode(current)) {
+                const ln = current.localName ? current.localName.toLowerCase() : '';
+                if (ln === 'subform' || ln === 'subformset') {
+                    const tokens = collectDirectAssistRoleTokens(current);
+                    if (assistsIncludeListItemRole(tokens)) {
+                        return true;
+                    }
+                }
+                current = current.parentElement || current.parentNode;
+            }
+            return false;
+        }
+
+        function isFirstListItemContentSibling(element) {
+            if (!element || !element.parentElement) {
+                return false;
+            }
+            const parent = element.parentElement;
+            const kids = parent.children || [];
+            for (let index = 0; index < kids.length; index += 1) {
+                const child = kids[index];
+                if (!child || !child.localName) {
+                    continue;
+                }
+                const ln = child.localName.toLowerCase();
+                if (!LIST_ITEM_PARENT_CONTENT_LOCAL_NAMES.has(ln)) {
+                    continue;
+                }
+                return child === element;
+            }
+            return false;
+        }
+
+        /** True when • / – / ▪ acts as a list marker: list-item subform/subformset plus first content sibling in that container. */
+        function objectQualifiesAsListItemLoneMarker(objectId) {
+            if (!objectId) {
+                return false;
+            }
+            const el = getElementByObjectId(objectId);
+            const hasLiContext = metadataHasListItemAncestor(objectId) || domAncestorHasListItemAssistRole(el);
+            if (!hasLiContext) {
+                return false;
+            }
+            return isFirstListItemContentSibling(el);
         }
 
         function getNormalizedAssistRoles(metadata) {
@@ -13318,7 +13387,7 @@
 
             const listMarkerKind = getLoneListMarkerGlyphKind(contentText);
             const isLoneListMarkerStaticText = isStaticText && listMarkerKind;
-            if (isLoneListMarkerStaticText && settings.objectId && metadataHasListItemAncestor(settings.objectId)) {
+            if (isLoneListMarkerStaticText && settings.objectId && objectQualifiesAsListItemLoneMarker(settings.objectId)) {
                 const expectedSrtExact = listMarkerKind === 'bullet'
                     ? (formLanguageKey === 'french' ? 'Puce' : 'Bullet')
                     : (formLanguageKey === 'french' ? 'Tiret' : 'Dash');
@@ -13345,7 +13414,7 @@
             const inListItemLoneMarkerCase = Boolean(
                 listMarkerKind
                 && settings.objectId
-                && metadataHasListItemAncestor(settings.objectId)
+                && objectQualifiesAsListItemLoneMarker(settings.objectId)
             );
             if (isStaticText && isSingleSpecialCharacter && settings.objectId && !inListItemLoneMarkerCase) {
                 const standaloneRule = SPECIAL_CHARACTER_STANDALONE_SRT_RULES[collapsedContent];
