@@ -9356,8 +9356,6 @@
             return false;
         }
 
-        const LIST_ITEM_PARENT_CONTENT_LOCAL_NAMES = new Set(['draw', 'field', 'exclgroup', 'subform', 'subformset']);
-
         function assistsIncludeListItemRole(tokens) {
             if (!Array.isArray(tokens) || !tokens.length) {
                 return false;
@@ -9386,30 +9384,7 @@
             return false;
         }
 
-        function isFirstListItemContentSibling(element) {
-            if (!element || !isElementNode(element)) {
-                return false;
-            }
-            const parent = element.parentElement || element.parentNode;
-            if (!parent || !isElementNode(parent)) {
-                return false;
-            }
-            const kids = parent.children || [];
-            for (let index = 0; index < kids.length; index += 1) {
-                const child = kids[index];
-                if (!child || !child.localName) {
-                    continue;
-                }
-                const ln = child.localName.toLowerCase();
-                if (!LIST_ITEM_PARENT_CONTENT_LOCAL_NAMES.has(ln)) {
-                    continue;
-                }
-                return child === element;
-            }
-            return false;
-        }
-
-        /** True when • / – / ▪ acts as a list marker: list-item subform/subformset plus first content sibling in that container. */
+        /** True when • / – / ▪ is under a subform (or subformset) whose direct children include <assist role="LI"/> (etc.). */
         function objectQualifiesAsListItemLoneMarker(objectId, domElementHint) {
             if (!objectId) {
                 return false;
@@ -9417,11 +9392,7 @@
             const el = (domElementHint && isElementNode(domElementHint))
                 ? domElementHint
                 : getElementByObjectId(objectId);
-            const hasLiContext = metadataHasListItemAncestor(objectId) || domAncestorHasListItemAssistRole(el);
-            if (!hasLiContext) {
-                return false;
-            }
-            return isFirstListItemContentSibling(el);
+            return metadataHasListItemAncestor(objectId) || domAncestorHasListItemAssistRole(el);
         }
 
         function getNormalizedAssistRoles(metadata) {
@@ -21566,17 +21537,17 @@
         ]);
 
         function collectDirectAssistRoleTokens(element) {
-            if (!element) {
+            if (!element || typeof element.getElementsByTagName !== 'function') {
                 return [];
             }
             const roles = [];
-            const children = getChildElements(element);
-            for (let index = 0; index < children.length; index += 1) {
-                const child = children[index];
-                if (!child || !child.localName || child.localName.toLowerCase() !== 'assist') {
+            const descendants = element.getElementsByTagName('*');
+            for (let index = 0; index < descendants.length; index += 1) {
+                const node = descendants[index];
+                if (!node || !node.localName || node.localName.toLowerCase() !== 'assist') {
                     continue;
                 }
-                const roleAttr = getAttributeCaseInsensitive(child, 'role');
+                const roleAttr = getAttributeCaseInsensitive(node, 'role');
                 if (!roleAttr) {
                     continue;
                 }
