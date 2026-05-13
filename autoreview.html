@@ -8011,10 +8011,14 @@
                 if (!trimmed) {
                     return;
                 }
-                if (trimmed === LANGUAGE_AVAILABILITY_DISPLAY_TEXT.english) {
+                // Same phrase-level detection as LANG017–019 format checks (not exact string equality),
+                // so a missing period/parenthesis does not incorrectly raise LANG020/LANG021.
+                const normalized = normalizeLanguageComparisonValue(trimmed);
+                const detected = detectLanguageAvailabilityLanguage(normalized);
+                if (detected === 'english') {
                     englishPresent = true;
                 }
-                if (trimmed === LANGUAGE_AVAILABILITY_DISPLAY_TEXT.french) {
+                if (detected === 'french') {
                     frenchPresent = true;
                 }
             });
