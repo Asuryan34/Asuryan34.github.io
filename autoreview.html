@@ -447,6 +447,45 @@
             }
         }
     </script>
+    <!--
+      ---------------------------------------------------------------------------
+      Image → SRT (SRT017): edit window.AUTOREVIEW_USER_IMAGE_SRT_RULES below.
+      Each rule matches when the image file hint contains a substring from
+      embeddedHrefContains (from <desc><text name="embeddedHref">… and similar).
+      Same shape as optional per-section "imageEmbeddedHrefSrtRules" in section JSON.
+      If the array is missing or empty, built-in defaults are used (see main script).
+      ---------------------------------------------------------------------------
+    -->
+    <script>
+        window.AUTOREVIEW_USER_IMAGE_SRT_RULES = [
+            {
+                id: 'desc-embedded-cra-fip',
+                embeddedHrefContains: ['CRA-FIP', 'CRA_FIP'],
+                expectedText: {
+                    english: 'Canada Revenue Agency Signature Logo',
+                    french: "Logo de la signature de l'Agence du revenu du Canada"
+                }
+            },
+            {
+                id: 'desc-embedded-canada-wordmark',
+                embeddedHrefContains: ['Canada_Wordmark', 'Canada-Wordmark', 'Canada Wordmark'],
+                expectedText: {
+                    english: '"Canada" Wordmark Logo',
+                    french: 'Logo du mot-symbole « Canada »'
+                }
+            }
+            // Add more rules here, e.g.:
+            // {
+            //     id: 'my-asset',
+            //     embeddedHrefContains: ['MyFilePrefix', 'MY-PNG'],
+            //     embeddedHrefCaseInsensitive: true,
+            //     expectedText: {
+            //         english: 'Required speak text (English)',
+            //         french: 'Texte requis (français)'
+            //     }
+            // }
+        ];
+    </script>
     <script id="commonWordsDataset" type="application/json">
         {
             "english": [
@@ -2677,21 +2716,21 @@
                 "code": "SRT018",
                 "severityLabel": "Notice",
                 "severity": 1,
-                "meaning": "The auto-review detected a hyphen (-) or en dash (\u2013) in this SRT that may not follow CRA typography (same rules as body text: spaced en dash for headings like \u201cPart X – …\u201d, hyphen without spaces for compounds).",
-                "suggestedFix": "Confirm each remaining highlight in the SRT using CRA hyphen/en dash rules. Obvious spaced en dashes, en-dash number ranges, closed compounds, and leading minus signs are not highlighted.",
+                "meaning": "The auto-review detected a raw mathematical symbol in this SRT (for example ASCII hyphen/minus, minus sign, plus, equals, multiplication, or division). Screen readers may read these as arithmetic; spell the operation in words instead (for example \u201cminus\u201d, \u201cplus\u201d, \u201ctimes\u201d, \u201cdivided by\u201d, \u201cequals\u201d).",
+                "suggestedFix": "Replace highlighted symbols with spelled-out wording appropriate to the phrase (English or French). Use words for minus/plus between quantities, not the Unicode or ASCII operator glyphs.",
                 "additionalDetail": "",
-                "shortSummary": "Review remaining hyphens and en dashes in this SRT.",
-                "name": "SRT018 \u2013 Review hyphens and en dashes in this SRT (CRA patterns)."
+                "shortSummary": "Spell out mathematical operations in SRT instead of using raw symbols.",
+                "name": "SRT018 \u2013 Spell out mathematical signs in SRT (do not use raw \u2013, +, \u00D7, \u00F7, =, etc.)."
             },
             "SRT019": {
                 "code": "SRT019",
                 "severityLabel": "Warning",
                 "severity": 2,
-                "meaning": "The auto-review detected a written-out date in this SRT (English or French month name), with or without a year, that uses a normal space instead of an unbreakable space within the date.",
-                "suggestedFix": "Use non-breaking spaces (U+00A0) for every space inside the date in the SRT. U+202F is also accepted.",
+                "meaning": "The auto-review detected a non-breaking space (U+00A0 or narrow no-break space U+202F) in this SRT. Screen reader text should use normal spaces only; do not use non-breaking spaces anywhere in Custom Screen Reader Text.",
+                "suggestedFix": "Replace every non-breaking space with a regular space (U+0020). This differs from visible body text/caption typography for written-out dates.",
                 "additionalDetail": "",
-                "shortSummary": "Written-out dates in this SRT must use non-breaking spaces.",
-                "name": "SRT019 \u2013 Written-out dates in SRT require non-breaking spaces."
+                "shortSummary": "Do not use non-breaking spaces in SRT.",
+                "name": "SRT019 \u2013 Non-breaking spaces are not permitted in SRT."
             },
             "SRT020": {
                 "code": "SRT020",
@@ -7264,8 +7303,8 @@
             SRT015: 'Remove blank SRT values',
             SRT016: 'Add SRT to images',
             SRT017: 'Use required SRT for standard images',
-            SRT018: 'Review hyphens vs en dashes (SRT)',
-            SRT019: 'Use NBSP inside written-out dates (SRT)',
+            SRT018: 'Spell out math operators in SRT (no raw symbols)',
+            SRT019: 'No non-breaking spaces in SRT',
             SRT020: 'Special characters: SRT per reference (or none)',
             'TXT-E001': 'No spaces before colons',
             'TXT-E002': 'No spaces before percent signs',
@@ -8046,8 +8085,6 @@
             TXT007: 'SRT007',
             TXT008: 'SRT008',
             TXT009: 'SRT009',
-            TXT010: 'SRT018',
-            TXT011: 'SRT019',
             'TXT-E001': 'SRT-E001',
             'TXT-E002': 'SRT-E002',
             'TXT-E003': 'SRT-E003',
@@ -10624,12 +10661,31 @@
                         return;
                     }
                     const combinedLower = joinScriptTextsLower(javascriptScripts);
+                    const structuralLower = getClearDataClickStructuralTextLower(javascriptScripts);
+                    const ifGuardMissing = !structuralLower.includes(CLEAR_DATA_CLICK_IF_GUARD_SIGNATURE_LOWER);
                     const missingPatterns = CLEAR_DATA_REQUIRED_PATTERNS
                         .filter(pattern => pattern && pattern.search && !combinedLower.includes(pattern.search));
+                    const detailParts = [];
+                    if (ifGuardMissing) {
+                        detailParts.push(
+                            'the Clear Data guard must wrap the messageBox(...) call in '
+                            + '`if(xfa.host.messageBox(CoreMessages.getMessage("M00004"), '
+                            + 'CoreMessages.getTitle("M00004"),2,2)==4)` '
+                            + '(comments and line breaks may appear outside the folded text; parentheses and comparing to `==4` must match the CRA pattern)'
+                        );
+                    }
                     if (missingPatterns.length) {
                         const labels = missingPatterns.map(pattern => pattern.label).join(', ');
+                        detailParts.push(`missing required calls or fragments inside the script: ${labels}`);
+                    }
+                    if (detailParts.length) {
                         const preview = buildScriptPreviewList(javascriptScripts);
-                        issues.push(createIssueForObject(definition, objectId, metadata, `click script is missing required calls: ${labels}.${preview ? ` Found: ${preview}.` : ''}`));
+                        issues.push(createIssueForObject(
+                            definition,
+                            objectId,
+                            metadata,
+                            `${detailParts.join(' ')}.${preview ? ` Found: ${preview}.` : ''}`
+                        ));
                     }
                 });
                 if (issues.length) {
@@ -13035,30 +13091,37 @@
             }
         ];
 
-        const IMAGE_FILE_SRT_EXPECTATIONS = [
-            // Add entries here to map specific image file names to their required screen reader text.
-            // Example structure:
-            // {
-            //     id: 'example-image',
-            //     fileNames: ['123.png', '234.png'],
-            //     expectedText: {
-            //         english: 'Example SRT',
-            //         french: 'Exemple de SRT'
-            //     }
-            // }
+        /*
+         * Embedded-href substring rules: defaults are in the HTML head right after
+         * &lt;script id="sectionSettingsData"&gt; — window.AUTOREVIEW_USER_IMAGE_SRT_RULES.
+         * Add section-specific rows via section JSON imageEmbeddedHrefSrtRules — getEffectiveImageSrtRequirements().
+         */
+        const IMAGE_EMBEDDED_HREF_SRT_BUILTIN_FALLBACK = [
             {
-                id: 'cra-signature-9pt-rgb-1200',
-                fileNames: [
-                    'CRA-FIP-9pt-RGB-1200-e.png'
-                ],
+                id: 'desc-embedded-cra-fip',
+                embeddedHrefContains: ['CRA-FIP', 'CRA_FIP'],
                 expectedText: {
                     english: 'Canada Revenue Agency Signature Logo',
                     french: "Logo de la signature de l'Agence du revenu du Canada"
                 }
+            },
+            {
+                id: 'desc-embedded-canada-wordmark',
+                embeddedHrefContains: ['Canada_Wordmark', 'Canada-Wordmark', 'Canada Wordmark'],
+                expectedText: {
+                    english: '"Canada" Wordmark Logo',
+                    french: 'Logo du mot-symbole « Canada »'
+                }
             }
         ];
 
-        const IMAGE_SRT_REQUIREMENTS = IMAGE_SRT_REQUIREMENTS_BASE.concat(IMAGE_FILE_SRT_EXPECTATIONS);
+        const IMAGE_EMBEDDED_HREF_SRT_DEFAULTS = (typeof window !== 'undefined'
+            && Array.isArray(window.AUTOREVIEW_USER_IMAGE_SRT_RULES)
+            && window.AUTOREVIEW_USER_IMAGE_SRT_RULES.length)
+            ? window.AUTOREVIEW_USER_IMAGE_SRT_RULES.slice()
+            : IMAGE_EMBEDDED_HREF_SRT_BUILTIN_FALLBACK.slice();
+
+        const IMAGE_SRT_REQUIREMENTS_STATIC = IMAGE_SRT_REQUIREMENTS_BASE.concat(IMAGE_EMBEDDED_HREF_SRT_DEFAULTS);
 
         function normalizeSrtValueForComparison(value) {
             if (value === null || value === undefined) {
@@ -13276,6 +13339,41 @@
                 }
             }
 
+            const substringNeedles = [];
+            const pushSubstring = needle => {
+                if (needle === null || needle === undefined) {
+                    return;
+                }
+                const trimmed = String(needle).trim();
+                if (trimmed) {
+                    substringNeedles.push(trimmed);
+                }
+            };
+            if (typeof requirement.embeddedHrefContains === 'string') {
+                pushSubstring(requirement.embeddedHrefContains);
+            } else if (Array.isArray(requirement.embeddedHrefContains)) {
+                requirement.embeddedHrefContains.forEach(pushSubstring);
+            }
+            const caseInsensitive = requirement.embeddedHrefCaseInsensitive !== false;
+            if (substringNeedles.length && normalizedFileCandidates.length) {
+                for (let fileIndex = 0; fileIndex < normalizedFileCandidates.length; fileIndex += 1) {
+                    const candidate = normalizedFileCandidates[fileIndex];
+                    let haystack = candidate.raw || '';
+                    if (caseInsensitive) {
+                        haystack = haystack.toLowerCase();
+                    }
+                    for (let nIndex = 0; nIndex < substringNeedles.length; nIndex += 1) {
+                        let needle = substringNeedles[nIndex];
+                        if (caseInsensitive) {
+                            needle = needle.toLowerCase();
+                        }
+                        if (needle && haystack.includes(needle)) {
+                            return { type: 'file', value: candidate.raw };
+                        }
+                    }
+                }
+            }
+
             return null;
         }
 
@@ -13453,7 +13551,8 @@
                 const mismatchMessages = [];
                 let mismatchHighlighted = false;
 
-                IMAGE_SRT_REQUIREMENTS.forEach(requirement => {
+                const imageSrtRequirements = getEffectiveImageSrtRequirements();
+                imageSrtRequirements.forEach(requirement => {
                     const matchDetails = imageRequirementMatches(requirement, {
                         names: nameCandidates,
                         fileNames: fileNameCandidates
@@ -13784,6 +13883,12 @@
             }
             const geometry = metadata && metadata.geometry ? metadata.geometry : null;
             if (!geometry || !geometry.minHeight) {
+                return [];
+            }
+            if (structural && (structural.isWithinTableLayout || structural.isWithinTableAssistRole)) {
+                return [];
+            }
+            if (structural && isDrawNamedLikeTableCellContent(metadata, structural)) {
                 return [];
             }
             if (structural && structural.parentHasMinHeight && structural.parentLocalName === 'subform') {
@@ -15828,7 +15933,11 @@
                 .replace(/\s+/g, ' ')
                 .trim();
             const candidateText = normalized.toUpperCase();
-            const pattern = /^(?<code>[A-Z][A-Z0-9]*(?:[ -][A-Z0-9]+)*)\s+(?<lang>[EF])(?:\s*\((?<yearContent>[^)]*)\))?$/;
+            /*
+             * Product code: letter-led (e.g. T5013 SCH 6) or digit-led with hyphen+letters (e.g. 5006-TG, 5010-C).
+             * Optionally more space-/hyphen-separated alphanumeric chunks (schedule lines, etc.).
+             */
+            const pattern = /^(?<code>(?:\d+[A-Z0-9]*(?:-[A-Z]+)*|[A-Z][A-Z0-9]*)(?:[ -][A-Z0-9]+)*)\s+(?<lang>[EF])(?:\s*\((?<yearContent>[^)]*)\))?$/;
             const match = candidateText.match(pattern);
             if (!match || !match.groups) {
                 return null;
@@ -15838,7 +15947,7 @@
                 return null;
             }
             const compactCode = codePortion.replace(/[\s-]+/g, '');
-            if (!/^[A-Z][A-Z0-9]*$/.test(compactCode) || !/\d/.test(compactCode)) {
+            if (!/^[A-Z0-9]+$/.test(compactCode) || !/[A-Z]/.test(compactCode) || !/\d/.test(compactCode)) {
                 return null;
             }
             const rawYearText = typeof match.groups.yearContent === 'string'
@@ -17461,6 +17570,86 @@
                 return null;
             }
             return sectionSettings[settingsKey] || null;
+        }
+
+        /*
+         * Optional per-section overrides in section JSON (same object as gridSizePt, etc.):
+         * "imageEmbeddedHrefSrtRules": [
+         *   {
+         *     "id": "optional-id",
+         *     "contains": "SUBSTRING_IN_EMBEDDED_HREF",
+         *     "expectedText": { "english": "...", "french": "..." }
+         *   },
+         *   {
+         *     "containsAny": ["PartA", "PartB"],
+         *     "caseInsensitive": true,
+         *     "expectedText": { "english": "...", "french": "..." }
+         *   }
+         * ]
+         * Also accepts "embeddedHrefContains" (string or string[]) or "descContains".
+         */
+        function normalizeSectionImageEmbeddedHrefSrtRule(rule, index) {
+            if (!rule || typeof rule !== 'object') {
+                return null;
+            }
+            const expectedText = rule.expectedText;
+            if (!expectedText || typeof expectedText !== 'object') {
+                return null;
+            }
+            const english = typeof expectedText.english === 'string' ? expectedText.english.trim() : '';
+            const french = typeof expectedText.french === 'string' ? expectedText.french.trim() : '';
+            if (!english && !french) {
+                return null;
+            }
+            const needles = [];
+            const pushSubstring = needle => {
+                if (needle === null || needle === undefined) {
+                    return;
+                }
+                const trimmed = String(needle).trim();
+                if (trimmed) {
+                    needles.push(trimmed);
+                }
+            };
+            ['contains', 'embeddedHrefContains', 'descContains'].forEach(key => {
+                const value = rule[key];
+                if (typeof value === 'string') {
+                    pushSubstring(value);
+                } else if (Array.isArray(value)) {
+                    value.forEach(pushSubstring);
+                }
+            });
+            if (Array.isArray(rule.containsAny)) {
+                rule.containsAny.forEach(pushSubstring);
+            }
+            if (!needles.length) {
+                return null;
+            }
+            const idRaw = typeof rule.id === 'string' ? rule.id.trim() : '';
+            return {
+                id: idRaw || `section-image-srt-${index + 1}`,
+                embeddedHrefContains: Array.from(new Set(needles)),
+                embeddedHrefCaseInsensitive: rule.caseInsensitive !== false,
+                expectedText: {
+                    english: english || french,
+                    french: french || english
+                }
+            };
+        }
+
+        function getEffectiveImageSrtRequirements() {
+            const list = IMAGE_SRT_REQUIREMENTS_STATIC.slice();
+            const cfg = getCurrentSectionConfig();
+            if (!cfg || !Array.isArray(cfg.imageEmbeddedHrefSrtRules)) {
+                return list;
+            }
+            cfg.imageEmbeddedHrefSrtRules.forEach((rule, idx) => {
+                const normalized = normalizeSectionImageEmbeddedHrefSrtRule(rule, idx);
+                if (normalized) {
+                    list.push(normalized);
+                }
+            });
+            return list;
         }
 
         function getCurrentGridSizeInPoints() {
@@ -20423,15 +20612,31 @@
                     return;
                 }
                 const isHeaderRow = roles.includes('th');
-                const cells = getChildEntriesFromLookup(childLookup, objectId);
-                cells.forEach(([childId, childMetadata]) => {
-                    if (!childMetadata) {
+                const rowChildren = getChildEntriesFromLookup(childLookup, objectId);
+                const namingTargets = [];
+                rowChildren.forEach(([cellChildId, cellChildMetadata]) => {
+                    if (!cellChildMetadata) {
                         return;
                     }
-                    const localName = childMetadata.localName ? childMetadata.localName.toLowerCase() : '';
-                    if (localName !== 'subform') {
-                        return;
+                    const cellChildLocal = cellChildMetadata.localName
+                        ? cellChildMetadata.localName.toLowerCase()
+                        : '';
+                    if (cellChildLocal === 'subform') {
+                        namingTargets.push([cellChildId, cellChildMetadata]);
+                        getChildEntriesFromLookup(childLookup, cellChildId).forEach(([nestedId, nestedMeta]) => {
+                            if (!nestedMeta) {
+                                return;
+                            }
+                            const nestedLocal = nestedMeta.localName ? nestedMeta.localName.toLowerCase() : '';
+                            if (nestedLocal === 'draw' || nestedLocal === 'field') {
+                                namingTargets.push([nestedId, nestedMeta]);
+                            }
+                        });
+                    } else if (cellChildLocal === 'draw' || cellChildLocal === 'field') {
+                        namingTargets.push([cellChildId, cellChildMetadata]);
                     }
+                });
+                namingTargets.forEach(([childId, childMetadata]) => {
                     const normalizedName = normalizeTableCellName(childMetadata);
                     if (!normalizedName) {
                         return;
@@ -20589,6 +20794,23 @@
                 }
             }
             return '(unnamed)';
+        }
+
+        /**
+         * CRA simple-table objects are often named Cell/Header (+ digits) or French equivalents.
+         * Designer may place minH on these draws for row sizing without enabling "Expand to fit height".
+         */
+        function isDrawNamedLikeTableCellContent(metadata, structural) {
+            const raw = (metadata && typeof metadata.name === 'string' && metadata.name.trim())
+                ? metadata.name.trim()
+                : (structural && typeof structural.rawNameAttr === 'string' && structural.rawNameAttr.trim()
+                    ? structural.rawNameAttr.trim()
+                    : '');
+            if (!raw) {
+                return false;
+            }
+            const normalized = normalizeTableCellName({ name: raw, structural: { rawNameAttr: raw } });
+            return normalized === 'CELL' || normalized === 'HEADER' || normalized === 'CELLULE' || normalized === 'ENTETE';
         }
 
         function determineFootnoteLanguageExpectation(metadata) {
@@ -22850,6 +23072,9 @@
                 const verticalScaleRaw = getAttributeCaseInsensitive(fontNode, 'fontVerticalScale');
                 const horizontalScale = parseFontScaleValue(horizontalScaleRaw);
                 const verticalScale = parseFontScaleValue(verticalScaleRaw);
+                const letterSpacingAttr = getAttributeCaseInsensitive(fontNode, 'letterSpacing')
+                    || getAttributeCaseInsensitive(fontNode, 'letter-spacing');
+                const letterSpacingRawDetail = normalizeLetterSpacingValue(letterSpacingAttr);
                 const sizeAttr = getAttributeCaseInsensitive(fontNode, 'size');
                 const normalizedSizeAttr = typeof sizeAttr === 'string' ? sizeAttr.trim() : '';
                 const normalizedSizeDisplay = normalizedSizeAttr
@@ -22874,6 +23099,7 @@
                     horizontalScaleRaw: normalizeScaleDisplayValue(horizontalScaleRaw),
                     verticalScale,
                     verticalScaleRaw: normalizeScaleDisplayValue(verticalScaleRaw),
+                    letterSpacingRaw: letterSpacingRawDetail,
                     fontSizeRaw: normalizedSizeAttr || null,
                     fontSize: fontSizeNumeric
                 });
@@ -22899,6 +23125,7 @@
                         horizontalScaleRaw: null,
                         verticalScale: null,
                         verticalScaleRaw: null,
+                        letterSpacingRaw: null,
                         fontSizeRaw: entry.raw,
                         fontSize: Number.isFinite(entry.value) ? entry.value : null
                     });
@@ -22922,6 +23149,17 @@
             const minFontSizeValue = fontSizeValues.length ? Math.min(...fontSizeValues) : null;
             const maxFontSizeValue = fontSizeValues.length ? Math.max(...fontSizeValues) : null;
 
+            const letterSpacingRawValues = [];
+            const letterSpacingSeenForFonts = new Set();
+            fontDetails.forEach(detail => {
+                if (!detail || !detail.letterSpacingRaw || letterSpacingSeenForFonts.has(detail.letterSpacingRaw)) {
+                    return;
+                }
+                letterSpacingSeenForFonts.add(detail.letterSpacingRaw);
+                letterSpacingRawValues.push(detail.letterSpacingRaw);
+            });
+            const hasLetterSpacing = letterSpacingRawValues.length > 0;
+
             if (!primaryFont) {
                 const fallbackDisplaySize = hasFontSize
                     ? fontSizeRawValues[0]
@@ -22938,8 +23176,8 @@
                     hasItalic: false,
                     allItalic: false,
                     hasNonItalic: false,
-                    hasLetterSpacing: false,
-                    letterSpacingRawValues: [],
+                    hasLetterSpacing,
+                    letterSpacingRawValues,
                     hasHorizontalScaling: false,
                     minHorizontalScale: null,
                     horizontalScaleValues: [],
@@ -23011,8 +23249,8 @@
                 hasItalic,
                 allItalic: hasItalic && !hasNonItalic && fontDetails.length > 0,
                 hasNonItalic,
-                hasLetterSpacing: false,
-                letterSpacingRawValues: [],
+                hasLetterSpacing,
+                letterSpacingRawValues,
                 hasHorizontalScaling,
                 minHorizontalScale,
                 horizontalScaleValues,
@@ -23052,9 +23290,22 @@
             return false;
         }
 
+        /**
+         * True when the raw string contains a line boundary (not only XML pretty-print outside value).
+         * Covers CR/LF from XFA or XMP (`&#xD;`), Unicode line/paragraph separators, NEL, VT/FF.
+         */
+        function textContainsStructuralLineBreak(rawText) {
+            if (!rawText || typeof rawText !== 'string') {
+                return false;
+            }
+            const normalized = rawText.replace(/\u00a0/g, ' ');
+            return /[\r\n\u2028\u2029\u0085\f\v]/.test(normalized);
+        }
+
         const CLEAN_TEXT_ANALYSIS_OPTIONS = {
             preserveMultipleSpaces: true,
-            preserveLeadingTrailingSpaces: true
+            preserveLeadingTrailingSpaces: true,
+            preserveNonBreakingSpaces: true
         };
 
         function cleanTextContent(text, options = {}) {
@@ -23063,8 +23314,13 @@
             }
             const preserveMultipleSpaces = Boolean(options && options.preserveMultipleSpaces);
             const preserveLeadingTrailingSpaces = Boolean(options && options.preserveLeadingTrailingSpaces);
-            let cleaned = text.replace(/\u00a0/g, ' ');
+            const preserveNonBreakingSpaces = Boolean(options && options.preserveNonBreakingSpaces);
+            let cleaned = text;
+            if (!preserveNonBreakingSpaces) {
+                cleaned = cleaned.replace(/\u00a0/g, ' ');
+            }
             cleaned = cleaned.replace(/\r\n/g, '\n');
+            cleaned = cleaned.replace(/\r/g, '\n');
             cleaned = cleaned.replace(/[ \t]+\n/g, '\n');
             cleaned = cleaned.replace(/\n[ \t]+/g, '\n');
             if (!preserveMultipleSpaces) {
@@ -26255,39 +26511,44 @@
             });
             applyRegexMatches(/([ \t]+)([\)\]\}])/g, 'TXT005', match => [match.index, match.index + match[1].length]);
             applyRegexMatches(/[“”‘’]/g, 'TXT006');
-            applyRegexMatches(/([\u00A0 ]*)([A-Za-z]\d[A-Za-z][\u00A0 ]\d[A-Za-z]\d)/gi, 'TXT007', match => {
-                const spaces = match[1] || '';
-                if (spaces.length === 2) {
-                    return null;
-                }
-                const start = match.index;
-                if (spaces.length > 2) {
-                    const highlightStart = start + 2;
-                    const highlightEnd = Math.min(length, start + spaces.length);
-                    if (highlightEnd <= highlightStart) {
+            // Postal code: two spaces before (TXT007 / SRT007). Required in visible text and captions, not in SRT.
+            if (!isSrtContext) {
+                applyRegexMatches(/([\u00A0 ]*)([A-Za-z]\d[A-Za-z][\u00A0 ]\d[A-Za-z]\d)/gi, 'TXT007', match => {
+                    const spaces = match[1] || '';
+                    if (spaces.length === 2) {
                         return null;
                     }
-                    return [highlightStart, highlightEnd];
-                }
-                const highlightEnd = Math.min(length, start + spaces.length + 1);
-                return [start, highlightEnd];
-            });
+                    const start = match.index;
+                    if (spaces.length > 2) {
+                        const highlightStart = start + 2;
+                        const highlightEnd = Math.min(length, start + spaces.length);
+                        if (highlightEnd <= highlightStart) {
+                            return null;
+                        }
+                        return [highlightStart, highlightEnd];
+                    }
+                    const highlightEnd = Math.min(length, start + spaces.length + 1);
+                    return [start, highlightEnd];
+                });
+            }
             if (!effectiveIgnoreDoubleSpace) {
                 applyRegexMatches(/([ \u00A0]{2,})/g, 'TXT008');
             }
             applyRegexMatches(/\b20\d\d\b/g, 'TXT009');
-            applyRegexMatches(/[-\u2013]/g, 'TXT010', match => {
-                if (isLikelyUrlOrEmail(match.index)) {
-                    return null;
-                }
-                if (isSpecialCharacterText(text)) {
-                    return null;
-                }
-                if (shouldSuppressTxt010TypographicHint(text, match.index)) {
-                    return null;
-                }
-                return [match.index, match.index + match[0].length];
-            });
+            if (!isSrtContext) {
+                applyRegexMatches(/[-\u2013]/g, 'TXT010', match => {
+                    if (isLikelyUrlOrEmail(match.index)) {
+                        return null;
+                    }
+                    if (isSpecialCharacterText(text)) {
+                        return null;
+                    }
+                    if (shouldSuppressTxt010TypographicHint(text, match.index)) {
+                        return null;
+                    }
+                    return [match.index, match.index + match[0].length];
+                });
+            }
 
             const applyWrittenDateNonBreakingSpaceChecks = () => {
                 const enabledCode = resolveEnabledCode('TXT011');
@@ -26319,9 +26580,42 @@
                     }
                 });
             };
-            applyWrittenDateNonBreakingSpaceChecks();
+            if (!isSrtContext) {
+                applyWrittenDateNonBreakingSpaceChecks();
+            }
 
             if (isSrtContext) {
+                // SRT019: non-breaking spaces are not permitted anywhere in SRT (TXT011 date-NBSP rule applies only to visible text).
+                applyRegexMatches(/[\u00A0\u202F]/g, 'SRT019');
+
+                /*
+                 * SRT018: typography hyphen/en dash rules (TXT010) do not apply to SRT. Instead, flag raw
+                 * mathematical symbols so authors spell out minus, plus, times, equals, etc.
+                 */
+                const applySrtMathematicalSymbolHighlights = () => {
+                    /** Narrow highlight to the operator character inside the full regex match. */
+                    const rangeOfFirstMatch = (match, operatorPattern) => {
+                        const segment = match[0] || '';
+                        const found = segment.search(operatorPattern);
+                        if (found < 0) {
+                            return null;
+                        }
+                        return [match.index + found, match.index + found + 1];
+                    };
+
+                    // Unicode operators (minus U+2212, times, divide, inequalities, etc.) — spell out in SRT.
+                    applyRegexMatches(/[\u2212\u00D7\u00F7\u00B1\u2260\u2264\u2265\u2248\u221A]/g, 'SRT018');
+                    // Equals / plus / times / minus between quantities (ASCII).
+                    applyRegexMatches(/\d[\s\u00A0]*=[\s\u00A0]*\d/g, 'SRT018', m => rangeOfFirstMatch(m, /=/));
+                    applyRegexMatches(/\d[\s\u00A0]*\+[\s\u00A0]*\d/g, 'SRT018', m => rangeOfFirstMatch(m, /\+/));
+                    applyRegexMatches(/\d\s*\*\s*\d/g, 'SRT018', m => rangeOfFirstMatch(m, /\*/));
+                    applyRegexMatches(/\d[\s\u00A0]*[-\u2212][\s\u00A0]*\d/g, 'SRT018', m => rangeOfFirstMatch(m, /[-\u2212]/));
+                    applyRegexMatches(/(?:^|[\s\u00A0(])[-\u2212](?=\d)/g, 'SRT018', m => rangeOfFirstMatch(m, /[-\u2212]/));
+                    applyRegexMatches(/(?:^|[^\d\s])=(?=[^\s])/g, 'SRT018', m => rangeOfFirstMatch(m, /=/));
+                    applyRegexMatches(/(?:^|[^\d\s])\+(?=\s*\d)/g, 'SRT018', m => rangeOfFirstMatch(m, /\+/));
+                };
+                applySrtMathematicalSymbolHighlights();
+
                 const legislativeParenthesisIndices = new Set();
                 const recordLegislativeParentheses = (startIndex, matchedText) => {
                     if (startIndex === undefined || startIndex === null) {
@@ -26951,10 +27245,7 @@
                     }
                     const rawValue = textNode.textContent || '';
                     const trailingSpaceDetected = hasTrailingSpace(rawValue);
-                    const containsLineBreak = rawValue
-                        .replace(/\r\n?/g, '\n')
-                        .trim()
-                        .includes('\n');
+                    const containsLineBreak = textContainsStructuralLineBreak(rawValue);
                     const value = cleanTextContent(rawValue);
                     if (value) {
                         formProperties.title = value;
@@ -27227,6 +27518,11 @@
         const RADIO_INITIALIZE_COMPARISON = normalizeScriptComparisonText('CoreFunctions.handleRBClick(this, this.rawValue);');
         const RADIO_CLICK_COMPARISON = normalizeScriptComparisonText('CoreFunctions.handleRBClick(this);');
 
+        /** Collapsed-lowercase canonical first line guard; fragments alone are insufficient (EVNT007). */
+        const CLEAR_DATA_CLICK_IF_GUARD_SIGNATURE_LOWER = normalizeScriptComparisonText(
+            'if(xfa.host.messageBox(CoreMessages.getMessage("M00004"), CoreMessages.getTitle("M00004"),2,2)==4)'
+        ).toLowerCase();
+
         const CLEAR_DATA_REQUIRED_PATTERNS = [
             { search: 'xfa.host.messagebox', label: 'xfa.host.messageBox(...) prompt' },
             { search: 'coremessages.getmessage("m00004")', label: 'CoreMessages.getMessage("M00004") call' },
@@ -27234,6 +27530,17 @@
             { search: 'xfa.host.resetdata();', label: 'xfa.host.resetData();' },
             { search: 'xfa.form.execinitialize();', label: 'xfa.form.execInitialize();' }
         ];
+
+        function getClearDataClickStructuralTextLower(javascriptScripts) {
+            if (!Array.isArray(javascriptScripts) || !javascriptScripts.length) {
+                return '';
+            }
+            const collapsedPieces = javascriptScripts.map(script => {
+                const raw = script && typeof script.text === 'string' ? script.text : '';
+                return normalizeScriptComparisonText(raw).toLowerCase();
+            });
+            return collapsedPieces.join('');
+        }
 
         function extractAdvancedDetails(element, cachedCraMetadata) {
             if (!element) {
@@ -28934,6 +29241,23 @@
                 if (typographyLineSpacingErrors.length) {
                     baseErrors.push(...typographyLineSpacingErrors.map(entry => ({ ...entry })));
                 }
+            }
+            const metadataForUrlRules = {
+                localName,
+                structural: structuralState,
+                valueText: hasNonTextPreview ? '' : valueText,
+                captionText,
+                content: hasNonTextPreview ? '' : content,
+                contentIsNonText: hasNonTextPreview,
+                srt
+            };
+            if (!hasNonTextPreview) {
+                baseErrors.push(...evaluateUrlHyperlinkRequirement(objectId, metadataForUrlRules).map(entry => ({ ...entry })));
+                baseErrors.push(...evaluateUrlHyperlinkInlineStyleOverrides(objectId, metadataForUrlRules).map(entry => ({ ...entry })));
+            }
+            const hyperlinkManualReminderIndexing = evaluateHyperlinkManualTestReminder(objectId, metadataForUrlRules);
+            if (hyperlinkManualReminderIndexing) {
+                baseErrors.push(hyperlinkManualReminderIndexing);
             }
             const supplementalSrt = applySupplementalSrtChecks({
                 objectId,
