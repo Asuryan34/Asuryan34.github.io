@@ -3096,11 +3096,11 @@
                 "code": "URL001",
                 "severityLabel": "Warning",
                 "severity": 2,
-                "meaning": "The auto-review detected that an URL (website address) was found but no corresponding Hyperlink.",
-                "suggestedFix": "Double check the URL in the text/caption and fix the hyperlink as necessary.",
+                "meaning": "The auto-review detected a plain-text website address that is not hyperlinked itself, while no identical address appeared earlier on the template with an active hyperlink.",
+                "suggestedFix": "Either hyperlink this occurrence, or add an earlier hyperlink to the same URL (for example duplicate the linked address earlier in reading order); confirm the hyperlink target.",
                 "additionalDetail": "",
-                "shortSummary": "An URL (website address) was found but no corresponding Hyperlink.",
-                "name": "URL001 \u2013 An URL (website address) was found but no corresponding Hyperlink."
+                "shortSummary": "Plain-text URL appears before any earlier hyperlinked occurrence of the same address.",
+                "name": "URL001 \u2013 Plain-text URL lacks an earlier matching hyperlink."
             },
             "URL003": {
                 "code": "URL003",
@@ -5366,6 +5366,8 @@
         let selectedTreeItem = null;
         let currentSelectionPathKey = null;
         let subformObjectIds = new Map();
+        /** Document-order accumulator: normalized URLs that already appeared under an active hyperlink (URL001). */
+        let url001LinkedUrlKeysAccumulator = null;
         let errorNavigationItems = [];
         let currentErrorNavigationIndex = -1;
         let gridRows = [];
@@ -5504,6 +5506,106 @@
                 return false;
             }
             return segments.slice(0, -1).some(segment => /[a-z0-9]/i.test(segment));
+        }
+
+        function normalizeUrlKeyForUrl001(raw) {
+            if (!raw || typeof raw !== 'string') {
+                return '';
+            }
+            let s = raw.trim();
+            if (!s) {
+                return '';
+            }
+            s = s.replace(/^[\[\(\{'"<]+/, '').replace(/[\]\)\}'">]+$/, '').trim();
+            if (!s) {
+                return '';
+            }
+            const lower = s.toLowerCase();
+            if (/^javascript:/i.test(lower)) {
+                return '';
+            }
+            if (/^mailto:/i.test(lower)) {
+                const rest = lower.slice('mailto:'.length).split('?')[0].trim();
+                return rest ? `mailto:${rest}` : '';
+            }
+            try {
+                let candidate = lower;
+                if (!/^https?:\/\//i.test(candidate)) {
+                    if (/^www\./i.test(candidate)) {
+                        candidate = `https://${candidate}`;
+                    } else if (/^[a-z0-9][a-z0-9.-]*\.[a-z]{2,}/i.test(candidate)) {
+                        candidate = `https://${candidate}`;
+                    }
+                }
+                const u = new URL(candidate);
+                let host = u.hostname.replace(/^www\./i, '');
+                let path = u.pathname === '/' ? '' : u.pathname;
+                if (path.length > 1 && path.endsWith('/')) {
+                    path = path.replace(/\/+$/, '');
+                }
+                const qs = u.search || '';
+                const frag = u.hash || '';
+                return `${host}${path}${qs}${frag}`;
+            } catch {
+                let fb = lower.replace(/^www\./i, '');
+                fb = fb.split('#')[0].split('?')[0];
+                if (fb.length > 1 && fb.endsWith('/')) {
+                    fb = fb.replace(/\/+$/, '');
+                }
+                fb = fb.replace(/[.,;:!?)]+$/, '');
+                return fb;
+            }
+        }
+
+        function mergeUrl001KeysIntoSet(keySource, targetSet) {
+            if (!(targetSet instanceof Set) || !(keySource instanceof Set)) {
+                return;
+            }
+            keySource.forEach(key => {
+                if (key) {
+                    targetSet.add(key);
+                }
+            });
+        }
+
+        function collectUrl001KeysForHyperlinkedRange(runs, start, end, display) {
+            const keys = new Set();
+            const addRaw = raw => {
+                const key = normalizeUrlKeyForUrl001(raw);
+                if (key) {
+                    keys.add(key);
+                }
+            };
+            addRaw(display);
+            if (!Array.isArray(runs) || !runs.length) {
+                return keys;
+            }
+            let position = 0;
+            for (let index = 0; index < runs.length; index += 1) {
+                const run = runs[index];
+                const text = run && typeof run.text === 'string' ? run.text : '';
+                const runStart = position;
+                const runEnd = position + text.length;
+                if (runEnd <= start) {
+                    position = runEnd;
+                    continue;
+                }
+                if (runStart >= end) {
+                    break;
+                }
+                const segmentStart = Math.max(start, runStart);
+                const segmentEnd = Math.min(end, runEnd);
+                const segmentText = text.slice(segmentStart - runStart, segmentEnd - runStart);
+                if (!segmentText || !segmentText.trim()) {
+                    position = runEnd;
+                    continue;
+                }
+                if (run && run.isHyperlink && run.hyperlinkHref) {
+                    addRaw(run.hyperlinkHref);
+                }
+                position = runEnd;
+            }
+            return keys;
         }
         const LINE_HEIGHT_SYMBOL_EXCEPTIONS = new Set('±><√≤≥<>–+÷×=≠►▼◄▲▪•✓'.split(''));
         const DOT_LEADER_FAKE_PATTERN = /(\.\s?){4,}/;
@@ -11465,6 +11567,7 @@
             if (!objectMetadata || !objectMetadata.size) {
                 return;
             }
+            url001LinkedUrlKeysAccumulator = new Set();
             objectMetadata.forEach((metadata, objectId) => {
                 const normalizedLocalName = metadata && typeof metadata.localName === 'string'
                     ? metadata.localName.trim().toLowerCase()
@@ -11496,7 +11599,11 @@
                     baseErrors = Array.isArray(contentAnalysis.errors)
                         ? contentAnalysis.errors.map(entry => ({ ...entry }))
                         : [];
-                    const urlErrors = evaluateUrlHyperlinkRequirement(objectId, metadata);
+                    const urlErrors = evaluateUrlHyperlinkRequirement(
+                        objectId,
+                        metadata,
+                        url001LinkedUrlKeysAccumulator
+                    );
                     if (urlErrors.length) {
                         baseErrors.push(...urlErrors.map(entry => ({ ...entry })));
                     }
@@ -20082,11 +20189,12 @@
             };
         }
 
-        function evaluateUrlHyperlinkRequirement(objectId, metadata) {
+        function evaluateUrlHyperlinkRequirement(objectId, metadata, linkedKeysAccumulator) {
             const errors = [];
             if (!isContentErrorEnabled('URL001') || !objectId || !metadata) {
                 return errors;
             }
+            const linkedSoFar = linkedKeysAccumulator instanceof Set ? linkedKeysAccumulator : new Set();
             const contexts = [];
             const normalizedLocalName = metadata.localName
                 ? String(metadata.localName).trim().toLowerCase()
@@ -20107,7 +20215,6 @@
                 const runs = Array.isArray(analysis.runs) ? analysis.runs : [];
                 const regex = new RegExp(URL_TEXT_PATTERN.source, 'gi');
                 let match;
-                let processedFirst = false;
                 while ((match = regex.exec(text)) !== null) {
                     let start = match.index;
                     let end = start + match[0].length;
@@ -20136,17 +20243,22 @@
                         }
                         continue;
                     }
-                    if (processedFirst) {
-                        break;
-                    }
-                    processedFirst = true;
                     const hyperlinked = isTextRangeHyperlinked(runs, start, end);
-                    if (!hyperlinked) {
-                        const entry = createContentErrorEntry('URL001', 1);
-                        if (entry) {
-                            const contextLabel = context.label;
-                            entry.context = `First detected URL in the ${contextLabel} is missing a hyperlink.`;
-                            errors.push(entry);
+                    if (hyperlinked) {
+                        mergeUrl001KeysIntoSet(
+                            collectUrl001KeysForHyperlinkedRange(runs, start, end, display),
+                            linkedSoFar
+                        );
+                    } else {
+                        const displayKey = normalizeUrlKeyForUrl001(display);
+                        if (displayKey && !linkedSoFar.has(displayKey)) {
+                            const entry = createContentErrorEntry('URL001', 1);
+                            if (entry) {
+                                const contextLabel = context.label;
+                                const preview = display.length > 80 ? `${display.slice(0, 77)}\u2026` : display;
+                                entry.context = `URL "${preview}" in the ${contextLabel} is plain text and no identical address appeared earlier under a hyperlink on the template (document order).`;
+                                errors.push(entry);
+                            }
                         }
                     }
                     if (regex.lastIndex === match.index) {
@@ -29424,7 +29536,13 @@
                 srt
             };
             if (!hasNonTextPreview) {
-                baseErrors.push(...evaluateUrlHyperlinkRequirement(objectId, metadataForUrlRules).map(entry => ({ ...entry })));
+                baseErrors.push(
+                    ...evaluateUrlHyperlinkRequirement(
+                        objectId,
+                        metadataForUrlRules,
+                        url001LinkedUrlKeysAccumulator
+                    ).map(entry => ({ ...entry }))
+                );
                 baseErrors.push(...evaluateUrlHyperlinkInlineStyleOverrides(objectId, metadataForUrlRules).map(entry => ({ ...entry })));
             }
             const hyperlinkManualReminderIndexing = evaluateHyperlinkManualTestReminder(objectId, metadataForUrlRules);
@@ -30142,6 +30260,7 @@
             objectMetadata = new Map();
             objectRichTextData = new Map();
             objectElementReferences = new Map();
+            url001LinkedUrlKeysAccumulator = new Set();
 			errorEntryIdCounter = 0;
             textContextAnalysisCache.clear();
             selectedTreeItem = null;
@@ -30285,6 +30404,7 @@
                 objectRichTextData = new Map();
                 objectElementReferences = new Map();
                 subformObjectIds = new Map();
+                url001LinkedUrlKeysAccumulator = null;
                 const errorMsg = document.createElement('p');
                 errorMsg.className = 'placeholder';
                 errorMsg.textContent = 'Unable to parse the XDP file. Please verify the file contents.';
@@ -30310,6 +30430,7 @@
                 objectRichTextData = new Map();
                 objectElementReferences = new Map();
                 subformObjectIds = new Map();
+                url001LinkedUrlKeysAccumulator = null;
                 const errorMsg = document.createElement('p');
                 errorMsg.className = 'placeholder';
                 errorMsg.textContent = 'No template section found in the XDP file.';
