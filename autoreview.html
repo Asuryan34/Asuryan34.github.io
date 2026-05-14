@@ -25051,7 +25051,6 @@
                 const contentType = exDataNode.getAttribute ? (exDataNode.getAttribute('contentType') || '') : '';
                 if (contentType.toLowerCase().includes('html')) {
                     const parser = new DOMParser();
-                    const hasExplicitHtmlBreaks = /<\s*(?:p|br)\b/i.test(rawContent);
                     const parseAndExtractParagraphs = (content, type, fallbackNodeSelector) => {
                         try {
                             const doc = parser.parseFromString(content, type);
@@ -25093,15 +25092,15 @@
                         }
                         return null;
                     });
-                    if (fromXhtml && (!hasExplicitHtmlBreaks || /\n/.test(fromXhtml))) {
+                    if (fromXhtml) {
                         return fromXhtml;
                     }
                     const fromHtml = parseAndExtractParagraphs(rawContent, 'text/html');
-                    if (fromHtml && (!hasExplicitHtmlBreaks || /\n/.test(fromHtml))) {
+                    if (fromHtml) {
                         return fromHtml;
                     }
                     const htmlDoc = parseAndExtractParagraphs(rawContent, 'application/xml');
-                    if (htmlDoc && (!hasExplicitHtmlBreaks || /\n/.test(htmlDoc))) {
+                    if (htmlDoc) {
                         return htmlDoc;
                     }
                     const manualConversion = convertHtmlMarkupToPlainText(rawContent);
@@ -26645,14 +26644,32 @@
 
                     // Unicode operators (minus U+2212, times, divide, inequalities, etc.) — spell out in SRT.
                     applyRegexMatches(/[\u2212\u00D7\u00F7\u00B1\u2260\u2264\u2265\u2248\u221A]/g, 'SRT018');
-                    // Equals / plus / times / minus between quantities (ASCII).
-                    applyRegexMatches(/\d[\s\u00A0]*=[\s\u00A0]*\d/g, 'SRT018', m => rangeOfFirstMatch(m, /=/));
-                    applyRegexMatches(/\d[\s\u00A0]*\+[\s\u00A0]*\d/g, 'SRT018', m => rangeOfFirstMatch(m, /\+/));
-                    applyRegexMatches(/\d\s*\*\s*\d/g, 'SRT018', m => rangeOfFirstMatch(m, /\*/));
-                    applyRegexMatches(/\d[\s\u00A0]*[-\u2212][\s\u00A0]*\d/g, 'SRT018', m => rangeOfFirstMatch(m, /[-\u2212]/));
-                    applyRegexMatches(/(?:^|[\s\u00A0(])[-\u2212](?=\d)/g, 'SRT018', m => rangeOfFirstMatch(m, /[-\u2212]/));
+                    /*
+                     * Ascii math between numbers: operands must allow multi-digit counts and amounts like "25$ - 58$".
+                     * (Earlier patterns mistakenly used "\\d … \\d", which only matched two single-digit numerals.)
+                     */
+                    applyRegexMatches(/\d+[\s\u00A0]*=[\s\u00A0]*\d+/g, 'SRT018', m => rangeOfFirstMatch(m, /=/));
+                    applyRegexMatches(/\d+[\s\u00A0]*\+[\s\u00A0]*\d+/g, 'SRT018', m => rangeOfFirstMatch(m, /\+/));
+                    applyRegexMatches(/\d+\s*\*\s*\d+/g, 'SRT018', m => rangeOfFirstMatch(m, /\*/));
+                    applyRegexMatches(
+                        /(?:\$[\s\u00A0]*)?\d+\$?[\s\u00A0]*[-\u2212][\s\u00A0]*(?:\$[\s\u00A0]*)?\d+\$?/g,
+                        'SRT018',
+                        m => rangeOfFirstMatch(m, /[-\u2212]/)
+                    );
+                    applyRegexMatches(/(?:^|[\s\u00A0(])[-\u2212](?=\d+)/g, 'SRT018', m => rangeOfFirstMatch(m, /[-\u2212]/));
                     applyRegexMatches(/(?:^|[^\d\s])=(?=[^\s])/g, 'SRT018', m => rangeOfFirstMatch(m, /=/));
-                    applyRegexMatches(/(?:^|[^\d\s])\+(?=\s*\d)/g, 'SRT018', m => rangeOfFirstMatch(m, /\+/));
+                    applyRegexMatches(/(?:^|[^\d\s])\+(?=\s*\d+)/g, 'SRT018', m => rangeOfFirstMatch(m, /\+/));
+                    /*
+                     * Hyphen/en dash/em dash/minus placed between spaced words (often read as subtraction or raw dash);
+                     * require real letters — avoids matching hyphenated compounds like "self-service".
+                     */
+                    const srtDashBetweenWords = '[A-Za-zÀ-ÖØ-öø-ÿ]{2,}[\\s\\u00A0]+[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212－][\\s\\u00A0]+[A-Za-zÀ-ÖØ-öø-ÿ]{2,}';
+                    applyRegexMatches(new RegExp(srtDashBetweenWords, 'gu'), 'SRT018', m => rangeOfFirstMatch(m, /[-\u2010\u2011\u2012\u2013\u2014\u2212－]/u));
+                    /*
+                     * "+" between letter-words ("foo + bar") — spaced so simple concatenation / labels are unaffected.
+                     */
+                    const srtPlusBetweenWords = '[A-Za-zÀ-ÖØ-öø-ÿ]{2,}[\\s\\u00A0]*\\+[\\s\\u00A0]*[A-Za-zÀ-ÖØ-öø-ÿ]{2,}';
+                    applyRegexMatches(new RegExp(srtPlusBetweenWords, 'gu'), 'SRT018', m => rangeOfFirstMatch(m, /\+/));
                 };
                 applySrtMathematicalSymbolHighlights();
 
