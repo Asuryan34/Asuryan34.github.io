@@ -2716,11 +2716,11 @@
                 "code": "SRT018",
                 "severityLabel": "Notice",
                 "severity": 1,
-                "meaning": "The auto-review detected a raw mathematical symbol in this SRT (for example ASCII hyphen/minus, minus sign, plus, equals, multiplication, or division). Screen readers may read these as arithmetic; spell the operation in words instead (for example \u201cminus\u201d, \u201cplus\u201d, \u201ctimes\u201d, \u201cdivided by\u201d, \u201cequals\u201d).",
-                "suggestedFix": "Replace highlighted symbols with spelled-out wording appropriate to the phrase (English or French). Use words for minus/plus between quantities, not the Unicode or ASCII operator glyphs.",
+                "meaning": "The auto-review detected a raw mathematical symbol in this SRT (for example +, =, ×, ÷, the minus sign U+2212, or subtraction between amounts). Spell these out in words instead of using operator glyphs. Spaced hyphen or en dash between words may be a dash or subtraction; see SRT021 when the sign is ambiguous.",
+                "suggestedFix": "Replace highlighted operators with spelled-out wording (English or French). For example: plus, minus, times, divided by, equals. For dollar amounts, say the words rather than embedding +, −, or = between values.",
                 "additionalDetail": "",
-                "shortSummary": "Spell out mathematical operations in SRT instead of using raw symbols.",
-                "name": "SRT018 \u2013 Spell out mathematical signs in SRT (do not use raw \u2013, +, \u00D7, \u00F7, =, etc.)."
+                "shortSummary": "Spell out mathematical operations in SRT instead of raw symbols.",
+                "name": "SRT018 \u2013 Spell out mathematical signs in SRT (do not use raw operators such as +, =, ×, U+2212 minus, etc.)."
             },
             "SRT019": {
                 "code": "SRT019",
@@ -2741,6 +2741,16 @@
                 "additionalDetail": "",
                 "shortSummary": "Lone special-character draws need the reference SRT wording, or no SRT when the reference says so (including list Bullet/Puce and Dash/Tiret).",
                 "name": "SRT020 \u2013 Lone special-character draws require reference Screen Reader Text (or none when specified)."
+            },
+            "SRT021": {
+                "code": "SRT021",
+                "severityLabel": "Notice",
+                "severity": 1,
+                "meaning": "The auto-review detected a hyphen (-) or en/em dash between words with spaces around it (for example word – word). That usually reads clearly as \u201cminus\u201d or \u201cto\u201d depending on context; compounds written without spaces (common-law) are not flagged here.",
+                "suggestedFix": "Listen to this SRT or review with accessibility testers. If the dash means subtraction or numeric opposition, spell out \u201cminus\u201d (or equivalent). If it is a range or paired phrase, consider wording such as \u201cto\u201d, \u201cthrough\u201d, or \u201cand\u201d instead of a bare dash.",
+                "additionalDetail": "",
+                "shortSummary": "Confirm spaced hyphen/dash in SRT is not subtraction (compounds without spaces are ignored).",
+                "name": "SRT021 \u2013 Verify spaced hyphen or dash is not meant as \u201cminus\u201d (ignore compounds like common-law)."
             },
             "TABLE001": {
                 "code": "TABLE001",
@@ -7303,9 +7313,10 @@
             SRT015: 'Remove blank SRT values',
             SRT016: 'Add SRT to images',
             SRT017: 'Use required SRT for standard images',
-            SRT018: 'Spell out math operators in SRT (no raw symbols)',
+            SRT018: 'Spell out math operators in SRT (symbols such as +, =, ×, true minus)',
             SRT019: 'No non-breaking spaces in SRT',
             SRT020: 'Special characters: SRT per reference (or none)',
+            SRT021: 'Verify spaced hyphen/dash is not subtraction (SRT)',
             'TXT-E001': 'No spaces before colons',
             'TXT-E002': 'No spaces before percent signs',
             'TXT-E003': 'Place dollar signs before the amount',
@@ -23376,6 +23387,21 @@
             let working = String(content);
             working = working.replace(/<\s*br\s*\/?>/gi, '\n');
             working = working.replace(/<\s*\/p\s*>/gi, '\n');
+            /*
+             * Designer dot-leader tabs serialize as <span style="xfa-tab-count:N">…</span> with filler NBSP/spaces.
+             * Stripping tags verbatim turns that into apparent "double spaces" (TXT008). Emit tab placeholders first,
+             * matching collectTextRunsFromNode / extractNodeTextWithBreaks semantics.
+             */
+            working = working.replace(/<span\b[^>]*\bxfa-tab-count\s*:\s*(\d+)[^>]*>[\s\u00a0]*<\/span>/gi, (full, countRaw) => {
+                const parsed = Number.parseInt(countRaw, 10);
+                const tabCount = Number.isFinite(parsed) && parsed > 0 ? Math.min(parsed, 64) : 1;
+                return '\t'.repeat(tabCount);
+            });
+            working = working.replace(/<span\b[^>]*\bxfa-tab-count\s*=\s*["']?(\d+)["']?[^>]*>[\s\u00a0]*<\/span>/gi, (full, countRaw) => {
+                const parsed = Number.parseInt(countRaw, 10);
+                const tabCount = Number.isFinite(parsed) && parsed > 0 ? Math.min(parsed, 64) : 1;
+                return '\t'.repeat(tabCount);
+            });
             working = working.replace(/<[^>]+>/g, '');
             const cleaned = cleanTextContentForAnalysis(working);
             return cleaned.replace(/\n+$/, '');
@@ -26628,8 +26654,8 @@
                 applyRegexMatches(/[\u00A0\u202F]/g, 'SRT019');
 
                 /*
-                 * SRT018: typography hyphen/en dash rules (TXT010) do not apply to SRT. Instead, flag raw
-                 * mathematical symbols so authors spell out minus, plus, times, equals, etc.
+                 * SRT018: raw mathematical symbols — spell out (plus, minus, times, equals, …).
+                 * SRT021: spaced hyphen/en dash between letter-words — confirm intent (ignore compounds like common-law).
                  */
                 const applySrtMathematicalSymbolHighlights = () => {
                     /** Narrow highlight to the operator character inside the full regex match. */
@@ -26641,37 +26667,126 @@
                         }
                         return [match.index + found, match.index + found + 1];
                     };
+                    const tokenHasLetter = s => s && /[A-Za-zÀ-ÖØ-öø-ÿ]/.test(s);
+                    const tokenOkForSpacedBinary = s => {
+                        if (!s) {
+                            return false;
+                        }
+                        if (tokenHasLetter(s)) {
+                            return true;
+                        }
+                        return /^\$?\d+(?:[.,]\d+)*\$?$/.test(s) || /^\d+(?:[.,]\d+)*\$?$/.test(s);
+                    };
 
-                    // Unicode operators (minus U+2212, times, divide, inequalities, etc.) — spell out in SRT.
-                    applyRegexMatches(/[\u2212\u00D7\u00F7\u00B1\u2260\u2264\u2265\u2248\u221A]/g, 'SRT018');
-                    /*
-                     * Ascii math between numbers: operands must allow multi-digit counts and amounts like "25$ - 58$".
-                     * (Earlier patterns mistakenly used "\\d … \\d", which only matched two single-digit numerals.)
-                     */
+                    // Unicode mathematical operators (true minus U+2212, times/divide/roots/inequalities, fullwidth minus).
+                    applyRegexMatches(/[\u2212\u00D7\u00F7\u00B1\u2260\u2264\u2265\u2248\u221A\uFF0D]/g, 'SRT018');
+
                     applyRegexMatches(/\d+[\s\u00A0]*=[\s\u00A0]*\d+/g, 'SRT018', m => rangeOfFirstMatch(m, /=/));
                     applyRegexMatches(/\d+[\s\u00A0]*\+[\s\u00A0]*\d+/g, 'SRT018', m => rangeOfFirstMatch(m, /\+/));
                     applyRegexMatches(/\d+\s*\*\s*\d+/g, 'SRT018', m => rangeOfFirstMatch(m, /\*/));
+                    applyRegexMatches(
+                        /(?:\$[\s\u00A0]*)?\d+\$?[\s\u00A0]*=[\s\u00A0]*(?:\$[\s\u00A0]*)?\d+\$?/g,
+                        'SRT018',
+                        m => rangeOfFirstMatch(m, /=/)
+                    );
+                    applyRegexMatches(
+                        /(?:\$[\s\u00A0]*)?\d+\$?[\s\u00A0]*\+[\s\u00A0]*(?:\$[\s\u00A0]*)?\d+\$?/g,
+                        'SRT018',
+                        m => rangeOfFirstMatch(m, /\+/)
+                    );
+                    applyRegexMatches(
+                        /(?:\$[\s\u00A0]*)?\d+\$?[\s\u00A0]*\*[\s\u00A0]*(?:\$[\s\u00A0]*)?\d+\$?/g,
+                        'SRT018',
+                        m => rangeOfFirstMatch(m, /\*/)
+                    );
                     applyRegexMatches(
                         /(?:\$[\s\u00A0]*)?\d+\$?[\s\u00A0]*[-\u2212][\s\u00A0]*(?:\$[\s\u00A0]*)?\d+\$?/g,
                         'SRT018',
                         m => rangeOfFirstMatch(m, /[-\u2212]/)
                     );
                     applyRegexMatches(/(?:^|[\s\u00A0(])[-\u2212](?=\d+)/g, 'SRT018', m => rangeOfFirstMatch(m, /[-\u2212]/));
-                    applyRegexMatches(/(?:^|[^\d\s])=(?=[^\s])/g, 'SRT018', m => rangeOfFirstMatch(m, /=/));
+
+                    /*
+                     * Word-like operands (with spaces): "Your income + your refund", "total = balance".
+                     * Skip digit-only pairs (handled above). Require at least one letter overall so bare amounts stay on numeric rules.
+                     */
+                    applyRegexMatches(/(?:^|[\s\u00A0])([^\s]+)\s+\+\s+([^\s]+)(?=[\s\u00A0]|$)/g, 'SRT018', m => {
+                        const left = m[1] || '';
+                        const right = m[2] || '';
+                        if (/^\d+$/.test(left) && /^\d+$/.test(right)) {
+                            return null;
+                        }
+                        if (!tokenOkForSpacedBinary(left) || !tokenOkForSpacedBinary(right)) {
+                            return null;
+                        }
+                        return rangeOfFirstMatch(m, /\+/);
+                    });
+
+                    applyRegexMatches(/(?:^|[\s\u00A0])([^\s]+)\s+\*\s+([^\s]+)(?=[\s\u00A0]|$)/g, 'SRT018', m => {
+                        const left = m[1] || '';
+                        const right = m[2] || '';
+                        if (/^\d+$/.test(left) && /^\d+$/.test(right)) {
+                            return null;
+                        }
+                        if (!tokenOkForSpacedBinary(left) || !tokenOkForSpacedBinary(right)) {
+                            return null;
+                        }
+                        return rangeOfFirstMatch(m, /\*/);
+                    });
+
+                    applyRegexMatches(/([^\s=]+)\s*=\s*([^\s=]+)/g, 'SRT018', m => {
+                        const left = m[1] || '';
+                        const right = m[2] || '';
+                        if (/^\d+$/.test(left) && /^\d+$/.test(right)) {
+                            return null;
+                        }
+                        if (!tokenOkForSpacedBinary(left) || !tokenOkForSpacedBinary(right)) {
+                            return null;
+                        }
+                        const eqIdx = (m[0] || '').indexOf('=');
+                        if (eqIdx < 0) {
+                            return null;
+                        }
+                        const abs = m.index + eqIdx;
+                        if (isLikelyUrlOrEmail(abs)) {
+                            return null;
+                        }
+                        return [abs, abs + 1];
+                    });
+
                     applyRegexMatches(/(?:^|[^\d\s])\+(?=\s*\d+)/g, 'SRT018', m => rangeOfFirstMatch(m, /\+/));
-                    /*
-                     * Hyphen/en dash/em dash/minus placed between spaced words (often read as subtraction or raw dash);
-                     * require real letters — avoids matching hyphenated compounds like "self-service".
-                     */
-                    const srtDashBetweenWords = '[A-Za-zÀ-ÖØ-öø-ÿ]{2,}[\\s\\u00A0]+[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212－][\\s\\u00A0]+[A-Za-zÀ-ÖØ-öø-ÿ]{2,}';
-                    applyRegexMatches(new RegExp(srtDashBetweenWords, 'gu'), 'SRT018', m => rangeOfFirstMatch(m, /[-\u2010\u2011\u2012\u2013\u2014\u2212－]/u));
-                    /*
-                     * "+" between letter-words ("foo + bar") — spaced so simple concatenation / labels are unaffected.
-                     */
-                    const srtPlusBetweenWords = '[A-Za-zÀ-ÖØ-öø-ÿ]{2,}[\\s\\u00A0]*\\+[\\s\\u00A0]*[A-Za-zÀ-ÖØ-öø-ÿ]{2,}';
-                    applyRegexMatches(new RegExp(srtPlusBetweenWords, 'gu'), 'SRT018', m => rangeOfFirstMatch(m, /\+/));
                 };
+
+                const applySrtAmbiguousSpacedDashHighlights = () => {
+                    /*
+                     * ASCII hyphen / hyphen characters with spaces — not the true minus sign (U+2212); those are SRT018.
+                     * Requires a letter in both tokens; pure "12 - 34" subtraction is left to numeric SRT018 rules.
+                     * Unspaced compounds (common-law) are not matched.
+                     */
+                    applyRegexMatches(
+                        /(?:^|[\s\u00A0])([^\s]+)(\s+[-\u2010\u2011\u2012\u2013\u2014]\s+)([^\s]+)(?=[\s\u00A0]|$)/gu,
+                        'SRT021',
+                        m => {
+                            const left = m[1] || '';
+                            const right = m[3] || '';
+                            if (/^\d+$/.test(left) && /^\d+$/.test(right)) {
+                                return null;
+                            }
+                            if (!/[A-Za-zÀ-ÖØ-öø-ÿ]/.test(left) || !/[A-Za-zÀ-ÖØ-öø-ÿ]/.test(right)) {
+                                return null;
+                            }
+                            const segment = m[0] || '';
+                            const found = segment.search(/[-\u2010\u2011\u2012\u2013\u2014]/u);
+                            if (found < 0) {
+                                return null;
+                            }
+                            return [m.index + found, m.index + found + 1];
+                        }
+                    );
+                };
+
                 applySrtMathematicalSymbolHighlights();
+                applySrtAmbiguousSpacedDashHighlights();
 
                 const legislativeParenthesisIndices = new Set();
                 const recordLegislativeParentheses = (startIndex, matchedText) => {
