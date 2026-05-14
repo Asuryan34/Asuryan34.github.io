@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3168,38 +3170,24 @@
             overflow: hidden;
         }
 
-        header {
-            background-color: var(--surface);
-            padding: 1.25rem var(--spacing) 0.75rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 1.75rem;
-            color: var(--accent);
-        }
-
         .controls-row {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.75rem var(--spacing);
+            padding: 0.6rem var(--spacing);
             background-color: var(--surface);
             border-bottom: 1px solid var(--border);
+            justify-content: space-between;
         }
 
-        .controls-row label {
+        .controls-label {
             font-weight: 600;
             color: var(--muted);
             display: flex;
             align-items: center;
             gap: 0.5rem;
-        }
-
-        .controls-row #saveReportButton {
-            margin-left: auto;
+            font-size: 0.88rem;
         }
 
         select {
@@ -4873,8 +4861,8 @@
                 justify-content: flex-start;
             }
 
-            .controls-row #saveReportButton {
-                margin-left: 0;
+            .controls-left, .controls-right {
+                flex-wrap: wrap;
             }
 
             .expected-values-grid {
@@ -4885,46 +4873,429 @@
                 display: none;
             }
         }
+        .settings-icon-button {
+            font-size: 1rem;
+            line-height: 1;
+            padding: 0.5rem 0.65rem;
+            min-width: 2.2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Settings lightbox modal */
+        .settings-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .settings-modal[hidden] {
+            display: none;
+        }
+
+        .settings-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(2px);
+        }
+
+        .settings-modal-dialog {
+            position: relative;
+            z-index: 1;
+            background: var(--bg, #f4f7fb);
+            border-radius: 0.75rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 860px;
+            display: flex;
+            flex-direction: column;
+            max-height: calc(100vh - 4rem);
+        }
+
+        .settings-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+            border-radius: 0.75rem 0.75rem 0 0;
+            flex-shrink: 0;
+        }
+
+        .settings-modal-header h2 {
+            margin: 0;
+            font-size: 1.15rem;
+        }
+
+        .settings-modal-close {
+            font-size: 1.4rem;
+            line-height: 1;
+            padding: 0.3rem 0.65rem;
+            border-radius: 0.4rem;
+        }
+
+        .settings-modal-body {
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .settings-modal-body .panel-card h3 {
+            margin: 0 0 0.75rem;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 720px) {
+            .settings-icon-button {
+                margin-left: 0;
+            }
+
+            .settings-modal {
+                padding: 0.5rem;
+                align-items: flex-start;
+            }
+
+            .settings-modal-dialog {
+                max-height: calc(100vh - 1rem);
+            }
+        }
+
+        /* ── Controls row two-zone layout ── */
+
+        .controls-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .controls-right {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-shrink: 0;
+        }
+
+        .app-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            padding-right: 0.5rem;
+            border-right: 1px solid var(--border);
+        }
+
+        /* ── Tab buttons row ── */
+        .tab-buttons-row {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            padding: 0 var(--spacing);
+            background-color: var(--surface);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            border-radius: 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.65rem 1.1rem;
+            margin-bottom: -2px;
+            cursor: pointer;
+            transition: color 0.15s ease, border-color 0.15s ease;
+            box-shadow: none;
+        }
+
+        .tab-btn:hover {
+            color: var(--accent);
+            border-bottom-color: rgba(10, 77, 140, 0.35);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .tab-btn:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: -2px;
+        }
+
+        /* ── Error summary bar ── */
+        .error-summary-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.45rem var(--spacing);
+            background: #f9fafb;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .error-summary-bar[hidden] {
+            display: none;
+        }
+
+        .error-summary-label {
+            color: var(--muted);
+            margin-right: 0.25rem;
+        }
+
+        .error-summary-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.15rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .error-summary-item.severity-critical {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .error-summary-item.severity-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .error-summary-item.severity-notice {
+            background: #dbeafe;
+            color: #1e3a8a;
+        }
+
+        .error-summary-item.zero {
+            opacity: 0.45;
+        }
+
+        /* ── Tree error navigation counter ── */
+        .error-nav-counter {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--muted);
+            text-align: center;
+            min-width: 3.5rem;
+            white-space: nowrap;
+        }
+
+        .tree-controls {
+            justify-content: space-between;
+        }
+
+        /* ── Typography accordion ── */
+        .typography-accordion {
+            padding: 0;
+        }
+
+        .typography-accordion-summary {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            list-style: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            user-select: none;
+        }
+
+        .typography-accordion-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .typography-accordion-summary::before {
+            content: '▸';
+            font-size: 0.75rem;
+            transition: transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .typography-accordion[open] .typography-accordion-summary::before {
+            transform: rotate(90deg);
+        }
+
+        .typography-accordion-body {
+            padding: 0 1.5rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .typography-section h3 {
+            margin: 0 0 0.6rem;
+            font-size: 0.95rem;
+            color: var(--muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.35rem;
+        }
+
+        /* ── Welcome / empty-state screen ── */
+        .welcome-screen {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            background: #f4f6f9;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .welcome-screen[hidden] {
+            display: none;
+        }
+
+        .welcome-icon {
+            color: var(--accent);
+            opacity: 0.25;
+        }
+
+        .welcome-screen h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--accent);
+        }
+
+        .welcome-screen p {
+            margin: 0;
+            color: var(--muted);
+            max-width: 340px;
+            line-height: 1.5;
+        }
+
+        .welcome-cta-btn {
+            margin-top: 0.5rem;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+        }
+
+        main.tab-container {
+            position: relative;
+        }
+
+        /* ── Toast notifications ── */
+        .toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: #1f2a37;
+            color: #fff;
+            padding: 0.65rem 1.1rem;
+            border-radius: 0.5rem;
+            font-size: 0.88rem;
+            font-weight: 500;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.2);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            pointer-events: none;
+            max-width: 320px;
+        }
+
+        .toast--visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast--success {
+            border-left: 3px solid #22c55e;
+        }
+
+        .toast--error {
+            border-left: 3px solid #ef4444;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h1>XDP file auto review report</h1>
-    </header>
+    <select id="reportSelect" hidden aria-hidden="true">
+        <option value="main">Main report</option>
+        <option value="heading">Heading report</option>
+        <option value="grid">Grid report</option>
+        <option value="accessibility">Accessibility report</option>
+    </select>
 
     <div class="controls-row">
-        <label for="reportSelect">Report
-            <select id="reportSelect">
-                <option value="main">Main report</option>
-                <option value="heading">Heading report</option>
-                <option value="grid">Grid report</option>
-                <option value="srt">SRT report</option>
-                <option value="accessibility">Accessibility report</option>
-                <option value="settings">Settings</option>
-            </select>
-        </label>
-        <label for="sectionSelect">Section
-            <select id="sectionSelect">
-                <option value="bis">BIS</option>
-                <option value="iis">IIS</option>
-                <option value="sis">SIS</option>
-                <option value="stbis">STBIS</option>
-            </select>
-        </label>
-        <label for="teamSelect">Team
-            <select id="teamSelect"></select>
-        </label>
-        <button id="reloadXdpButton" type="button" disabled>Reload the xdp</button>
-        <button id="seeCodeButton" class="secondary">See the XDP code</button>
-        <button id="saveReportButton">Save report</button>
+        <div class="controls-left">
+            <span class="app-title">Auto Review</span>
+            <label for="sectionSelect" class="controls-label">Section
+                <select id="sectionSelect">
+                    <option value="bis">BIS</option>
+                    <option value="iis">IIS</option>
+                    <option value="sis">SIS</option>
+                    <option value="stbis">STBIS</option>
+                </select>
+            </label>
+            <label for="teamSelect" class="controls-label">Team
+                <select id="teamSelect"></select>
+            </label>
+        </div>
+        <div class="controls-right">
+            <button id="reloadXdpButton" type="button" hidden>Reload XDP</button>
+            <button id="seeCodeButton" class="secondary">See XDP code</button>
+            <button id="openSettingsButton" class="secondary settings-icon-button" type="button" title="Settings" aria-label="Open settings" aria-haspopup="dialog">
+                <svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+            <button id="saveReportButton">Save report</button>
+        </div>
         <input type="file" id="xdpFileInput" accept=".xdp,.xml,.html,.htm" hidden>
+    </div>
+
+    <div class="tab-buttons-row" role="tablist" aria-label="Report views">
+        <button class="tab-btn active" data-tab="main" role="tab" aria-selected="true">Main</button>
+        <button class="tab-btn" data-tab="heading" role="tab" aria-selected="false">Heading</button>
+        <button class="tab-btn" data-tab="grid" role="tab" aria-selected="false">Grid</button>
+        <button class="tab-btn" data-tab="accessibility" role="tab" aria-selected="false">Accessibility</button>
+    </div>
+
+    <div id="errorSummaryBar" class="error-summary-bar" hidden>
+        <span class="error-summary-label">Errors:</span>
+        <span class="error-summary-item severity-critical" id="summaryItemCritical"><span id="summaryCountCritical">0</span> Critical</span>
+        <span class="error-summary-item severity-warning" id="summaryItemWarning"><span id="summaryCountWarning">0</span> Warning</span>
+        <span class="error-summary-item severity-notice" id="summaryItemNotice"><span id="summaryCountNotice">0</span> Notice</span>
     </div>
 
     <div class="layout">
         <aside class="object-tree">
             <div class="tree-controls">
-                <button id="prevErrorButton" class="secondary">&laquo; Prev error</button>
-                <button id="nextErrorButton" class="secondary">Next error &raquo;</button>
+                <button id="prevErrorButton" class="secondary">&laquo; Prev</button>
+                <span id="errorNavCounter" class="error-nav-counter" aria-live="polite" aria-atomic="true"></span>
+                <button id="nextErrorButton" class="secondary">Next &raquo;</button>
             </div>
             <div class="tree-container" id="objectTree">
                 <p class="placeholder">Load an XDP file to display its object hierarchy.</p>
@@ -4934,6 +5305,14 @@
         <div class="tree-resizer" role="separator" aria-orientation="vertical" aria-label="Resize hierarchy panel"></div>
 
         <main class="tab-container">
+            <div id="welcomeScreen" class="welcome-screen">
+                <div class="welcome-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                </div>
+                <h2>Load an XDP file to begin</h2>
+                <p>Drag and drop an XDP, XML, or saved report file anywhere on this page, or click below to browse.</p>
+                <button id="loadFileCtaButton" class="welcome-cta-btn" type="button">Open XDP file&hellip;</button>
+            </div>
             <div class="tab-panel active" data-tab="main">
                 <div class="panel-card">
                     <div class="file-status">
@@ -5030,18 +5409,23 @@
                         </section>
                     </div>
                 </div>
-                <div class="panel-card">
-                    <h2>Font</h2>
-                    <div id="fontSection" class="detail-table">
-                        <p class="placeholder">Select an object to view font details.</p>
+                <details class="panel-card typography-accordion" open>
+                    <summary class="typography-accordion-summary">Typography</summary>
+                    <div class="typography-accordion-body">
+                        <div class="typography-section">
+                            <h3>Font</h3>
+                            <div id="fontSection" class="detail-table">
+                                <p class="placeholder">Select an object to view font details.</p>
+                            </div>
+                        </div>
+                        <div class="typography-section">
+                            <h3>Paragraph</h3>
+                            <div id="paragraphSection" class="detail-table">
+                                <p class="placeholder">Select an object to view paragraph details.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="panel-card">
-                    <h2>Paragraph</h2>
-                    <div id="paragraphSection" class="detail-table">
-                        <p class="placeholder">Select an object to view paragraph details.</p>
-                    </div>
-                </div>
+                </details>
                 <div class="panel-card" id="errorsPanel" hidden>
                     <h2>Errors</h2>
                     <div id="errorsContent" class="object-errors"></div>
@@ -5102,9 +5486,30 @@
                 </div>
             </div>
 
-            <div class="tab-panel" data-tab="settings">
+
+
+            <div class="tab-panel" data-tab="code">
                 <div class="panel-card">
-                    <h2>Section Settings</h2>
+                    <h2>Loaded XDP Code (Read only)</h2>
+                    <div class="code-panel-actions">
+                        <button id="closeCodeViewButton" class="secondary" type="button">Back to report</button>
+                    </div>
+                    <textarea id="xdpCodeViewer" class="code-viewer" readonly>Load an XDP file to display its XML structure.</textarea>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="settingsModal" class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle" hidden>
+        <div class="settings-modal-backdrop"></div>
+        <div class="settings-modal-dialog">
+            <div class="settings-modal-header">
+                <h2 id="settingsModalTitle">Settings</h2>
+                <button id="closeSettingsButton" class="settings-modal-close secondary" type="button" aria-label="Close settings">&times;</button>
+            </div>
+            <div class="settings-modal-body">
+                <div class="panel-card">
+                    <h3>Section Settings</h3>
                     <div id="settingsContent" class="settings-grid">
                         <p class="placeholder" style="grid-column: 1 / -1;">Select a section to view settings.</p>
                     </div>
@@ -5127,24 +5532,7 @@
                     <div id="errorsCheckedContainer" class="errors-category-list"></div>
                 </div>
             </div>
-
-            <div class="tab-panel" data-tab="srt">
-                <div class="panel-card">
-                    <h2>SRT Report</h2>
-                    <p class="placeholder">SRT-specific checks will be displayed here.</p>
-                </div>
-            </div>
-
-            <div class="tab-panel" data-tab="code">
-                <div class="panel-card">
-                    <h2>Loaded XDP Code (Read only)</h2>
-                    <div class="code-panel-actions">
-                        <button id="closeCodeViewButton" class="secondary" type="button">Back to report</button>
-                    </div>
-                    <textarea id="xdpCodeViewer" class="code-viewer" readonly>Load an XDP file to display its XML structure.</textarea>
-                </div>
-            </div>
-        </main>
+        </div>
     </div>
 
     <div id="dropOverlay" class="drop-overlay" hidden aria-hidden="true">
@@ -5153,6 +5541,8 @@
             <span class="drop-overlay-subtitle">.xdp, .xml, or saved report .html files are supported.</span>
         </div>
     </div>
+
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
 
     <script>
         const reportSelect = document.getElementById('reportSelect');
@@ -5290,7 +5680,7 @@
         const formPropertiesToggle = document.getElementById('formPropertiesToggle');
         const formPropertiesPanel = document.getElementById('formPropertiesPanel');
         const formPropertiesContent = document.getElementById('formPropertiesContent');
-        const TABS_WITHOUT_TREE = new Set(['grid', 'heading', 'settings', 'code']);
+        const TABS_WITHOUT_TREE = new Set(['grid', 'heading', 'code']);
         const errorCategoryLists = new Map();
         const TREE_MIN_WIDTH = 220;
         const TREE_MAX_WIDTH = 640;
@@ -17380,7 +17770,8 @@
                     teamSelect.value = mapped.team;
                 }
             }
-            const targetTab = currentTab || (archivedReportState && archivedReportState.currentTab) || 'main';
+            const rawTargetTab = currentTab || (archivedReportState && archivedReportState.currentTab) || 'main';
+            const targetTab = rawTargetTab === 'settings' || rawTargetTab === 'srt' ? 'main' : rawTargetTab;
             if (reportSelect) {
                 reportSelect.value = targetTab;
             }
@@ -21757,15 +22148,22 @@
                 panel.classList.toggle('active', panel.dataset.tab === tabName);
             });
             currentTab = tabName;
+            // Sync visible tab buttons
+            document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
+                const isActive = btn.dataset.tab === tabName;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+            // Keep hidden select in sync for archived-report compat
+            if (reportSelect) {
+                reportSelect.value = tabName;
+            }
             if (layoutContainer) {
                 if (TABS_WITHOUT_TREE.has(tabName)) {
                     layoutContainer.classList.add('hide-tree');
                 } else {
                     layoutContainer.classList.remove('hide-tree');
                 }
-            }
-            if (tabName === 'settings') {
-                updateSettingsView();
             }
         }
 
@@ -29776,6 +30174,10 @@
             if (nextErrorButton) {
                 nextErrorButton.disabled = true;
             }
+            const counterEl = document.getElementById('errorNavCounter');
+            if (counterEl) counterEl.textContent = '';
+            const summaryBar = document.getElementById('errorSummaryBar');
+            if (summaryBar) summaryBar.hidden = true;
         }
 
         function updateErrorNavigationFromSelection() {
@@ -29800,6 +30202,8 @@
                 nextErrorButton.disabled = !hasErrors;
             }
             updateErrorNavigationFromSelection();
+            updateErrorNavCounter();
+            updateErrorSummary();
         }
 
         function getHighestSeverityFromErrors(errors) {
@@ -29903,6 +30307,7 @@
                 }
             }
             currentErrorNavigationIndex = targetIndex;
+            updateErrorNavCounter();
         }
 
         function expandTreeAncestors(labelElement) {
@@ -30389,6 +30794,7 @@
             const enableReloadButton = () => {
                 if (reloadXdpButton) {
                     reloadXdpButton.disabled = false;
+                    reloadXdpButton.hidden = false;
                 }
             };
             if (reloadXdpButton) {
@@ -30559,6 +30965,141 @@
             showTab(tabName);
         });
 
+        // Tab button click handlers
+        document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabName = btn.dataset.tab;
+                lastReportTab = tabName;
+                showTab(tabName);
+            });
+        });
+
+        // Load file CTA button
+        const loadFileCtaButton = document.getElementById('loadFileCtaButton');
+        if (loadFileCtaButton && !isArchivedReport) {
+            loadFileCtaButton.addEventListener('click', () => {
+                requestReloadFileSelection(null);
+            });
+        }
+
+        // ── Toast notifications ──
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = `toast toast--${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => toast.classList.add('toast--visible'));
+            });
+            setTimeout(() => {
+                toast.classList.remove('toast--visible');
+                setTimeout(() => {
+                    if (toast.parentNode) toast.parentNode.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+
+        // ── Error summary bar ──
+        function updateErrorSummary() {
+            const summaryBar = document.getElementById('errorSummaryBar');
+            const critEl = document.getElementById('summaryCountCritical');
+            const warnEl = document.getElementById('summaryCountWarning');
+            const noticeEl = document.getElementById('summaryCountNotice');
+            const critItem = document.getElementById('summaryItemCritical');
+            const warnItem = document.getElementById('summaryItemWarning');
+            const noticeItem = document.getElementById('summaryItemNotice');
+            if (!summaryBar) return;
+            if (!objectMetadata || !objectMetadata.size) {
+                summaryBar.hidden = true;
+                return;
+            }
+            let critical = 0, warning = 0, notice = 0, hasObjects = false;
+            objectMetadata.forEach(meta => {
+                if (!meta) return;
+                hasObjects = true;
+                if (!Array.isArray(meta.errors)) return;
+                meta.errors.forEach(err => {
+                    if (!err || err.dismissed) return;
+                    if (err.severity === 3) critical++;
+                    else if (err.severity === 2) warning++;
+                    else if (err.severity === 1) notice++;
+                });
+            });
+            if (!hasObjects) {
+                summaryBar.hidden = true;
+                return;
+            }
+            if (critEl) critEl.textContent = critical;
+            if (warnEl) warnEl.textContent = warning;
+            if (noticeEl) noticeEl.textContent = notice;
+            if (critItem) critItem.classList.toggle('zero', critical === 0);
+            if (warnItem) warnItem.classList.toggle('zero', warning === 0);
+            if (noticeItem) noticeItem.classList.toggle('zero', notice === 0);
+            summaryBar.hidden = false;
+        }
+
+        // ── Error navigation counter ──
+        function updateErrorNavCounter() {
+            const counterEl = document.getElementById('errorNavCounter');
+            if (!counterEl) return;
+            const total = errorNavigationItems ? errorNavigationItems.length : 0;
+            if (total === 0) {
+                counterEl.textContent = '';
+                return;
+            }
+            const pos = (currentErrorNavigationIndex >= 0 && currentErrorNavigationIndex < total)
+                ? currentErrorNavigationIndex + 1
+                : String.fromCharCode(8212);
+            counterEl.textContent = `${pos} / ${total}`;
+        }
+
+        // ── Welcome screen visibility ──
+        function setWelcomeScreenVisible(visible) {
+            const ws = document.getElementById('welcomeScreen');
+            if (ws) ws.hidden = !visible;
+        }
+
+        // Settings lightbox
+        const settingsModal = document.getElementById('settingsModal');
+        const openSettingsButton = document.getElementById('openSettingsButton');
+        const closeSettingsButton = document.getElementById('closeSettingsButton');
+        const settingsModalBackdrop = settingsModal ? settingsModal.querySelector('.settings-modal-backdrop') : null;
+
+        function openSettingsModal() {
+            if (!settingsModal) return;
+            settingsModal.removeAttribute('hidden');
+            updateSettingsView();
+            if (closeSettingsButton) closeSettingsButton.focus();
+            document.addEventListener('keydown', onSettingsModalKeydown);
+        }
+
+        function closeSettingsModal() {
+            if (!settingsModal) return;
+            settingsModal.setAttribute('hidden', '');
+            document.removeEventListener('keydown', onSettingsModalKeydown);
+            if (openSettingsButton) openSettingsButton.focus();
+        }
+
+        function onSettingsModalKeydown(event) {
+            if (event.key === 'Escape') {
+                closeSettingsModal();
+            }
+        }
+
+        if (openSettingsButton) {
+            openSettingsButton.addEventListener('click', openSettingsModal);
+        }
+
+        if (closeSettingsButton) {
+            closeSettingsButton.addEventListener('click', closeSettingsModal);
+        }
+
+        if (settingsModalBackdrop) {
+            settingsModalBackdrop.addEventListener('click', closeSettingsModal);
+        }
+
         if (seeCodeButton) {
             seeCodeButton.addEventListener('click', () => {
                 if (currentTab === 'code') {
@@ -30664,6 +31205,11 @@
             currentXdpContent = '';
             desiredSelectionPathKey = null;
             currentSelectionPathKey = null;
+            if (reloadXdpButton) {
+                reloadXdpButton.disabled = true;
+                reloadXdpButton.hidden = true;
+            }
+            setWelcomeScreenVisible(true);
         }
 
         async function extractFileHandleFromDataTransfer(dataTransfer) {
@@ -30694,6 +31240,7 @@
             if (!selectedFileName.classList.contains('badge')) {
                 selectedFileName.classList.add('badge');
             }
+            setWelcomeScreenVisible(false);
         }
 
         function readFileText(file) {
@@ -30841,7 +31388,9 @@
                     }
                     if (reloadXdpButton) {
                         reloadXdpButton.disabled = true;
+                        reloadXdpButton.hidden = true;
                     }
+                    setWelcomeScreenVisible(true);
                 }
                 return false;
             } finally {
@@ -31177,7 +31726,7 @@
                 if (archivedBody) {
                     archivedBody.classList.add('archived-report');
                 }
-                const removableNodes = archivedRoot.querySelectorAll('#reloadXdpButton, #saveReportButton, #xdpFileInput');
+                const removableNodes = archivedRoot.querySelectorAll('#reloadXdpButton, #saveReportButton, #openSettingsButton, #xdpFileInput, #loadFileCtaButton, .tab-buttons-row, #errorSummaryBar');
                 removableNodes.forEach(node => node.remove());
                 const archivedReportSelect = archivedRoot.querySelector('#reportSelect');
                 if (archivedReportSelect) {
@@ -31216,7 +31765,7 @@
                     }
                     archivedHead.appendChild(stateScript);
                 }
-                const archivedSettingsPanel = archivedRoot.querySelector('.tab-panel[data-tab="settings"]');
+                const archivedSettingsPanel = archivedRoot.querySelector('#settingsModal');
                 if (archivedSettingsPanel) {
                     archivedSettingsPanel.querySelectorAll('input:not(.errors-checked-search), select, textarea, button:not(#exportErrorCatalogButton)').forEach(element => {
                         element.setAttribute('disabled', 'disabled');
@@ -31238,6 +31787,7 @@
                 downloadLink.click();
                 document.body.removeChild(downloadLink);
                 setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+                showToast(`Report saved: ${exportName}`);
             });
         }
 
@@ -31297,7 +31847,14 @@
                 populateTeamSelect(sectionSelect.value);
             }
             updateSettingsView();
+            // Start with welcome screen visible and reload button hidden
+            setWelcomeScreenVisible(true);
+            if (reloadXdpButton) {
+                reloadXdpButton.hidden = true;
+                reloadXdpButton.disabled = true;
+            }
         } else {
+            setWelcomeScreenVisible(false);
             updateHeadingReportView();
             prepareArchivedReportView();
         }
