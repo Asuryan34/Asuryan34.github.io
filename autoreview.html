@@ -1316,11 +1316,11 @@
                 "code": "FONT-TXT006",
                 "severityLabel": "Critical",
                 "severity": 3,
-                "meaning": "The auto-review detected that parts of this object's text are using \"Letter spacing\".",
+                "meaning": "The auto-review detected that part or all of this object's text is using \"Letter spacing\".",
                 "suggestedFix": "To fix this problem, select this object and enter its text by either double clicking on it or pressing F2 (while in the \"Design View\"). Next select all of the text (ctrl-A) and change the font's \"Letter spacing\" to 0 (found in the \"FONT\" window). Sometimes blank spaces are assigned different spacing values, which may explain why nothing appears in the PDF.",
                 "additionalDetail": "",
-                "shortSummary": "Parts of this object's text are using \"Letter spacing\".",
-                "name": "FONT-TXT006 \u2013 Parts of this object's text are using \"Letter spacing\"."
+                "shortSummary": "Part or all of this object's text is using \"Letter spacing\".",
+                "name": "FONT-TXT006 \u2013 Part or all of this object's text is using \"Letter spacing\"."
             },
             "FONT001": {
                 "code": "FONT001",
@@ -12468,8 +12468,8 @@
                     entry.context = buildFontContextLabelMessage(
                         context,
                         letterSpacingDisplay
-                            ? `Letter spacing detected (${letterSpacingDisplay}).`
-                            : 'Letter spacing detected.'
+                            ? `Part or all of the text is using \"Letter spacing\" (${letterSpacingDisplay}).`
+                            : 'Part or all of the text is using \"Letter spacing\".'
                     );
                     results.push(entry);
                 }
@@ -23395,6 +23395,46 @@
             const localName = node.localName ? node.localName.toLowerCase() : '';
             if (localName === 'br') {
                 return '\n';
+            }
+            const tabCountStyle = node.getAttribute ? node.getAttribute('style') : null;
+            if (tabCountStyle) {
+                const tabStyles = parseCssStyles(tabCountStyle);
+                const rawTabCount = tabStyles && tabStyles['xfa-tab-count'] !== undefined && tabStyles['xfa-tab-count'] !== null
+                    ? tabStyles['xfa-tab-count']
+                    : '';
+                const trimmedTab = String(rawTabCount || '').trim();
+                if (trimmedTab) {
+                    const tabMatch = trimmedTab.match(/[0-9]+/);
+                    const parsedTabCount = tabMatch ? Number.parseInt(tabMatch[0], 10) : NaN;
+                    const tabCount = Number.isFinite(parsedTabCount) && parsedTabCount > 0 ? parsedTabCount : 0;
+                    if (tabCount) {
+                        let buffer = '\t'.repeat(tabCount);
+                        const childrenForTab = node.childNodes || [];
+                        const meaningfulAfterTabMarks = childrenForTab.some(child => {
+                            if (!child) {
+                                return false;
+                            }
+                            if (child.nodeType === Node.TEXT_NODE) {
+                                const value = child.nodeValue || '';
+                                const normalized = value
+                                    .replace(/\r\n?/g, '\n')
+                                    .replace(/\u00a0/g, ' ')
+                                    .trim();
+                                return Boolean(normalized);
+                            }
+                            if (child.nodeType === Node.ELEMENT_NODE) {
+                                return true;
+                            }
+                            return false;
+                        });
+                        if (meaningfulAfterTabMarks) {
+                            for (let index = 0; index < childrenForTab.length; index += 1) {
+                                buffer += extractNodeTextWithBreaks(childrenForTab[index]);
+                            }
+                        }
+                        return buffer;
+                    }
+                }
             }
             let buffer = '';
             const children = node.childNodes || [];
