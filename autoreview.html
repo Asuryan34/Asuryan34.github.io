@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2075,6 +2072,16 @@
                 "shortSummary": "The object does not use standard locale values",
                 "name": "LOCAL001 \u2013 The object does not use standard locale values"
             },
+            "LOCAL002": {
+                "code": "LOCAL002",
+                "severityLabel": "Critical",
+                "severity": 3,
+                "meaning": "This object has its \"Locale\" explicitly set to a language that does not match the form's locale. Objects should normally use the same locale as the form, or \"Default locale\".",
+                "suggestedFix": "With the object selected, open the \"Object\" window and set the object's locale to \"Default locale\", or to match the form: \"English (Canada)\" (en_CA) on an English form, or \"French (Canada)\" (fr_CA) on a French form.",
+                "additionalDetail": "",
+                "shortSummary": "Object locale does not match the form locale.",
+                "name": "LOCAL002 \u2013 Object locale does not match the form locale."
+            },
             "MASTPG001": {
                 "code": "MASTPG001",
                 "severityLabel": "Critical",
@@ -2509,11 +2516,11 @@
                 "code": "SRT-F003",
                 "severityLabel": "Critical",
                 "severity": 3,
-                "meaning": "A \"dollar sign\" in this object's text appears to be misplaced. In French, the dollar sign appears after the dollar value, with a space between it and the value's last digit. Example: 3,00 $.",
-                "suggestedFix": "Place the \"dollar sign\" in the right position.",
+                "meaning": "A \"dollar sign\" in this object's text appears to be misplaced or is not preceded by a space. In French, the dollar sign appears after the dollar value, with a space between it and the value's last digit. Example: 3,00 $.",
+                "suggestedFix": "Place the \"dollar sign\" in the right position and ensure there is a space before it.",
                 "additionalDetail": "",
-                "shortSummary": "Dollar signs found before the amount. (SRT)",
-                "name": "SRT-F003 \u2013 Dollar signs found before the amount. (SRT)"
+                "shortSummary": "Dollar sign not positioned correctly. (SRT)",
+                "name": "SRT-F003 \u2013 Dollar sign not positioned correctly. (SRT)"
             },
             "SRT-F004": {
                 "code": "SRT-F004",
@@ -2909,11 +2916,11 @@
                 "code": "TXT-F003",
                 "severityLabel": "Critical",
                 "severity": 3,
-                "meaning": "A \"dollar sign\" in this object's text appears to be misplaced. In French, the dollar sign appears after the dollar value, with a space between it and the value's last digit. Example: 3,00 $.",
-                "suggestedFix": "Place the \"dollar sign\" in the right position.",
+                "meaning": "A \"dollar sign\" in this object's text appears to be misplaced or is not preceded by a space. In French, the dollar sign appears after the dollar value, with a space between it and the value's last digit. Example: 3,00 $.",
+                "suggestedFix": "Place the \"dollar sign\" in the right position and ensure there is a space before it.",
                 "additionalDetail": "",
-                "shortSummary": "Dollar signs found before the amount.",
-                "name": "TXT-F003 \u2013 Dollar signs found before the amount."
+                "shortSummary": "Dollar sign not positioned correctly.",
+                "name": "TXT-F003 \u2013 Dollar sign not positioned correctly."
             },
             "TXT-F004": {
                 "code": "TXT-F004",
@@ -7726,6 +7733,7 @@
             FORM0015: 'Found a "space" character at the end of the form\'s title (in proprerties).',
             FORM0016: 'The form\'s title in properties contains a line break.',
             LOCAL001: 'The object does not use standard locale values',
+            LOCAL002: 'Object locale does not match the form locale.',
             FORM0017: 'The page margins fall below the minimum clearance or are inconsistent across pages.',
             FORM0018: 'The page margins do not meet the recommended clearance from Section Settings.',
             GRAPH001: 'The size of the CRA signature image is not correct.',
@@ -7783,7 +7791,7 @@
             'TXT-E006': 'Thousands separators are not correct.',
             'TXT-F001': 'Missing space before colons.',
             'TXT-F002': 'Missing space before percent signs.',
-            'TXT-F003': 'Dollar signs found before the amount.',
+            'TXT-F003': 'Dollar sign not positioned correctly.',
             'TXT-F004': 'Thousands separators are not correct.',
             'TXT-F005': 'Straight quotes have been found.',
             'TXT-F006': 'Uneven number of "chevrons" found.',
@@ -7886,7 +7894,7 @@
             'SRT-E006': 'Thousands separators are not correct. (SRT)',
             'SRT-F001': 'Missing space before colons. (SRT)',
             'SRT-F002': 'Missing space before percent signs. (SRT)',
-            'SRT-F003': 'Dollar signs found before the amount. (SRT)',
+            'SRT-F003': 'Dollar sign not positioned correctly. (SRT)',
             'SRT-F004': 'Thousands separators are not correct. (SRT)',
             'SRT-F005': 'Straight quotes have been found. (SRT)',
             'SRT-F006': 'Uneven number of "chevrons" found. (SRT)',
@@ -8406,8 +8414,22 @@
             return results;
         }
 
+        function languageErrorResultsIncludeCode(entries, codes) {
+            if (!Array.isArray(entries) || !entries.length || !Array.isArray(codes) || !codes.length) {
+                return false;
+            }
+            const codeSet = new Set(codes.map(code => String(code).trim().toUpperCase()).filter(Boolean));
+            return entries.some(entry => {
+                const entryCode = entry && entry.code ? String(entry.code).trim().toUpperCase() : '';
+                return entryCode && codeSet.has(entryCode);
+            });
+        }
+
         function collectLocaleLanguageErrorsForMetadata(metadata, formLocaleInfo, primaryFormLanguage) {
             if (!metadata) {
+                return [];
+            }
+            if (shouldSkipLanguageLocaleChecksForMetadata(metadata)) {
                 return [];
             }
             const results = [];
@@ -8462,8 +8484,12 @@
                     }));
                 }
             }
+            const hasValueObjectLocaleTextMismatch = languageErrorResultsIncludeCode(results, ['LANG005', 'LANG006']);
+            const hasCaptionObjectLocaleTextMismatch = languageErrorResultsIncludeCode(results, ['LANG007', 'LANG008']);
+            const hasSrtObjectLocaleTextMismatch = languageErrorResultsIncludeCode(results, ['LANG009', 'LANG010']);
             if (formLocaleInfo && formLocaleInfo.language) {
-                if (valueText && !metadata.contentIsNonText && !valueIsLanguageAvailabilityText) {
+                if (valueText && !metadata.contentIsNonText && !valueIsLanguageAvailabilityText
+                    && !hasValueObjectLocaleTextMismatch) {
                     results.push(...evaluateComponentLanguageAgainstLocale({
                         text: valueText,
                         componentLabel: 'Object text',
@@ -8475,7 +8501,7 @@
                         localeTypeLabel: 'the form locale'
                     }));
                 }
-                if (captionText) {
+                if (captionText && !hasCaptionObjectLocaleTextMismatch) {
                     results.push(...evaluateComponentLanguageAgainstLocale({
                         text: captionText,
                         componentLabel: 'Caption text',
@@ -8487,7 +8513,7 @@
                         localeTypeLabel: 'the form locale'
                     }));
                 }
-                if (srtText) {
+                if (srtText && !hasSrtObjectLocaleTextMismatch) {
                     results.push(...evaluateComponentLanguageAgainstLocale({
                         text: srtText,
                         componentLabel: 'SRT content',
@@ -14483,6 +14509,17 @@
             return true;
         }
 
+        function shouldSkipLanguageLocaleChecksForMetadata(metadata) {
+            if (!metadata) {
+                return false;
+            }
+            const structural = metadata.structural || {};
+            const objectId = metadata.objectId !== undefined && metadata.objectId !== null
+                ? metadata.objectId
+                : null;
+            return isLineNumberObjectByCriteria(metadata, structural, objectId);
+        }
+
         function evaluateExpandToFitHeight(metadata, structural) {
             if (!isContentErrorEnabled('LAYOUT01')) {
                 return [];
@@ -14662,6 +14699,36 @@
                     });
                     if (entry) {
                         errors.push(entry);
+                    }
+                }
+            }
+            if (structural && structural.hasDirectLocaleAttribute && isContentErrorEnabled('LOCAL002')) {
+                const normalized = (structural.directLocaleNormalized || '').toLowerCase();
+                if (normalized === 'en_ca' || normalized === 'fr_ca') {
+                    const objectLanguage = normalizeDeclaredLanguage(normalized);
+                    const formLocaleInfo = getFormLocaleLanguageInfo();
+                    const formLanguage = formLocaleInfo && formLocaleInfo.language ? formLocaleInfo.language : null;
+                    if (objectLanguage && formLanguage && objectLanguage !== formLanguage) {
+                        const valueText = typeof metadata.valueText === 'string' ? metadata.valueText : '';
+                        const captionText = typeof metadata.captionText === 'string' ? metadata.captionText : '';
+                        let contentText = valueText;
+                        if (!contentText && !metadata.contentIsNonText) {
+                            contentText = typeof metadata.content === 'string' ? metadata.content : '';
+                        }
+                        const isLanguageAvailability = isLanguageAvailabilityLocaleExemptText(contentText)
+                            || isLanguageAvailabilityLocaleExemptText(captionText);
+                        if (!isLanguageAvailability) {
+                            const raw = structural.directLocaleRaw || structural.directLocaleNormalized || '—';
+                            const formDisplay = formLocaleInfo.display
+                                || (formLanguage === 'french' ? 'fr_CA' : 'en_CA');
+                            const entry = createErrorEntryFromCode('LOCAL002', {
+                                context: `Object locale is '${raw}' but the form locale is '${formDisplay}'.`,
+                                title: 'Locale configuration'
+                            });
+                            if (entry) {
+                                errors.push(entry);
+                            }
+                        }
                     }
                 }
             }
@@ -17129,17 +17196,20 @@
             if (content) {
                 valueElement.innerHTML = markup;
                 sectionElement.hidden = false;
+                sectionElement.removeAttribute('hidden');
                 sectionElement.removeAttribute('aria-hidden');
                 return true;
             }
             if (showWhenEmpty) {
                 valueElement.innerHTML = `<p class="placeholder">${placeholderText}</p>`;
                 sectionElement.hidden = false;
+                sectionElement.removeAttribute('hidden');
                 sectionElement.removeAttribute('aria-hidden');
                 return true;
             }
             valueElement.innerHTML = '';
             sectionElement.hidden = true;
+            sectionElement.setAttribute('hidden', '');
             sectionElement.setAttribute('aria-hidden', 'true');
             return false;
         }
@@ -17335,7 +17405,8 @@
             }
             const structural = metadata.structural || {};
             const typeLabel = typeof metadata.type === 'string' ? metadata.type : '';
-            if (typeLabel === TYPE_LABELS.draw) {
+            const localName = metadata.localName ? metadata.localName.toLowerCase() : '';
+            if (typeLabel === TYPE_LABELS.draw || typeLabel === 'LineNumber' || localName === 'draw') {
                 return true;
             }
             if (typeof metadata.headingToken === 'string' && metadata.headingToken.trim()) {
@@ -17364,7 +17435,11 @@
             }
             let hasContent = false;
             const structural = metadata && metadata.structural ? metadata.structural : {};
-            const baseIsField = Boolean(structural && structural.isField);
+            const normalizedLocalName = metadata && metadata.localName
+                ? metadata.localName.toLowerCase()
+                : '';
+            const baseIsField = Boolean(structural && structural.isField)
+                || normalizedLocalName === 'field';
             const typeLabel = metadata && typeof metadata.type === 'string' ? metadata.type.trim() : '';
             const normalizedTypeLabel = typeLabel.toLowerCase();
             const isButton = Boolean(structural && structural.isButton)
@@ -17377,27 +17452,6 @@
             }
             const shouldShowCaptionSection = baseIsField || isButton;
             const shouldShowDefaultSection = isField;
-            if (contentTextSection) {
-                if (shouldShowTextSection) {
-                    contentTextSection.style.removeProperty('display');
-                } else {
-                    contentTextSection.style.display = 'none';
-                }
-            }
-            if (contentCaptionSection) {
-                if (shouldShowCaptionSection) {
-                    contentCaptionSection.style.removeProperty('display');
-                } else {
-                    contentCaptionSection.style.display = 'none';
-                }
-            }
-            if (contentDefaultSection) {
-                if (shouldShowDefaultSection) {
-                    contentDefaultSection.style.removeProperty('display');
-                } else {
-                    contentDefaultSection.style.display = 'none';
-                }
-            }
             let textMarkup = null;
             const highlightCodes = Array.isArray(metadata && metadata.textHighlightCodes)
                 ? metadata.textHighlightCodes
@@ -17424,7 +17478,16 @@
                 hasContent = true;
             }
             if (shouldShowCaptionSection) {
-                const captionMarkup = buildMarkupForTextContext(objectId, metadata, 'caption', highlightCodes);
+                let captionMarkup = buildMarkupForTextContext(objectId, metadata, 'caption', highlightCodes);
+                if (!captionMarkup) {
+                    const captionText = typeof metadata.captionText === 'string' ? metadata.captionText.trim() : '';
+                    if (captionText) {
+                        captionMarkup = wrapMarkupWithHighlightCodes(
+                            convertPlainTextToParagraphMarkup(captionText),
+                            highlightCodes
+                        );
+                    }
+                }
                 if (setContentSectionState(contentCaptionSection, contentCaptionValue, captionMarkup, {
                     showWhenEmpty: true
                 })) {
@@ -17478,19 +17541,23 @@
                     || hasSrtText
                     || hasSrtMarkup);
             }
-            if (contentSrtSection) {
-                if (shouldShowSrtSection) {
-                    contentSrtSection.style.removeProperty('display');
-                } else {
-                    contentSrtSection.style.display = 'none';
-                }
-            }
-            if (setContentSectionState(contentSrtSection, contentSrtValue, srtMarkup, {
+            if (setContentSectionState(contentSrtSection, contentSrtValue, shouldShowSrtSection ? srtMarkup : null, {
                 showWhenEmpty: shouldShowSrtSection
             })) {
                 hasContent = true;
             }
-            contentPanel.hidden = !hasContent;
+            const isLineNumberObject = typeLabel === 'LineNumber'
+                || isLineNumberObjectByCriteria(metadata, structural, objectId);
+            if (baseIsField || isButton || isImageObject || shouldShowTextSection || isLineNumberObject) {
+                hasContent = true;
+            }
+            if (hasContent) {
+                contentPanel.hidden = false;
+                contentPanel.removeAttribute('hidden');
+            } else {
+                contentPanel.hidden = true;
+                contentPanel.setAttribute('hidden', '');
+            }
             applyActiveErrorHighlightState();
         }
 
@@ -21234,16 +21301,20 @@
                         ? cellChildMetadata.localName.toLowerCase()
                         : '';
                     if (cellChildLocal === 'subform') {
-                        namingTargets.push([cellChildId, cellChildMetadata]);
+                        const nestedCells = [];
                         getChildEntriesFromLookup(childLookup, cellChildId).forEach(([nestedId, nestedMeta]) => {
                             if (!nestedMeta) {
                                 return;
                             }
                             const nestedLocal = nestedMeta.localName ? nestedMeta.localName.toLowerCase() : '';
                             if (nestedLocal === 'draw' || nestedLocal === 'field') {
-                                namingTargets.push([nestedId, nestedMeta]);
+                                nestedCells.push([nestedId, nestedMeta]);
                             }
                         });
+                        nestedCells.forEach(entry => namingTargets.push(entry));
+                        if (!nestedCells.length) {
+                            namingTargets.push([cellChildId, cellChildMetadata]);
+                        }
                     } else if (cellChildLocal === 'draw' || cellChildLocal === 'field') {
                         namingTargets.push([cellChildId, cellChildMetadata]);
                     }
@@ -21320,6 +21391,56 @@
             };
         }
 
+        function getTableRowAssistRoles(metadata) {
+            const roles = [];
+            if (!metadata) {
+                return roles;
+            }
+            if (Array.isArray(metadata.assistRoles)) {
+                metadata.assistRoles.forEach(role => {
+                    if (role) {
+                        roles.push(String(role).toLowerCase());
+                    }
+                });
+            }
+            const structural = metadata.structural || {};
+            if (Array.isArray(structural.assistRoles)) {
+                structural.assistRoles.forEach(role => {
+                    if (role) {
+                        roles.push(String(role).toLowerCase());
+                    }
+                });
+            }
+            return roles;
+        }
+
+        function metadataIsWithinAccessibleTable(metadata) {
+            if (!metadata) {
+                return false;
+            }
+            const structural = metadata.structural || {};
+            if (structural.isWithinTableAssistRole || structural.isWithinTableLayout) {
+                return true;
+            }
+            const parentId = metadata.parentObjectId;
+            if (!parentId || !objectMetadata.has(parentId)) {
+                return false;
+            }
+            const parentMetadata = objectMetadata.get(parentId);
+            if (!parentMetadata) {
+                return false;
+            }
+            const parentStructural = parentMetadata.structural || {};
+            if (parentStructural.layoutNormalized === 'table') {
+                return true;
+            }
+            const parentRoles = getTableRowAssistRoles(parentMetadata);
+            if (parentRoles.includes('table')) {
+                return true;
+            }
+            return Boolean(parentStructural.isWithinTableAssistRole || parentStructural.isWithinTableLayout);
+        }
+
         function isTableRowMetadata(metadata) {
             if (!metadata) {
                 return false;
@@ -21329,18 +21450,26 @@
                 return false;
             }
             const structural = metadata.structural || {};
-            if (structural.layoutNormalized !== 'row') {
-                return false;
-            }
-            if (structural.parentLayoutNormalized === 'table') {
-                return true;
-            }
-            const parentId = metadata.parentObjectId;
-            if (parentId && objectMetadata.has(parentId)) {
-                const parentMetadata = objectMetadata.get(parentId);
-                if (parentMetadata && parentMetadata.structural && parentMetadata.structural.layoutNormalized === 'table') {
+            if (structural.layoutNormalized === 'row') {
+                if (structural.parentLayoutNormalized === 'table') {
                     return true;
                 }
+                const parentId = metadata.parentObjectId;
+                if (parentId && objectMetadata.has(parentId)) {
+                    const parentMetadata = objectMetadata.get(parentId);
+                    if (parentMetadata && parentMetadata.structural && parentMetadata.structural.layoutNormalized === 'table') {
+                        return true;
+                    }
+                }
+            }
+            const rowRoles = getTableRowAssistRoles(metadata);
+            const collapsedRoles = rowRoles.map(role => role.replace(/\s+/g, ''));
+            const isAccessibleTableRow = rowRoles.includes('th')
+                || rowRoles.includes('tr')
+                || collapsedRoles.includes('headerrow')
+                || collapsedRoles.includes('bodyrow');
+            if (isAccessibleTableRow && metadataIsWithinAccessibleTable(metadata)) {
+                return true;
             }
             return false;
         }
@@ -22430,8 +22559,30 @@
             return null;
         }
 
+        function isDesignerPrototypeContainer(element) {
+            if (!element || !element.localName) {
+                return false;
+            }
+            return element.localName.toLowerCase() === 'proto';
+        }
+
+        function isDesignerInternalObjectName(element) {
+            const nameAttr = element && element.getAttribute ? element.getAttribute('name') : null;
+            if (!nameAttr || typeof nameAttr !== 'string') {
+                return false;
+            }
+            return nameAttr.startsWith('designer__');
+        }
+
+        function isExcludedFromObjectHierarchy(element) {
+            return isDesignerPrototypeContainer(element) || isDesignerInternalObjectName(element);
+        }
+
         function isRelevantNode(element) {
             if (!isElementNode(element)) {
+                return false;
+            }
+            if (isExcludedFromObjectHierarchy(element)) {
                 return false;
             }
             const localName = element.localName ? element.localName.toLowerCase() : '';
