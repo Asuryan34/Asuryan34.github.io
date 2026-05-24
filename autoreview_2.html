@@ -3116,6 +3116,16 @@
                 "shortSummary": "Written-out dates found without Non-Breaking Space (NBSP)",
                 "name": "TXT011 – Written-out dates found without Non-Breaking Space (NBSP)"
             },
+            "TXT012": {
+                "code": "TXT012",
+                "severityLabel": "Warning",
+                "severity": 2,
+                "meaning": "The word \"line\", \"lines\", \"ligne\", or \"lignes\" is followed by a number but the space between them is a regular space, not a Non-Breaking Space (NBSP, U+00A0). A regular space allows the line reference to be split across two lines during PDF rendering.",
+                "suggestedFix": "Replace the regular space between \"line\" / \"ligne\" and the number with a Non-Breaking Space (U+00A0). In Designer, you can insert one by pressing Ctrl+Shift+Space.",
+                "additionalDetail": "",
+                "shortSummary": "Line reference (line/ligne + number) found without Non-Breaking Space",
+                "name": "TXT012 – Line reference (line/ligne + number) found without Non-Breaking Space"
+            },
             "URL001": {
                 "code": "URL001",
                 "severityLabel": "Critical",
@@ -3548,6 +3558,12 @@
                 "meaning": "Le contenu se termine par une ponctuation incorrecte ou manquante.",
                 "suggestedFix": "Vérifiez et corrigez la ponctuation de fin du contenu selon les normes de rédaction ARC.",
                 "name": "TXT011 – La ponctuation de fin est incorrecte."
+            },
+            "TXT012": {
+                "shortSummary": "Référence de ligne (line/ligne + nombre) sans espace insécable",
+                "meaning": "Le mot \"line\", \"lines\", \"ligne\" ou \"lignes\" est suivi d'un nombre, mais l'espace entre les deux est un espace ordinaire et non un espace insécable (NBSP, U+00A0). Un espace ordinaire permet que la référence soit coupée entre deux lignes lors du rendu PDF.",
+                "suggestedFix": "Remplacez l'espace ordinaire entre \"ligne\" / \"line\" et le nombre par un espace insécable (U+00A0). Dans Designer, vous pouvez en insérer un en appuyant sur Ctrl+Maj+Espace.",
+                "name": "TXT012 – Référence de ligne (line/ligne + nombre) sans espace insécable"
             },
             "TXT-E001": {
                 "shortSummary": "Un espace avant un deux-points a été détecté.",
@@ -7278,9 +7294,9 @@
 
     <div id="errorSummaryBar" class="error-summary-bar" hidden>
         <span class="error-summary-label" data-i18n="errors_label">Errors:</span>
-        <span class="error-summary-item severity-critical" id="summaryItemCritical"><span id="summaryCountCritical">0</span> Critical</span>
-        <span class="error-summary-item severity-warning" id="summaryItemWarning"><span id="summaryCountWarning">0</span> Warning</span>
-        <span class="error-summary-item severity-notice" id="summaryItemNotice"><span id="summaryCountNotice">0</span> Notice</span>
+        <span class="error-summary-item severity-critical" id="summaryItemCritical"><span id="summaryCountCritical">0</span> <span data-i18n="severity_critical">Critical</span></span>
+        <span class="error-summary-item severity-warning" id="summaryItemWarning"><span id="summaryCountWarning">0</span> <span data-i18n="severity_warning">Warning</span></span>
+        <span class="error-summary-item severity-notice" id="summaryItemNotice"><span id="summaryCountNotice">0</span> <span data-i18n="severity_notice">Notice</span></span>
     </div>
 
     <div class="layout">
@@ -7333,11 +7349,11 @@
                     <div class="info-grid two-column">
                         <div class="info-column">
                             <div class="info-field">
-                                <div class="info-label">CRA Object Name</div>
+                                <div class="info-label" data-i18n="info_cra_object_name">CRA Object Name</div>
                                 <div class="info-value"><span id="craObjectNameValue" class="placeholder">&mdash;</span></div>
                             </div>
                             <div class="info-field">
-                                <div class="info-label">Location</div>
+                                <div class="info-label" data-i18n="info_location">Location</div>
                                 <div class="info-value"><span id="objectLocationValue" class="placeholder">&mdash;</span></div>
                             </div>
                             <div class="info-field">
@@ -7351,9 +7367,9 @@
                                 </div>
                             </div>
                             <div class="info-field">
-                                <div class="info-label">Name</div>
+                                <div class="info-label" data-i18n="info_name">Name</div>
                                 <div class="info-value">
-                                    <span id="objectNameValue" class="placeholder">Select an object to view details</span>
+                                    <span id="objectNameValue" class="placeholder" data-i18n="obj_select_placeholder">Select an object to view details</span>
                                     <button id="copyObjectName" class="copy-btn" type="button" aria-describedby="objectNameValue">Copy</button>
                                 </div>
                             </div>
@@ -7364,11 +7380,11 @@
                                 <div class="info-value"><span id="objectHeightValue" class="placeholder">&mdash;</span></div>
                             </div>
                             <div class="info-field">
-                                <div class="info-label">Role</div>
+                                <div class="info-label" data-i18n="info_role">Role</div>
                                 <div class="info-value"><span id="objectRoleValue" class="placeholder">&mdash;</span></div>
                             </div>
                             <div class="info-field">
-                                <div class="info-label">Type</div>
+                                <div class="info-label" data-i18n="info_type">Type</div>
                                 <div class="info-value"><span id="objectTypeValue" class="placeholder">&mdash;</span></div>
                             </div>
                             <div class="info-field">
@@ -7390,52 +7406,52 @@
                     </div>
                 </div>
                 <div class="panel-card" id="contentPanel" hidden>
-                    <h2>Content</h2>
+                    <h2 data-i18n="panel_content">Content</h2>
                     <div class="content-section-group">
                         <section class="content-section" id="contentTextSection" hidden>
-                            <h3>Text</h3>
+                            <h3 data-i18n="content_text">Text</h3>
                             <div id="contentTextValue" class="text-block"></div>
                         </section>
                         <section class="content-section" id="contentCaptionSection" hidden>
-                            <h3>Caption</h3>
+                            <h3 data-i18n="content_caption">Caption</h3>
                             <div id="contentCaptionValue" class="text-block"></div>
                         </section>
                         <section class="content-section" id="contentDefaultSection" hidden>
-                            <h3>Default Value</h3>
+                            <h3 data-i18n="content_default_value">Default Value</h3>
                             <div id="contentDefaultValue" class="text-block"></div>
                         </section>
                         <section class="content-section" id="contentSrtSection" hidden>
-                            <h3>Screen reader text (SRT)</h3>
+                            <h3 data-i18n="content_srt">Screen reader text (SRT)</h3>
                             <div id="contentSrtValue" class="text-block"></div>
                         </section>
                     </div>
                 </div>
                 <details class="panel-card typography-accordion" open>
-                    <summary class="typography-accordion-summary">Typography</summary>
+                    <summary class="typography-accordion-summary" data-i18n="panel_typography">Typography</summary>
                     <div class="typography-accordion-body">
                         <div class="typography-section">
-                            <h3>Font</h3>
+                            <h3 data-i18n="panel_font">Font</h3>
                             <div id="fontSection" class="detail-table">
-                                <p class="placeholder">Select an object to view font details.</p>
+                                <p class="placeholder" data-i18n="font_placeholder">Select an object to view font details.</p>
                             </div>
                         </div>
                         <div class="typography-section">
-                            <h3>Paragraph</h3>
+                            <h3 data-i18n="panel_paragraph">Paragraph</h3>
                             <div id="paragraphSection" class="detail-table">
-                                <p class="placeholder">Select an object to view paragraph details.</p>
+                                <p class="placeholder" data-i18n="paragraph_placeholder">Select an object to view paragraph details.</p>
                             </div>
                         </div>
                     </div>
                 </details>
                 <div class="panel-card" id="errorsPanel" hidden>
-                    <h2>Errors</h2>
+                    <h2 data-i18n="errors_heading">Errors</h2>
                     <div id="errorsContent" class="object-errors"></div>
                 </div>
             </div>
 
             <div id="tab-panel-heading" class="tab-panel" data-tab="heading" role="tabpanel" aria-labelledby="tab-btn-heading" tabindex="-1">
                 <div class="panel-card">
-                    <h2>Heading Report</h2>
+                    <h2 data-i18n="panel_heading_rpt">Heading Report</h2>
                     <div id="headingReport" class="heading-report">
                         <p id="headingReportPlaceholder" class="placeholder">Load an XDP file to view heading roles.</p>
                         <ol id="headingReportList" class="heading-report-list" hidden></ol>
@@ -7447,7 +7463,7 @@
                 <div class="panel-card">
                     <div class="grid-report-header">
                         <div class="grid-report-title">
-                            <h2>Grid Report</h2>
+                            <h2 data-i18n="grid_report_heading">Grid Report</h2>
                             <span id="gridOnGridSummary" class="grid-on-grid-summary">—</span>
                         </div>
                         <div class="unit-toggle" id="gridUnitToggle" role="group" aria-label="Measurement unit toggle">
@@ -7459,15 +7475,15 @@
                         <table class="grid-table" aria-describedby="gridUnitToggle">
                             <thead>
                                 <tr>
-                                    <th scope="col">Object</th>
-                                    <th scope="col">On grid</th>
-                                    <th scope="col">Type</th>
-                                    <th scope="col">X coord</th>
-                                    <th scope="col">Y coord</th>
-                                    <th scope="col">Width</th>
-                                    <th scope="col">Height</th>
-                                    <th scope="col">Min width</th>
-                                    <th scope="col">Min height</th>
+                                    <th scope="col" data-i18n="grid_col_object">Object</th>
+                                    <th scope="col" data-i18n="grid_col_on_grid">On grid</th>
+                                    <th scope="col" data-i18n="grid_col_type">Type</th>
+                                    <th scope="col" data-i18n="grid_col_x">X coord</th>
+                                    <th scope="col" data-i18n="grid_col_y">Y coord</th>
+                                    <th scope="col" data-i18n="grid_col_width">Width</th>
+                                    <th scope="col" data-i18n="grid_col_height">Height</th>
+                                    <th scope="col" data-i18n="grid_col_min_width">Min width</th>
+                                    <th scope="col" data-i18n="grid_col_min_height">Min height</th>
                                 </tr>
                             </thead>
                             <tbody id="gridReportBody">
@@ -7482,8 +7498,8 @@
 
             <div id="tab-panel-accessibility" class="tab-panel" data-tab="accessibility" role="tabpanel" aria-labelledby="tab-btn-accessibility" tabindex="-1">
                 <div class="panel-card">
-                    <h2>Accessibility Report</h2>
-                    <p class="placeholder">Place Holder</p>
+                    <h2 data-i18n="accessibility_report_heading">Accessibility Report</h2>
+                    <p class="placeholder" data-i18n="accessibility_placeholder">Place Holder</p>
                 </div>
             </div>
 
@@ -7597,6 +7613,10 @@
         const contentSrtValue = document.getElementById('contentSrtValue');
         const errorsPanel = document.getElementById('errorsPanel');
         const errorsContent = document.getElementById('errorsContent');
+        const langToggleButton = document.getElementById('langToggleButton');
+        const errorsCheckedSearch = document.getElementById('errorsCheckedSearch');
+        const errorNavCounter = document.getElementById('errorNavCounter');
+        const errorSummaryBar = document.getElementById('errorSummaryBar');
         const gridReportBody = document.getElementById('gridReportBody');
         const gridOnGridSummary = document.getElementById('gridOnGridSummary');
         const gridUnitToggle = document.getElementById('gridUnitToggle');
@@ -7672,11 +7692,6 @@
                 general:     t('cat_general')
             };
         }
-        const SETTINGS_CATEGORY_LABELS = Object.freeze({
-            fontSize: 'Font size',
-            lineSpacing: 'Lines spacing',
-            general: 'General Settings'
-        });
         const DEFAULT_SETTINGS_CATEGORY = 'general';
         const layoutContainer = document.querySelector('.layout');
         const treeResizer = document.querySelector('.tree-resizer');
@@ -7930,6 +7945,103 @@
                 ecat_8_fld:   'Field appearance & behavior',
                 ecat_en:      'English',
                 ecat_fr:      'French',
+                // Basic info labels
+                info_cra_object_name:  'CRA Object Name',
+                info_location:         'Location',
+                info_name:             'Name',
+                info_role:             'Role',
+                info_type:             'Type',
+                info_object_height:    'Object height',
+                info_caption_height:   'Object Caption height',
+                info_multiline_text:   'Multiline text',
+                info_multiline_caption:'Multiline Caption text',
+                info_multiline_value:  'Multiline value',
+                // Typography panel
+                panel_font:            'Font',
+                panel_paragraph:       'Paragraph',
+                font_placeholder:      'Select an object to view font details.',
+                paragraph_placeholder: 'Select an object to view paragraph details.',
+                // Errors panel
+                errors_heading:        'Errors',
+                // Grid report
+                grid_report_heading:   'Grid Report',
+                grid_col_object:       'Object',
+                grid_col_on_grid:      'On grid',
+                grid_col_type:         'Type',
+                grid_col_x:            'X coord',
+                grid_col_y:            'Y coord',
+                grid_col_width:        'Width',
+                grid_col_height:       'Height',
+                grid_col_min_width:    'Min width',
+                grid_col_min_height:   'Min height',
+                grid_on_grid_suffix:   'on grid',
+                grid_on_grid_title:    '{0} of {1} objects align with the grid.',
+                // Accessibility tab
+                accessibility_report_heading: 'Accessibility Report',
+                accessibility_placeholder:    'Place Holder',
+                // Advanced info panel labels
+                adv_locale:          'Locale',
+                adv_access:          'Access',
+                adv_presence:        'Presence',
+                adv_margins:         'Margins',
+                adv_bg_color:        'Background color(s)',
+                adv_text_dec:        'Text decoration(s)',
+                adv_spacing:         'Spacing above/below',
+                adv_indent:          'Indentation',
+                adv_patterns:        'Pattern(s)',
+                adv_dot_leader:      'Dot leader(s)',
+                adv_content_flow:    'Content flow',
+                adv_tabbing:         'Tabbing order',
+                adv_digits:          'Number of digits allowed',
+                adv_decimals:        'Number of decimals allowed',
+                adv_negative:        'Negative value allowed',
+                adv_cra_version:     'CRA object version',
+                adv_events:          'Events',
+                adv_library_usage:   'Library usage',
+                adv_not_specified:   'Not specified',
+                adv_no_margins:      'No margins defined',
+                adv_no_bg:           'No background fill',
+                adv_no_text_dec:     'No text decorations',
+                adv_no_spacing:      'No spacing values',
+                adv_no_indent:       'No indentation values',
+                adv_no_patterns:     'No value patterns',
+                adv_no_dot_leaders:  'No dot leaders defined',
+                adv_no_tabbing:      'No traversal references',
+                adv_no_events:       'No script events',
+                adv_no_libraries:    'No library references detected',
+                adv_select_object:   'Select an object to view advanced metadata.',
+                obj_select_placeholder: 'Select an object to view details',
+                // Content section headings
+                content_text:          'Text',
+                content_caption:       'Caption',
+                content_default_value: 'Default Value',
+                content_srt:           'Screen reader text (SRT)',
+                // Typography display strings
+                typo_value_header:     'Value',
+                typo_caption_header:   'Caption',
+                typo_font_size:        'Font & Size',
+                typo_bold_italic:      'Bold & Italic',
+                typo_font_color:       'Font color(s)',
+                typo_no_font_color:    'No explicit font color',
+                typo_line_spacing:     'Line spacing',
+                typo_not_detected:     'Not detected',
+                typo_unspecified_font: 'Unspecified font',
+                typo_bold_yes:         'Yes',
+                typo_bold_no:          'No',
+                typo_not_applicable:   'Typography properties are not applicable for this object.',
+                typo_not_applicable_subform: 'Typography properties are not applicable to subform containers.',
+                typo_para_not_applicable: 'Paragraph settings are not applicable for this object.',
+                // Error detail labels
+                err_extra_details:     'Extra details',
+                err_not_an_error:      'Not an error',
+                err_validation_error:  'Validation error',
+                err_lang_match_breakdown: 'Language match breakdown',
+                err_english_matches:   'English matches',
+                err_french_matches:    'French matches',
+                // formatBooleanYesNo
+                bool_yes:              'Yes',
+                bool_no:               'No',
+                bool_not_detected:     'Not detected',
             },
             fr: {
                 // Header
@@ -8097,6 +8209,103 @@
                 ecat_8_fld:   'Apparence et comportement des champs',
                 ecat_en:      'Anglais',
                 ecat_fr:      'Français',
+                // Basic info labels
+                info_cra_object_name:  'Nom d\'objet ARC',
+                info_location:         'Emplacement',
+                info_name:             'Nom',
+                info_role:             'Rôle',
+                info_type:             'Type',
+                info_object_height:    'Hauteur de l\'objet',
+                info_caption_height:   'Hauteur de légende de l\'objet',
+                info_multiline_text:   'Texte multiligne',
+                info_multiline_caption:'Légende multiligne',
+                info_multiline_value:  'Valeur multiligne',
+                // Typography panel
+                panel_font:            'Police',
+                panel_paragraph:       'Paragraphe',
+                font_placeholder:      'Sélectionnez un objet pour afficher les détails de police.',
+                paragraph_placeholder: 'Sélectionnez un objet pour afficher les détails de paragraphe.',
+                // Errors panel
+                errors_heading:        'Erreurs',
+                // Grid report
+                grid_report_heading:   'Rapport de grille',
+                grid_col_object:       'Objet',
+                grid_col_on_grid:      'Sur grille',
+                grid_col_type:         'Type',
+                grid_col_x:            'Coord. X',
+                grid_col_y:            'Coord. Y',
+                grid_col_width:        'Largeur',
+                grid_col_height:       'Hauteur',
+                grid_col_min_width:    'Larg. min',
+                grid_col_min_height:   'Haut. min',
+                grid_on_grid_suffix:   'sur grille',
+                grid_on_grid_title:    '{0} objet(s) sur {1} sont alignés sur la grille.',
+                // Accessibility tab
+                accessibility_report_heading: 'Rapport d\'accessibilité',
+                accessibility_placeholder:    'Espace réservé',
+                // Advanced info panel labels
+                adv_locale:          'Paramètres régionaux',
+                adv_access:          'Accès',
+                adv_presence:        'Présence',
+                adv_margins:         'Marges',
+                adv_bg_color:        'Couleur(s) de fond',
+                adv_text_dec:        'Décoration(s) de texte',
+                adv_spacing:         'Espacement au-dessus/en dessous',
+                adv_indent:          'Retrait',
+                adv_patterns:        'Modèle(s)',
+                adv_dot_leader:      'Filet(s) de conduite',
+                adv_content_flow:    'Flux de contenu',
+                adv_tabbing:         'Ordre de tabulation',
+                adv_digits:          'Nombre de chiffres autorisés',
+                adv_decimals:        'Nombre de décimales autorisées',
+                adv_negative:        'Valeur négative autorisée',
+                adv_cra_version:     'Version de l\'objet ARC',
+                adv_events:          'Événements',
+                adv_library_usage:   'Utilisation des bibliothèques',
+                adv_not_specified:   'Non spécifié',
+                adv_no_margins:      'Aucune marge définie',
+                adv_no_bg:           'Aucun remplissage d\'arrière-plan',
+                adv_no_text_dec:     'Aucune décoration de texte',
+                adv_no_spacing:      'Aucune valeur d\'espacement',
+                adv_no_indent:       'Aucune valeur de retrait',
+                adv_no_patterns:     'Aucun modèle de valeur',
+                adv_no_dot_leaders:  'Aucun filet de conduite défini',
+                adv_no_tabbing:      'Aucune référence de parcours',
+                adv_no_events:       'Aucun événement de script',
+                adv_no_libraries:    'Aucune référence de bibliothèque détectée',
+                adv_select_object:   'Sélectionnez un objet pour afficher les métadonnées avancées.',
+                obj_select_placeholder: 'Sélectionnez un objet pour afficher les détails',
+                // Content section headings
+                content_text:          'Texte',
+                content_caption:       'Légende',
+                content_default_value: 'Valeur par défaut',
+                content_srt:           'Texte du lecteur d\'écran (SRT)',
+                // Typography display strings
+                typo_value_header:     'Valeur',
+                typo_caption_header:   'Légende',
+                typo_font_size:        'Police & Taille',
+                typo_bold_italic:      'Gras & Italique',
+                typo_font_color:       'Couleur(s) de police',
+                typo_no_font_color:    'Aucune couleur de police explicite',
+                typo_line_spacing:     'Interligne',
+                typo_not_detected:     'Non détecté',
+                typo_unspecified_font: 'Police non spécifiée',
+                typo_bold_yes:         'Oui',
+                typo_bold_no:          'Non',
+                typo_not_applicable:   'Les propriétés typographiques ne s\'appliquent pas à cet objet.',
+                typo_not_applicable_subform: 'Les propriétés typographiques ne s\'appliquent pas aux conteneurs de sous-formulaires.',
+                typo_para_not_applicable: 'Les paramètres de paragraphe ne s\'appliquent pas à cet objet.',
+                // Error detail labels
+                err_extra_details:     'Détails supplémentaires',
+                err_not_an_error:      'Pas une erreur',
+                err_validation_error:  'Erreur de validation',
+                err_lang_match_breakdown: 'Détail des correspondances linguistiques',
+                err_english_matches:   'Correspondances anglaises',
+                err_french_matches:    'Correspondances françaises',
+                // formatBooleanYesNo
+                bool_yes:              'Oui',
+                bool_no:               'Non',
+                bool_not_detected:     'Non détecté',
             }
         };
 
@@ -8108,69 +8317,63 @@
                 : (UI_STRINGS.en[key] || key);
         }
 
-        /** Re-render all settings-panel checkbox labels in the current language.
-         *  Walks every [data-error-code] element and calls getContentErrorLabel()
-         *  (which reads the FR overlay when currentLanguage === 'fr') so labels
-         *  update instantly on language switch without rebuilding the DOM. */
+        // Static EN→FR map for settings panel category headings.
+        // Computed once; refreshCheckboxLabels reads from it without rebuilding.
+        const CATEGORY_TRANSLATIONS = {
+            'Form Infrastructure':      'Infrastructure du formulaire',
+            'Typography':               'Typographie',
+            'Content':                  'Contenu',
+            'Screen Reader Text (SRT)': "Texte du lecteur d'écran (SRT)",
+            'Language & Locale':        'Langue et paramètres régionaux',
+            'Accessibility':            'Accessibilité',
+            'Events & Scripts':         'Événements et scripts',
+            'Fields':                   'Champs',
+            'Font':                     'Police',
+            'Paragraph':                'Paragraphe',
+            'Structure':                'Structure',
+            'URL':                      'URL',
+            'Tables':                   'Tableaux',
+            'Headings':                 'En-têtes',
+            'Lists':                    'Listes',
+            'Roles':                    'Rôles',
+            'Footnotes':                'Notes de bas de page',
+            'Form-level checks':        'Vérifications au niveau du formulaire',
+            'Core Libraries':           'Bibliothèques principales',
+            'Core':                     'Principaux',
+            'Optional':                 'Facultatifs',
+        };
+        const FR_CATEGORY_TO_EN = Object.fromEntries(
+            Object.entries(CATEGORY_TRANSLATIONS).map(([en, fr]) => [fr, en])
+        );
+
+        /** Re-render all settings-panel checkbox labels and badges in the current language.
+         *  Reads name directly from getErrorDescription() — no manual string assembly. */
         function refreshCheckboxLabels() {
-            // Error-check checkboxes
+            // Error-check checkboxes: patch the label span in-place from the
+            // language-aware `name` field (already "CODE – summary" in the right language).
             document.querySelectorAll('[data-error-code] .error-check-label-text').forEach(span => {
                 const li = span.closest('[data-error-code]');
                 if (!li) { return; }
                 const code = li.dataset.errorCode;
                 if (!code) { return; }
-                const label = getContentErrorLabel(code) || code;
-                span.textContent = `${code} \u2013 ${label}`;
-                li.dataset.searchText = [code, label].join(' ');
+                const desc = getErrorDescription(code);
+                const name = (desc && desc.name) || code;
+                span.textContent = name;
+                li.dataset.searchText = name;
             });
 
-            // Severity badges (Critical / Warning / Notice)
-            const sevMap = {
-                'critical':      { en: 'Critical',    fr: 'Critique' },
-                'critique':      { en: 'Critical',    fr: 'Critique' },
-                'warning':       { en: 'Warning',     fr: 'Avertissement' },
-                'avertissement': { en: 'Warning',     fr: 'Avertissement' },
-                'notice':        { en: 'Notice',      fr: 'Avis' },
-                'avis':          { en: 'Notice',      fr: 'Avis' },
-            };
-            document.querySelectorAll('.error-severity-badge').forEach(badge => {
-                const key = badge.textContent.trim().toLowerCase();
-                if (sevMap[key]) {
-                    badge.textContent = sevMap[key][currentLanguage] || sevMap[key].en;
-                }
+            // Severity badges: translate from the stable data-severity attribute,
+            // not from live text content (which would be language-dependent).
+            document.querySelectorAll('.error-severity-badge[data-severity]').forEach(badge => {
+                badge.textContent = getSeverityLabel(Number(badge.dataset.severity));
             });
 
-            // Category <summary> headings inside the settings panel
-            const catMap = {
-                'Form Infrastructure':      'Infrastructure du formulaire',
-                'Typography':               'Typographie',
-                'Content':                  'Contenu',
-                'Screen Reader Text (SRT)': "Texte du lecteur d'écran (SRT)",
-                'Language & Locale':        'Langue et paramètres régionaux',
-                'Accessibility':            'Accessibilité',
-                'Events & Scripts':         'Événements et scripts',
-                'Fields':                   'Champs',
-                'Font':                     'Police',
-                'Paragraph':                'Paragraphe',
-                'Structure':                'Structure',
-                'URL':                      'URL',
-                'Tables':                   'Tableaux',
-                'Headings':                 'En-têtes',
-                'Lists':                    'Listes',
-                'Roles':                    'Rôles',
-                'Footnotes':                'Notes de bas de page',
-                'Form-level checks':        'Vérifications au niveau du formulaire',
-                'Core Libraries':           'Bibliothèques principales',
-                'Core':                     'Principaux',
-                'Optional':                 'Facultatifs',
-            };
-            // Build reverse map for FR→EN lookup
-            const frToEn = Object.fromEntries(Object.entries(catMap).map(([en, fr]) => [fr, en]));
+            // Category <summary> headings inside the settings panel.
             document.querySelectorAll('#settingsContent details > summary').forEach(sum => {
                 const text = sum.textContent.trim();
-                const enKey = frToEn[text] ?? text; // resolve if already in FR
-                if (Object.prototype.hasOwnProperty.call(catMap, enKey)) {
-                    sum.textContent = currentLanguage === 'fr' ? catMap[enKey] : enKey;
+                const enKey = FR_CATEGORY_TO_EN[text] ?? text; // resolve if already in FR
+                if (Object.prototype.hasOwnProperty.call(CATEGORY_TRANSLATIONS, enKey)) {
+                    sum.textContent = currentLanguage === 'fr' ? CATEGORY_TRANSLATIONS[enKey] : enKey;
                 }
             });
         }
@@ -8183,16 +8386,13 @@
                 if (key) { el.textContent = t(key); }
             });
             // aria-labels on error nav buttons
-            const prevBtn = document.getElementById('prevErrorButton');
-            const nextBtn = document.getElementById('nextErrorButton');
-            if (prevBtn) prevBtn.setAttribute('aria-label', t('prev_error_aria'));
-            if (nextBtn) nextBtn.setAttribute('aria-label', t('next_error_aria'));
+            if (prevErrorButton) prevErrorButton.setAttribute('aria-label', t('prev_error_aria'));
+            if (nextErrorButton) nextErrorButton.setAttribute('aria-label', t('next_error_aria'));
             // Language toggle button itself
-            const langBtn = document.getElementById('langToggleButton');
-            if (langBtn) {
-                langBtn.textContent = t('lang_toggle_text');
-                langBtn.setAttribute('aria-label', t('lang_toggle_label'));
-                langBtn.setAttribute('title', t('lang_toggle_title'));
+            if (langToggleButton) {
+                langToggleButton.textContent = t('lang_toggle_text');
+                langToggleButton.setAttribute('aria-label', t('lang_toggle_label'));
+                langToggleButton.setAttribute('title', t('lang_toggle_title'));
             }
             // Tree placeholder
             const treePlaceholder = document.querySelector('#objectTree .placeholder');
@@ -8207,15 +8407,13 @@
                     );
                 }
             }
-            // Re-render settings panel checkbox labels and category headings
+            // Patch all toggle labels and category headings in-place.
+            // Both programmatic-check rows (Path 1) and content-error rows (Path 2)
+            // carry data-error-code + error-check-label-text, so a single walk
+            // covers everything — no DOM rebuild needed.
             refreshCheckboxLabels();
-            // Re-render the content-error toggle list (appendToggle path)
-            if (typeof renderContentErrorSettings === 'function') {
-                renderContentErrorSettings();
-            }
             // Refresh search input placeholder
-            const errSearch = document.getElementById('errorsCheckedSearch');
-            if (errSearch) { errSearch.placeholder = t('search_error_codes_placeholder'); }
+            if (errorsCheckedSearch) { errorsCheckedSearch.placeholder = t('search_error_codes_placeholder'); }
             // Refresh settings placeholder texts
             const settingsPlaceholder = document.querySelector('#settingsContent .placeholder');
             if (settingsPlaceholder && !settingsPlaceholder.closest('[data-object-id]')) {
@@ -8227,6 +8425,10 @@
             }
             // Persist
             try { localStorage.setItem('autoreview_lang', currentLanguage); } catch {}
+            // Refresh grid on-grid summary suffix if data is loaded
+            if (_lastGridEligibleCount !== null) {
+                updateGridReportSummary(_lastGridAlignedCount, _lastGridEligibleCount);
+            }
         }
         // ═══════════════════════════════════════════════════════════════════
 
@@ -8505,7 +8707,6 @@
             }
             return keys;
         }
-        const LINE_HEIGHT_SYMBOL_EXCEPTIONS = new Set('±><√≤≥<>–+÷×=≠►▼◄▲▪•✓'.split(''));
         const DOT_LEADER_FAKE_PATTERN = /(\.\s?){4,}/;
         const DOT_LEADER_FAKE_PATTERN_G = new RegExp(DOT_LEADER_FAKE_PATTERN.source, 'g');
         const FONT_SPECIAL_GLYPHS = new Set(['►', '▼', '◄', '▲']);
@@ -8515,14 +8716,6 @@
             letter: { width: 612, height: 792 },
             legal: { width: 612, height: 1008 }
         });
-        const computeConstant = value => () => value;
-        const computeFontPlusOffset = (fontCompute, offset) => context => {
-            if (typeof fontCompute !== 'function') {
-                return null;
-            }
-            const base = fontCompute(context);
-            return Number.isFinite(base) ? base + offset : null;
-        };
         const EXPECTED_VALUE_VARIABLES = {
             expSpecCharFontSize: {
                 label: 'Font size for special characters:',
@@ -10297,64 +10490,6 @@
         };
         const ERROR_DESCRIPTION_MAP = window.ERROR_DESCRIPTIONS || {};
 
-        function getErrorTextEntry(code) {
-            if (!code) {
-                return null;
-            }
-            const entry = ERROR_DESCRIPTION_MAP[code];
-            if (!entry || typeof entry !== 'object') {
-                return null;
-            }
-            if (currentLanguage === 'fr') {
-                const frMap = window.ERROR_DESCRIPTIONS_FR || {};
-                const frEntry = frMap[code];
-                if (frEntry && typeof frEntry === 'object') {
-                    return {
-                        ...entry,
-                        shortSummary: frEntry.shortSummary || entry.shortSummary,
-                        meaning:      frEntry.meaning      || entry.meaning,
-                        suggestedFix: frEntry.suggestedFix || entry.suggestedFix,
-                        name: code + ' \u2013 ' + (frEntry.shortSummary || entry.shortSummary)
-                    };
-                }
-            }
-            return entry;
-        }
-        /** Returns the display label for a code in the current language.
-         *  Reads live from ERROR_DESCRIPTIONS / ERROR_DESCRIPTIONS_FR so labels
-         *  are always correct after a language switch. Replaces the old
-         *  CONTENT_ERROR_LABEL_OVERRIDES static English-only dictionary. */
-        function getContentErrorLabel(code) {
-            if (!code) { return code; }
-            const entry = getErrorTextEntry(code); // already language-aware
-            if (entry) {
-                return entry.shortSummary || entry.meaning || code;
-            }
-            return code;
-        }
-
-        // Empty alias — kept so any stray references don't throw.
-        const CONTENT_ERROR_LABEL_OVERRIDES = {};
-
-        function deriveContentErrorLabel(code, description) {
-            if (description && typeof description === 'object') {
-                if (typeof description.name === 'string' && description.name.includes('–')) {
-                    const parts = description.name.split('–');
-                    const candidate = parts.slice(1).join('–').trim();
-                    if (candidate) {
-                        return candidate;
-                    }
-                }
-                if (typeof description.shortSummary === 'string' && description.shortSummary.trim()) {
-                    return description.shortSummary.trim();
-                }
-                if (typeof description.meaning === 'string' && description.meaning.trim()) {
-                    return description.meaning.trim();
-                }
-            }
-            return code;
-        }
-
         function deriveContentErrorSeverity(description) {
             if (description && typeof description.severity === 'number') {
                 return description.severity;
@@ -10380,10 +10515,6 @@
                 const description = ERROR_DESCRIPTION_MAP[code];
                 definitionMap[code] = {
                     code,
-                    // label stores the English shortSummary at build-time;
-                    // at render-time getContentErrorLabel(code) is called instead
-                    // so the correct language is always used.
-                    label: (description && description.shortSummary) || deriveContentErrorLabel(code, description),
                     severity: deriveContentErrorSeverity(description)
                 };
             });
@@ -10398,7 +10529,6 @@
                 }
             };
             Object.keys(ERROR_DESCRIPTION_MAP || {}).forEach(add);
-            Object.keys(CONTENT_ERROR_LABEL_OVERRIDES || {}).forEach(add);
             ERROR_CHECK_DEFINITIONS.forEach(def => add(def && def.code));
         }());
 
@@ -14381,58 +14511,70 @@
             applyErrorResultsToObjects();
         }
 
-        function createErrorCheckElement(definition) {
-            const listElement = getErrorCategoryListElement(definition.category);
-            if (!listElement) {
-                return;
-            }
+        /**
+         * Unified DOM builder for a single error-check toggle row.
+         *
+         * Both programmatic checks (ERROR_CHECK_DEFINITIONS) and content-error
+         * checks (CONTENT_ERROR_DEFINITIONS) produce identical DOM; the only
+         * real differences are which state map they write to, what toggle-ID
+         * format they use, and whether they need a DOM fallback list. Those
+         * details are handled by the caller via the options object and by
+         * running any post-creation logic after this function returns.
+         *
+         * @param {object} opts
+         *   code             {string}    Error code, e.g. "EVNT009"
+         *   category         {string}    data-scope of the target <ul>
+         *   toggleId         {string}    HTML id for the <input type="checkbox">
+         *   isChecked        {boolean}   Initial checked state
+         *   extraClass       {string=}   Extra CSS class on the <li>
+         *   fallbackCategory {string=}   Scope to fall back to if category list not found
+         *   fallbackSeverity {number=}   Severity used when the description has none
+         *   onToggle         {function}  Called with (isChecked) on every change
+         * @returns {{ listItem, toggle, labelText } | null}
+         */
+        function createErrorCheckToggle({ code, category, toggleId, isChecked,
+                                          extraClass, fallbackCategory, fallbackSeverity, onToggle }) {
+            const listElement = getErrorCategoryListElement(category)
+                || (fallbackCategory ? getErrorCategoryListElement(fallbackCategory) : null);
+            if (!listElement) { return null; }
+
             const listItem = document.createElement('li');
             listItem.className = 'error-check';
-            if (definition.code) {
-                listItem.dataset.errorCode = definition.code;
-            }
+            if (code) { listItem.dataset.errorCode = code; }
+            if (extraClass) { listItem.classList.add(extraClass); }
 
             const row = document.createElement('div');
             row.className = 'error-check-row';
 
             const toggleLabel = document.createElement('label');
             toggleLabel.className = 'error-toggle';
-            toggleLabel.setAttribute('for', `${definition.id}-toggle`);
+            toggleLabel.setAttribute('for', toggleId);
 
             const toggle = document.createElement('input');
             toggle.type = 'checkbox';
-            toggle.id = `${definition.id}-toggle`;
-            const activeDefault = definition.activeByDefault !== false;
-            toggle.checked = activeDefault;
-            toggle.dataset.checkId = definition.id;
+            toggle.id = toggleId;
+            toggle.checked = isChecked;
 
-            const textEntry = getErrorTextEntry(definition.code);
+            // `name` from getErrorDescription is already the final "CODE – summary"
+            // string in the active language — no manual string assembly needed.
+            const desc = getErrorDescription(code);
+            const name = (desc && desc.name) || code || '';
 
             const labelText = document.createElement('span');
             labelText.className = 'error-check-label-text';
-            const titlePrefix = definition.code ? `${definition.code} \u2013 ` : '';
-            const derivedLabel = getContentErrorLabel(definition.code)
-                || deriveContentErrorLabel(definition.code, textEntry)
-                || definition.label;
-            labelText.textContent = `${titlePrefix}${derivedLabel}`;
-            const searchParts = [definition.code, derivedLabel].filter(p => typeof p === 'string' && p.trim());
-            listItem.dataset.searchText = searchParts.join(' ');
+            labelText.textContent = name;
+            listItem.dataset.searchText = name;
 
             toggleLabel.appendChild(toggle);
             toggleLabel.appendChild(labelText);
-            const severityFromDescription = textEntry && typeof textEntry.severity === 'number'
-                ? textEntry.severity
-                : null;
-            const severityFromDefinition = typeof definition.severity === 'number'
-                ? definition.severity
-                : null;
-            const severity = severityFromDescription !== null
-                ? severityFromDescription
-                : severityFromDefinition;
+
+            const severity = (desc && desc.severity !== null ? desc.severity : null)
+                ?? (typeof fallbackSeverity === 'number' ? fallbackSeverity : null);
             if (severity !== null) {
                 const badgeClass = getSeverityClass(severity);
                 const badge = document.createElement('span');
                 badge.className = `error-severity-badge${badgeClass ? ` ${badgeClass}` : ''}`;
+                badge.dataset.severity = severity; // stable anchor for refreshCheckboxLabels
                 badge.textContent = getSeverityLabel(severity);
                 badge.setAttribute('aria-hidden', 'true');
                 toggleLabel.appendChild(badge);
@@ -14440,40 +14582,55 @@
 
             row.appendChild(toggleLabel);
 
-            let infoBundle = null;
-            if (definition.code) {
-                infoBundle = createErrorInfoBundle([definition.code], {
-                    label: `View full error message for ${definition.code}`
+            if (code) {
+                const infoBundle = createErrorInfoBundle([code], {
+                    label: `View full error message for ${code}`
                 });
-            }
-            if (infoBundle) {
-                row.appendChild(infoBundle.button);
-            }
-
-            listItem.appendChild(row);
-            if (infoBundle) {
-                listItem.appendChild(infoBundle.panel);
+                if (infoBundle) {
+                    row.appendChild(infoBundle.button);
+                    listItem.appendChild(row);
+                    listItem.appendChild(infoBundle.panel);
+                } else {
+                    listItem.appendChild(row);
+                }
+            } else {
+                listItem.appendChild(row);
             }
 
             listElement.appendChild(listItem);
+            toggle.addEventListener('change', () => onToggle(toggle.checked));
 
+            return { listItem, toggle, labelText };
+        }
+
+        /** Path 1 wrapper: creates the toggle row then registers it in the
+         *  programmatic-check state maps (errorCheckElements / errorCheckState). */
+        function createErrorCheckElement(definition) {
+            const activeDefault = definition.activeByDefault !== false;
+            const result = createErrorCheckToggle({
+                code:             definition.code,
+                category:         definition.category,
+                toggleId:         `${definition.id}-toggle`,
+                isChecked:        activeDefault,
+                fallbackSeverity: definition.severity,
+                onToggle: isChecked => {
+                    const state = errorCheckState.get(definition.id) || { active: true };
+                    state.active = isChecked;
+                    errorCheckState.set(definition.id, state);
+                    updateErrorCheckResultById(definition.id);
+                }
+            });
+            if (!result) { return; }
+
+            // Stamp the check ID on the toggle (used by update helpers) and
+            // register the elements + initial state in their respective maps.
+            result.toggle.dataset.checkId = definition.id;
             errorCheckElements.set(definition.id, {
-                container: listItem,
-                toggle,
-                label: labelText
+                container: result.listItem,
+                toggle:    result.toggle,
+                label:     result.labelText
             });
-
-            errorCheckState.set(definition.id, {
-                active: activeDefault,
-                result: null
-            });
-
-            toggle.addEventListener('change', () => {
-                const state = errorCheckState.get(definition.id) || { active: true };
-                state.active = toggle.checked;
-                errorCheckState.set(definition.id, state);
-                updateErrorCheckResultById(definition.id);
-            });
+            errorCheckState.set(definition.id, { active: activeDefault, result: null });
         }
 
         function initializeErrorCheckUI() {
@@ -14771,138 +14928,39 @@
             };
         }
 
+        /** Path 2: creates toggle rows for every content-error code.
+         *  Called once at init. On language switch, refreshCheckboxLabels()
+         *  patches the existing spans in-place — no DOM rebuild needed. */
         function renderContentErrorSettings() {
-            const contentScopeLists = new Map();
-
-            const ensureListForScope = scopeName => {
-                const normalized = typeof scopeName === 'string' ? scopeName.trim() : '';
-                if (!normalized) {
-                    return null;
-                }
-                const cacheKey = normalized.toLowerCase();
-                if (contentScopeLists.has(cacheKey)) {
-                    return contentScopeLists.get(cacheKey);
-                }
-                const listElement = getErrorCategoryListElement(normalized);
-                if (listElement) {
-                    contentScopeLists.set(cacheKey, listElement);
-                    return listElement;
-                }
-                return null;
-            };
-
-            const registerContentScopes = () => {
-                const scopeNames = new Set(['text']);
-                CONTENT_ERROR_SCOPE_RULES.forEach(rule => {
-                    if (rule && rule.scope) {
-                        scopeNames.add(rule.scope);
-                    }
-                });
-                scopeNames.forEach(scopeName => {
-                    ensureListForScope(scopeName);
-                });
-            };
-
-            registerContentScopes();
-
-            const fallbackList = ensureListForScope('text');
-            const availableLists = Array.from(new Set(
-                Array.from(contentScopeLists.values()).filter(Boolean)
-            ));
-
-            if (!availableLists.length && !fallbackList) {
+            // Guard: nothing to do if no lists exist yet.
+            if (!getErrorCategoryListElement('text') && !document.querySelector('.error-checks-list')) {
                 return;
             }
 
-            availableLists.forEach(list => {
-                list.textContent = '';
-            });
-
-            const appendToggle = (scopeName, code, extraClass = 'content-error-toggle') => {
-                const targetList = ensureListForScope(scopeName) || fallbackList;
-                if (!targetList) {
-                    return;
-                }
-                const definition = CONTENT_ERROR_DEFINITIONS[code] || {};
-                const listItem = document.createElement('li');
-                listItem.className = 'error-check';
-                listItem.dataset.errorCode = code;
-                if (extraClass) {
-                    listItem.classList.add(extraClass);
-                }
-
-                const row = document.createElement('div');
-                row.className = 'error-check-row';
-
-                const toggleLabel = document.createElement('label');
-                toggleLabel.className = 'error-toggle';
-                toggleLabel.setAttribute('for', `${code}-content-toggle`);
-
-                const toggle = document.createElement('input');
-                toggle.type = 'checkbox';
-                toggle.id = `${code}-content-toggle`;
-                toggle.checked = isContentErrorEnabled(code);
-
-                const labelText = document.createElement('span');
-                labelText.className = 'error-check-label-text';
-                const titleLabel = getContentErrorLabel(code) || definition.label || 'Text validation issue';
-                labelText.textContent = `${code} \u2013 ${titleLabel}`;
-                listItem.dataset.searchText = `${code} ${titleLabel}`.trim();
-
-                toggleLabel.appendChild(toggle);
-                toggleLabel.appendChild(labelText);
-
-                const severity = typeof definition.severity === 'number' ? definition.severity : null;
-                if (severity !== null) {
-                    const badgeClass = getSeverityClass(severity);
-                    const badge = document.createElement('span');
-                    badge.className = `error-severity-badge${badgeClass ? ` ${badgeClass}` : ''}`;
-                    badge.textContent = getSeverityLabel(severity);
-                    badge.setAttribute('aria-hidden', 'true');
-                    toggleLabel.appendChild(badge);
-                }
-
-                row.appendChild(toggleLabel);
-
-                const infoBundle = createErrorInfoBundle([code], {
-                    label: `View full error message for ${code}`
-                });
-                if (infoBundle) {
-                    row.appendChild(infoBundle.button);
-                    listItem.appendChild(row);
-                    listItem.appendChild(infoBundle.panel);
-                } else {
-                    listItem.appendChild(row);
-                }
-                targetList.appendChild(listItem);
-
-                toggle.addEventListener('change', () => {
-                    setContentErrorPreference(code, toggle.checked);
-                });
-            };
-
-            const groupedByScope = new Map();
+            // Clear previously rendered items. Static programmatic-check items
+            // from initializeErrorCheckUI are NOT marked with this class and are
+            // never touched here.
+            document.querySelectorAll('li.content-error-toggle').forEach(li => li.remove());
 
             Object.keys(CONTENT_ERROR_DEFINITIONS)
                 .filter(code => !ERROR_CHECK_CODE_SET.has(code))
                 .sort()
                 .forEach(code => {
+                    const definition = CONTENT_ERROR_DEFINITIONS[code] || {};
                     const placement = resolveContentErrorPlacement(code);
-                    const scopeKey = placement && placement.scope ? placement.scope : '';
-                    const extraClass = placement && placement.extraClass
-                        ? placement.extraClass
-                        : 'content-error-toggle';
-                    if (!groupedByScope.has(scopeKey)) {
-                        groupedByScope.set(scopeKey, []);
-                    }
-                    groupedByScope.get(scopeKey).push({ code, extraClass });
+                    const scopeKey  = (placement && placement.scope) || null;
+                    const extraClass = (placement && placement.extraClass) || 'content-error-toggle';
+                    createErrorCheckToggle({
+                        code,
+                        category:         scopeKey,
+                        toggleId:         `${code}-content-toggle`,
+                        isChecked:        isContentErrorEnabled(code),
+                        extraClass,
+                        fallbackCategory: 'text',
+                        fallbackSeverity: definition.severity,
+                        onToggle: isChecked => setContentErrorPreference(code, isChecked)
+                    });
                 });
-
-            groupedByScope.forEach((entries, scopeKey) => {
-                entries.forEach(entry => {
-                    appendToggle(scopeKey || null, entry.code, entry.extraClass);
-                });
-            });
         }
 
         function applyErrorsCheckedSearchFilter(rawQuery) {
@@ -14950,7 +15008,7 @@
         }
 
         function initializeErrorsCheckedSearch() {
-            const input = document.getElementById('errorsCheckedSearch');
+            const input = errorsCheckedSearch;
             if (!input || !errorsCheckedContainer) {
                 return;
             }
@@ -14968,21 +15026,22 @@
                 return null;
             }
             const severity = typeof entry.severity === 'number' ? entry.severity : null;
-            // Merge French overlay when active (same logic as getErrorTextEntry)
-            let shortSummary  = entry.shortSummary  || '';
-            let meaning       = entry.meaning        || '';
-            let suggestedFix  = entry.suggestedFix   || '';
+            let name         = entry.name         || '';
+            let shortSummary = entry.shortSummary || '';
+            let meaning      = entry.meaning      || '';
+            let suggestedFix = entry.suggestedFix || '';
             if (currentLanguage === 'fr') {
                 const frEntry = (window.ERROR_DESCRIPTIONS_FR || {})[code];
                 if (frEntry && typeof frEntry === 'object') {
-                    shortSummary  = frEntry.shortSummary  || shortSummary;
-                    meaning       = frEntry.meaning        || meaning;
-                    suggestedFix  = frEntry.suggestedFix   || suggestedFix;
+                    name         = frEntry.name         || name;
+                    shortSummary = frEntry.shortSummary || shortSummary;
+                    meaning      = frEntry.meaning      || meaning;
+                    suggestedFix = frEntry.suggestedFix || suggestedFix;
                 }
             }
             return {
                 code: entry.code || code,
-                name: `${code} \u2013 ${shortSummary}` || `${code}`,
+                name: name || `${code} \u2013 ${shortSummary}` || code,
                 shortSummary,
                 meaning,
                 suggestedFix,
@@ -15346,28 +15405,19 @@
         function createContentErrorEntry(code, count = 1) {
             const definition = CONTENT_ERROR_DEFINITIONS[code] || {};
             const description = getErrorDescription(code);
-            const titleLabel = definition.label || 'Text validation issue';
-            const summary = description && description.shortSummary
-                ? description.shortSummary
-                : (definition.summary || 'Resolve the detected text content issue.');
-            const meaning = description && description.meaning
-                ? description.meaning
-                : buildMeaningFromSummary(summary);
-            const solution = description && description.suggestedFix
-                ? description.suggestedFix
-                : (definition.solution || '');
-            const extraDetail = description && description.additionalDetail
-                ? description.additionalDetail
-                : '';
-            const severity = description && description.severity !== null
-                ? description.severity
-                : (typeof definition.severity === 'number' ? definition.severity : 3);
-            const severityLabel = description && description.severityLabel
-                ? description.severityLabel
-                : (severity ? getSeverityLabel(severity) : '');
+            const summary = (description && description.shortSummary)
+                || 'Resolve the detected text content issue.';
+            const meaning = (description && description.meaning)
+                || buildMeaningFromSummary(summary);
+            const solution = (description && description.suggestedFix) || '';
+            const extraDetail = (description && description.additionalDetail) || '';
+            const severity = (description && description.severity !== null ? description.severity : null)
+                ?? (typeof definition.severity === 'number' ? definition.severity : 3);
+            const severityLabel = (description && description.severityLabel)
+                || (severity ? getSeverityLabel(severity) : '');
             const entry = {
                 code,
-                title: description && description.name ? description.name : `${code} – ${titleLabel}`,
+                title: (description && description.name) || code,
                 summary,
                 meaning,
                 solution,
@@ -15972,10 +16022,6 @@
                     return { context, label, text, contextKey };
                 })
                 .filter(item => item && item.text);
-            const headingLevelNumeric = (() => {
-                const parsed = Number.parseInt(headingLevelValue, 10);
-                return Number.isFinite(parsed) ? parsed : null;
-            })();
             const structural = metadataForText && metadataForText.structural ? metadataForText.structural : null;
             const resolveHeadingBoldFlags = (ctx, fallbackKey = null) => {
                 const contextObject = ctx || {};
@@ -16728,16 +16774,10 @@
         }
 
         function getSeverityLabel(severity) {
-            if (severity === 3) {
-                return 'Critical';
-            }
-            if (severity === 2) {
-                return 'Warning';
-            }
-            if (severity === 1) {
-                return 'Notice';
-            }
-            return 'Info';
+            if (severity === 3) { return t('severity_critical'); }
+            if (severity === 2) { return t('severity_warning'); }
+            if (severity === 1) { return t('severity_notice'); }
+            return t('severity_notice');
         }
 
         function hydrateFromArchivedState(state) {
@@ -18294,7 +18334,6 @@
             const isFormNumberTextCandidate = candidateTexts.some(text => containsFormNumberFragment(text) || isFormNumberText(text));
             const isScheduleNumberTextCandidate = candidateTexts.some(text => isScheduleNumberText(text))
                 || isScheduleNumberName(structural.rawNameAttr);
-            const isLineNumberText = candidateTexts.some(text => containsLineNumberIndicator(text));
             const contentIsSpecialCharacter = isSpecialCharacterText(options.contentText);
             const valueIsSpecialCharacter = isSpecialCharacterText(options.valueText);
             const captionIsSpecialCharacter = isSpecialCharacterText(options.captionText);
@@ -20050,7 +20089,7 @@
         }
 
 		function resetObjectDetails() {
-            objectNameValue.textContent = 'Select an object to view details';
+            objectNameValue.textContent = t('obj_select_placeholder');
             objectTypeValue.textContent = '—';
             if (objectRoleValue) {
                 objectRoleValue.textContent = '—';
@@ -20062,19 +20101,19 @@
                 objectChoiceValue.textContent = '—';
             }
             if (objectHeightLabel) {
-                objectHeightLabel.textContent = 'Object height';
+                objectHeightLabel.textContent = t('info_object_height');
             }
             if (objectHeightValue) {
                 objectHeightValue.textContent = '—';
             }
             if (objectMultilineLabel) {
-                objectMultilineLabel.textContent = 'Multiline text';
+                objectMultilineLabel.textContent = t('info_multiline_text');
             }
             if (objectMultilineValue) {
                 objectMultilineValue.textContent = '—';
             }
             if (objectValueMultilineLabel && objectValueMultilineContainer && objectValueMultilineValue) {
-                objectValueMultilineLabel.textContent = 'Multiline value';
+                objectValueMultilineLabel.textContent = t('info_multiline_value');
                 setInfoRowVisibility(objectValueMultilineLabel, objectValueMultilineContainer, false);
                 objectValueMultilineValue.textContent = '—';
             }
@@ -20130,8 +20169,8 @@
         }
 
         function resetTypographySections() {
-            setDetailTablePlaceholder(fontSection, 'Select an object to view font details.');
-            setDetailTablePlaceholder(paragraphSection, 'Select an object to view paragraph details.');
+            setDetailTablePlaceholder(fontSection, t('font_placeholder'));
+            setDetailTablePlaceholder(paragraphSection, t('paragraph_placeholder'));
         }
 
         function resetFormPropertiesState() {
@@ -20257,7 +20296,12 @@
             updateGridReportSummary(0, 0);
         }
 
+        let _lastGridAlignedCount = null;
+        let _lastGridEligibleCount = null;
+
         function updateGridReportSummary(alignedCount, eligibleCount) {
+            _lastGridAlignedCount = alignedCount;
+            _lastGridEligibleCount = eligibleCount;
             if (!gridOnGridSummary) {
                 return;
             }
@@ -20270,8 +20314,10 @@
             const formatted = Number.isFinite(percentage)
                 ? (Number.isInteger(percentage) ? percentage.toFixed(0) : percentage.toFixed(1))
                 : '0';
-            gridOnGridSummary.textContent = `${formatted}% on grid`;
-            gridOnGridSummary.title = `${alignedCount} of ${eligibleCount} objects align with the grid.`;
+            gridOnGridSummary.textContent = `${formatted}% ${t('grid_on_grid_suffix')}`;
+            gridOnGridSummary.title = t('grid_on_grid_title')
+                .replace('{0}', alignedCount)
+                .replace('{1}', eligibleCount);
         }
 
         function setSettingsPlaceholder(message, expectedValuesMessage = message) {
@@ -21959,29 +22005,6 @@
             return String(value);
         }
 
-        function appendStaticSettingsRow(container, labelText, valueText, options = {}) {
-            const labelCell = document.createElement('div');
-            labelCell.className = 'info-label';
-            labelCell.textContent = labelText;
-            if (options.variableKey) {
-                labelCell.dataset.variableKey = options.variableKey;
-            }
-
-            const valueCell = document.createElement('div');
-            valueCell.className = 'settings-value';
-            if (options.variableKey) {
-                valueCell.dataset.variableKey = options.variableKey;
-            }
-
-            const valueSpan = document.createElement('span');
-            valueSpan.className = 'settings-static-text';
-            valueSpan.textContent = valueText;
-            valueCell.appendChild(valueSpan);
-
-            container.appendChild(labelCell);
-            container.appendChild(valueCell);
-        }
-
         function createExpectedValueItem(labelText, valueText, options = {}) {
             const item = document.createElement('div');
             item.className = 'expected-value-item';
@@ -22003,16 +22026,6 @@
             valueContainer.appendChild(valueSpan);
 
             item.appendChild(valueContainer);
-            return item;
-        }
-
-        function appendExpectedValueItem(container, labelText, valueText, options = {}) {
-            if (!container) {
-                return;
-            }
-
-            const item = createExpectedValueItem(labelText, valueText, options);
-            container.appendChild(item);
             return item;
         }
 
@@ -22053,14 +22066,40 @@
             });
         }
 
+        /** Translate a stored font display string (e.g. "Unspecified font, 8pt") for the current language. */
+        function translateFontDisplay(value) {
+            if (!value || typeof value !== 'string') { return value; }
+            const EN_UNSPECIFIED = 'Unspecified font';
+            if (value.startsWith(EN_UNSPECIFIED)) {
+                return t('typo_unspecified_font') + value.slice(EN_UNSPECIFIED.length);
+            }
+            return value;
+        }
+
+        /** Translate a stored boldItalic string (e.g. "Bold: Yes, Italic: No") for the current language. */
+        function translateBoldItalicDisplay(value) {
+            if (!value || typeof value !== 'string') { return value; }
+            // Pattern: "Bold: Yes/No, Italic: Yes/No"
+            const match = value.match(/^Bold:\s*(Yes|No),\s*Italic:\s*(Yes|No)$/i);
+            if (match) {
+                const boldVal = match[1].toLowerCase() === 'yes' ? t('typo_bold_yes') : t('typo_bold_no');
+                const italicVal = match[2].toLowerCase() === 'yes' ? t('typo_bold_yes') : t('typo_bold_no');
+                return `${t('typo_bold_italic').split(' & ')[0] || 'Bold'}: ${boldVal}, ${t('typo_bold_italic').split(' & ')[1] || 'Italic'}: ${italicVal}`;
+            }
+            return value;
+        }
+
         function renderFontSection(typography, objectType) {
             if (!typography) {
-                setDetailTablePlaceholder(fontSection, 'Select an object to view font details.');
+                setDetailTablePlaceholder(fontSection, t('font_placeholder'));
                 return;
             }
 
             if (typography.applicable === false) {
-                setDetailTablePlaceholder(fontSection, typography.message || 'Typography properties are not applicable for this object.');
+                const msg = typography.message
+                    ? (UI_STRINGS.en.hasOwnProperty(typography.message) ? t(typography.message) : typography.message)
+                    : t('typo_not_applicable');
+                setDetailTablePlaceholder(fontSection, msg);
                 return;
             }
 
@@ -22069,7 +22108,7 @@
             const isStaticText = objectType === TYPE_LABELS.draw;
             const isButton = normalizedType === 'button';
             const showValueColumn = !isButton;
-            const valueHeaderText = isStaticText ? '' : 'Value';
+            const valueHeaderText = isStaticText ? '' : t('typo_value_header');
 
             fontSection.className = showValueColumn && hasCaption ? 'detail-table two-columns' : 'detail-table';
             fontSection.innerHTML = '';
@@ -22079,7 +22118,7 @@
                 fontSection.appendChild(createHeaderCell(valueHeaderText));
             }
             if (hasCaption) {
-                fontSection.appendChild(createHeaderCell('Caption'));
+                fontSection.appendChild(createHeaderCell(t('typo_caption_header')));
             }
 
             const appendRow = (label, value, captionValue) => {
@@ -22099,23 +22138,30 @@
                 if (typeof colorValues === 'string' && colorValues.trim()) {
                     return colorValues;
                 }
-                return 'No explicit font color';
+                return t('typo_no_font_color');
             };
 
-            appendRow('Font & Size', typography.font && typography.font.value, hasCaption && typography.font ? typography.font.caption : null);
-            appendRow('Bold & Italic', typography.style && typography.style.value, hasCaption && typography.style ? typography.style.caption : null);
+            appendRow(t('typo_font_size'),
+                translateFontDisplay(typography.font && typography.font.value),
+                hasCaption && typography.font ? translateFontDisplay(typography.font.caption) : null);
+            appendRow(t('typo_bold_italic'),
+                translateBoldItalicDisplay(typography.style && typography.style.value),
+                hasCaption && typography.style ? translateBoldItalicDisplay(typography.style.caption) : null);
             const fontColors = typography.fontColors || {};
-            appendRow('Font color(s)', formatFontColors(fontColors.value), hasCaption ? formatFontColors(fontColors.caption) : null);
+            appendRow(t('typo_font_color'), formatFontColors(fontColors.value), hasCaption ? formatFontColors(fontColors.caption) : null);
         }
 
         function renderParagraphSection(typography, objectType) {
             if (!typography) {
-                setDetailTablePlaceholder(paragraphSection, 'Select an object to view paragraph details.');
+                setDetailTablePlaceholder(paragraphSection, t('paragraph_placeholder'));
                 return;
             }
 
             if (typography.applicable === false) {
-                setDetailTablePlaceholder(paragraphSection, typography.message || 'Paragraph settings are not applicable for this object.');
+                const msg = typography.message
+                    ? (UI_STRINGS.en.hasOwnProperty(typography.message) ? t(typography.message) : typography.message)
+                    : t('typo_para_not_applicable');
+                setDetailTablePlaceholder(paragraphSection, msg);
                 return;
             }
 
@@ -22124,7 +22170,7 @@
             const isStaticText = objectType === TYPE_LABELS.draw;
             const isButton = normalizedType === 'button';
             const showValueColumn = !isButton;
-            const valueHeaderText = isStaticText ? '' : 'Value';
+            const valueHeaderText = isStaticText ? '' : t('typo_value_header');
 
             paragraphSection.className = showValueColumn && hasCaption ? 'detail-table two-columns' : 'detail-table';
             paragraphSection.innerHTML = '';
@@ -22134,7 +22180,7 @@
                 paragraphSection.appendChild(createHeaderCell(valueHeaderText));
             }
             if (hasCaption) {
-                paragraphSection.appendChild(createHeaderCell('Caption'));
+                paragraphSection.appendChild(createHeaderCell(t('typo_caption_header')));
             }
 
             const appendRow = (label, value, captionValue) => {
@@ -22148,9 +22194,9 @@
             };
 
             const paragraphInfo = typography.paragraph || {};
-            const valueDisplay = showValueColumn ? (paragraphInfo.value || 'Not detected') : paragraphInfo.value;
-            const captionDisplay = hasCaption ? (paragraphInfo.caption || 'Not detected') : null;
-            appendRow('Line spacing', valueDisplay, captionDisplay);
+            const valueDisplay = showValueColumn ? (paragraphInfo.value || t('typo_not_detected')) : paragraphInfo.value;
+            const captionDisplay = hasCaption ? (paragraphInfo.caption || t('typo_not_detected')) : null;
+            appendRow(t('typo_line_spacing'), valueDisplay, captionDisplay);
 
         }
 
@@ -22194,15 +22240,15 @@
             const details = document.createElement('details');
             details.className = 'language-match-details';
             const summary = document.createElement('summary');
-            summary.textContent = 'Language match breakdown';
+            summary.textContent = t('err_lang_match_breakdown');
             details.appendChild(summary);
             const listsContainer = document.createElement('div');
             listsContainer.className = 'language-match-lists';
-            const englishGroup = createLanguageMatchGroup('English matches', englishMatches);
+            const englishGroup = createLanguageMatchGroup(t('err_english_matches'), englishMatches);
             if (englishGroup) {
                 listsContainer.appendChild(englishGroup);
             }
-            const frenchGroup = createLanguageMatchGroup('French matches', frenchMatches);
+            const frenchGroup = createLanguageMatchGroup(t('err_french_matches'), frenchMatches);
             if (frenchGroup) {
                 listsContainer.appendChild(frenchGroup);
             }
@@ -22267,14 +22313,39 @@
                 list.appendChild(dd);
             };
 
-            appendRow('Meaning', entry.meaning);
-            appendRow('Suggested fix', entry.solution);
+            // Resolve meaning and solution at render time from the live (language-aware)
+            // description, falling back to the baked-in entry values.
+            const liveEntryDesc = entry.code ? getErrorDescription(entry.code) : null;
+            const liveMeaning  = (liveEntryDesc && liveEntryDesc.meaning)  || entry.meaning  || '';
+            const liveSolution = (liveEntryDesc && liveEntryDesc.suggestedFix) || entry.solution || '';
+            appendRow(t('err_meaning'), liveMeaning);
+            appendRow(t('err_suggested_fix'), liveSolution);
             const extraDetails = buildExtraDetailsContent(entry);
             if (extraDetails) {
-                appendRow('Extra details', extraDetails);
+                appendRow(t('err_extra_details'), extraDetails);
             }
 
             return list.children.length ? list : null;
+        }
+
+        /** Populate (or re-populate) an info panel from its stored data-codes.
+         *  Called at open time so the content always reflects the current language. */
+        function populateInfoPanel(panel) {
+            const codes = (panel.dataset.codes || '').split(',').map(c => c.trim()).filter(Boolean);
+            if (!codes.length) { return; }
+            panel.innerHTML = '';
+            codes.forEach((code, index) => {
+                if (index > 0) {
+                    const divider = document.createElement('hr');
+                    divider.className = 'error-info-divider';
+                    panel.appendChild(divider);
+                }
+                const entry = createErrorEntryFromCode(code);
+                if (entry) {
+                    const details = createErrorDetailsList(entry);
+                    if (details) { panel.appendChild(details); }
+                }
+            });
         }
 
         function createErrorInfoBundle(codes, options = {}) {
@@ -22282,10 +22353,9 @@
             if (!normalizedCodes.length) {
                 return null;
             }
-            const entries = normalizedCodes
-                .map(code => createErrorEntryFromCode(code))
-                .filter(Boolean);
-            if (!entries.length) {
+            // Verify at least one code resolves to a real description.
+            const hasAny = normalizedCodes.some(code => Boolean(createErrorEntryFromCode(code)));
+            if (!hasAny) {
                 return null;
             }
             const panelId = `${normalizedCodes.join('-')}-info-panel`;
@@ -22293,17 +22363,9 @@
             panel.id = panelId;
             panel.className = 'error-info-panel';
             panel.hidden = true;
-            entries.forEach((entry, index) => {
-                if (index > 0) {
-                    const divider = document.createElement('hr');
-                    divider.className = 'error-info-divider';
-                    panel.appendChild(divider);
-                }
-                const details = createErrorDetailsList(entry);
-                if (details) {
-                    panel.appendChild(details);
-                }
-            });
+            // Store codes for lazy population — panel content is built (or rebuilt)
+            // each time it is opened so it always reflects the current language.
+            panel.dataset.codes = normalizedCodes.join(',');
 
             const button = document.createElement('button');
             button.type = 'button';
@@ -22318,6 +22380,10 @@
             button.innerHTML = '<span aria-hidden="true">i</span>';
             button.addEventListener('click', () => {
                 const expanded = button.getAttribute('aria-expanded') === 'true';
+                if (!expanded) {
+                    // Rebuild content on every open — picks up the current language.
+                    populateInfoPanel(panel);
+                }
                 button.setAttribute('aria-expanded', String(!expanded));
                 panel.hidden = expanded;
             });
@@ -22382,7 +22448,13 @@
                 header.className = 'object-error-header';
 
                 const heading = document.createElement('h3');
-                heading.innerHTML = entry.title || entry.code || 'Validation error';
+                // Rebuild the title at render time so it respects the current language.
+                // getErrorDescription() merges the FR overlay when currentLanguage === 'fr'.
+                const liveDesc = entry.code ? getErrorDescription(entry.code) : null;
+                const liveTitle = liveDesc && liveDesc.name
+                    ? liveDesc.name
+                    : (entry.title || entry.code || t('err_validation_error'));
+                heading.innerHTML = liveTitle;
                 header.appendChild(heading);
 
                 const toggleLabel = document.createElement('label');
@@ -22404,7 +22476,7 @@
                     updateTreeErrorStates({ expandAncestors: false });
                 });
                 toggleLabel.appendChild(checkbox);
-                toggleLabel.appendChild(document.createTextNode('Not an error'));
+                toggleLabel.appendChild(document.createTextNode(t('err_not_an_error')));
                 header.appendChild(toggleLabel);
                 section.appendChild(header);
 
@@ -22454,11 +22526,12 @@
             return list;
         }
 
-        function formatBooleanYesNo(value, fallback = 'Not detected') {
+        function formatBooleanYesNo(value, fallback) {
+            const fallbackText = fallback !== undefined ? fallback : t('bool_not_detected');
             if (typeof value !== 'boolean') {
-                return fallback;
+                return fallbackText;
             }
-            return value ? 'Yes' : 'No';
+            return value ? t('bool_yes') : t('bool_no');
         }
 
         function buildEventSummaryStrings(events = []) {
@@ -24755,7 +24828,7 @@
             if (!details) {
                 const placeholder = document.createElement('p');
                 placeholder.className = 'placeholder';
-                placeholder.textContent = 'Select an object to view advanced metadata.';
+                placeholder.textContent = t('adv_select_object');
                 advancedInfoContent.appendChild(placeholder);
                 return;
             }
@@ -24775,20 +24848,20 @@
                 dl.appendChild(dd);
             };
 
-            appendRow('Locale', details.locale || 'Not specified');
+            appendRow(t('adv_locale'), details.locale || t('adv_not_specified'));
             if (details.access) {
-                appendRow('Access', details.access);
+                appendRow(t('adv_access'), details.access);
             }
             if (details.presence) {
-                appendRow('Presence', details.presence);
+                appendRow(t('adv_presence'), details.presence);
             }
-            appendRow('Margins', createMetaListFromEntries(details.margins || [], formatMarginEntry, 'No margins defined'));
-            appendRow('Background color(s)', createMetaList(details.backgroundColors || [], 'No background fill'));
-            appendRow('Text decoration(s)', createMetaList(details.textDecorations || [], 'No text decorations'));
-            appendRow('Spacing above/below', createMetaListFromEntries(details.spacing || [], formatSpacingEntry, 'No spacing values'));
-            appendRow('Indentation', createMetaListFromEntries(details.indents || [], formatIndentEntry, 'No indentation values'));
-            appendRow('Pattern(s)', createMetaList(details.patterns || [], 'No value patterns'));
-            appendRow('Dot leader(s)', createMetaListFromEntries(details.dotLeaders || [], entry => {
+            appendRow(t('adv_margins'), createMetaListFromEntries(details.margins || [], formatMarginEntry, t('adv_no_margins')));
+            appendRow(t('adv_bg_color'), createMetaList(details.backgroundColors || [], t('adv_no_bg')));
+            appendRow(t('adv_text_dec'), createMetaList(details.textDecorations || [], t('adv_no_text_dec')));
+            appendRow(t('adv_spacing'), createMetaListFromEntries(details.spacing || [], formatSpacingEntry, t('adv_no_spacing')));
+            appendRow(t('adv_indent'), createMetaListFromEntries(details.indents || [], formatIndentEntry, t('adv_no_indent')));
+            appendRow(t('adv_patterns'), createMetaList(details.patterns || [], t('adv_no_patterns')));
+            appendRow(t('adv_dot_leader'), createMetaListFromEntries(details.dotLeaders || [], entry => {
                 if (!entry || !entry.description) {
                     return '';
                 }
@@ -24798,11 +24871,11 @@
                 const suffix = spacingValue ? ` (spacing: ${spacingValue})` : '';
                 const context = entry.context ? `${entry.context}` : 'dot leader';
                 return `${context}: ${entry.description}${suffix}`;
-            }, 'No dot leaders defined'));
+            }, t('adv_no_dot_leaders')));
             if (details.contentFlow) {
-                appendRow('Content flow', details.contentFlow);
+                appendRow(t('adv_content_flow'), details.contentFlow);
             }
-            appendRow('Tabbing order', createMetaList(details.tabbing || [], 'No traversal references'));
+            appendRow(t('adv_tabbing'), createMetaList(details.tabbing || [], t('adv_no_tabbing')));
 
             if (details.fieldLengthLimit) {
                 const digitsValue = Number.isFinite(details.fieldLengthLimit.digits)
@@ -24811,16 +24884,16 @@
                 const decimalsValue = Number.isFinite(details.fieldLengthLimit.decimals)
                     ? details.fieldLengthLimit.decimals
                     : null;
-                appendRow('Number of digits allowed', digitsValue !== null ? String(digitsValue) : 'Not detected');
-                appendRow('Number of decimals allowed', decimalsValue !== null ? String(decimalsValue) : 'Not detected');
-                appendRow('Negative value allowed', formatBooleanYesNo(details.fieldLengthLimit.allowsNegative));
+                appendRow(t('adv_digits'), digitsValue !== null ? String(digitsValue) : t('bool_not_detected'));
+                appendRow(t('adv_decimals'), decimalsValue !== null ? String(decimalsValue) : t('bool_not_detected'));
+                appendRow(t('adv_negative'), formatBooleanYesNo(details.fieldLengthLimit.allowsNegative));
             }
 
             if (details.craVersion) {
-                appendRow('CRA object version', details.craVersion);
+                appendRow(t('adv_cra_version'), details.craVersion);
             }
 
-            appendRow('Events', createMetaList(buildEventSummaryStrings(details.events || []), 'No script events'));
+            appendRow(t('adv_events'), createMetaList(buildEventSummaryStrings(details.events || []), t('adv_no_events')));
 
             advancedInfoContent.appendChild(dl);
             positionAdvancedInfoPanel();
@@ -25763,6 +25836,8 @@
             return /\b[EF]\s*\(\s*\d{2}(?:-\d)?\s*\)/.test(upper);
         }
 
+        /** Returns true when text contains a "line/ligne + number" reference
+         *  joined by any whitespace — used by TXT012 to find candidates. */
         function containsLineNumberIndicator(text) {
             if (!text) {
                 return false;
@@ -29601,73 +29676,6 @@
                 }
             };
 
-            // Helper to check black background/white font from XML string as fallback
-            const hasBlackBackgroundWhiteFontFromXml = (xmlString) => {
-                if (!xmlString || typeof xmlString !== 'string') {
-                    return false;
-                }
-                // Check for black background: border -> fill -> color value="0,0,0"
-                // Pattern allows for nested elements, whitespace, and other attributes
-                // Examples: <color value="0,0,0"/> or <color value='0,0,0'/> or <color value="0,0,0" />
-                const blackBgPattern = /<border[^>]*>[\s\S]*?<fill[^>]*>[\s\S]*?<color[^>]*value\s*=\s*["']\s*0\s*,\s*0\s*,\s*0\s*["'][^>]*\/?>/i;
-                const hasBlackBg = blackBgPattern.test(xmlString);
-                
-                if (!hasBlackBg) {
-                    return false;
-                }
-                
-                // Check for white font: font -> fill -> color value="255,255,255"
-                // Pattern allows for nested elements, whitespace, and other attributes
-                // Examples: <color value="255,255,255"/> or <color value='255,255,255'/> or <color value="255,255,255" />
-                const whiteFontPattern = /<font[^>]*>[\s\S]*?<fill[^>]*>[\s\S]*?<color[^>]*value\s*=\s*["']\s*255\s*,\s*255\s*,\s*255\s*["'][^>]*\/?>/i;
-                const hasWhiteFont = whiteFontPattern.test(xmlString);
-                
-                return hasWhiteFont;
-            };
-            
-            // Try to get element from document if objectId lookup fails
-            const getElementForBlackBgCheck = (objectId, objectName) => {
-                // First try the standard lookup
-                let element = objectId ? getElementByObjectId(objectId) : null;
-                
-                // If that fails and we have an object name, try to find by name attribute
-                if (!element && objectName) {
-                    try {
-                        const nameAttr = typeof objectName === 'string' ? objectName.trim() : '';
-                        if (nameAttr) {
-                            // Try to find element with matching name attribute
-                            // Check in the current document context
-                            const doc = document;
-                            if (doc && doc.querySelectorAll) {
-                                const candidates = doc.querySelectorAll('[name="' + nameAttr.replace(/"/g, '\\"') + '"]');
-                                if (candidates && candidates.length > 0) {
-                                    element = candidates[0];
-                                }
-                            }
-                            // Also try getElementsByName if available
-                            if (!element && doc && doc.getElementsByName) {
-                                const byName = doc.getElementsByName(nameAttr);
-                                if (byName && byName.length > 0) {
-                                    element = byName[0];
-                                }
-                            }
-                            // Also try searching in all iframes and other document contexts
-                            if (!element && doc && doc.querySelectorAll) {
-                                // Try to find in draw elements specifically (for draw elements like the user's example)
-                                const drawElements = doc.querySelectorAll('draw[name="' + nameAttr.replace(/"/g, '\\"') + '"]');
-                                if (drawElements && drawElements.length > 0) {
-                                    element = drawElements[0];
-                                }
-                            }
-                        }
-                    } catch (error) {
-                        // Ignore errors
-                    }
-                }
-                
-                return element;
-            };
-
             const applyEnglishThousandsSeparatorChecks = () => {
                 // Check if object is a line number (_ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
                     const objectId = options && options.objectId;
@@ -29907,6 +29915,37 @@
             };
             if (!isSrtContext) {
                 applyWrittenDateNonBreakingSpaceChecks();
+            }
+
+            // TXT012: "line/lines/ligne/lignes + number" must use a Non-Breaking Space.
+            // Only flag the specific space character between the word and the digit,
+            // leaving the rest of the match unhighlighted (same approach as TXT011).
+            // Skip SRT context — NBSP rules for SRT are handled separately by SRT019.
+            if (!isSrtContext) {
+                const applyLineReferenceNonBreakingSpaceChecks = () => {
+                    const enabledCode = resolveEnabledCode('TXT012');
+                    if (!enabledCode) {
+                        return;
+                    }
+                    // Match "line/lines/ligne/lignes" followed by one or more whitespace
+                    // characters and then 1–4 digits. The capture group 1 holds the word,
+                    // group 2 holds the whitespace run, group 3 holds the digits.
+                    const pattern = /\b(lines?|lignes?)([ \t]+)(\d{1,4})\b/gi;
+                    let match;
+                    while ((match = pattern.exec(text)) !== null) {
+                        const spaceStart = match.index + match[1].length;
+                        const spaceEnd   = spaceStart + match[2].length;
+                        // Walk each character in the whitespace run; flag only regular
+                        // spaces/tabs — a match that already uses   is compliant.
+                        for (let i = spaceStart; i < spaceEnd; i += 1) {
+                            const ch = text[i];
+                            if (ch === ' ' || ch === '	') {
+                                markRangeInternal(i, i + 1, enabledCode);
+                            }
+                        }
+                    }
+                };
+                applyLineReferenceNonBreakingSpaceChecks();
             }
 
             if (isSrtContext) {
@@ -32063,7 +32102,7 @@
             if (isSubformContainer) {
                 typography = {
                     applicable: false,
-                    message: 'Typography properties are not applicable to subform containers.',
+                    message: 'typo_not_applicable_subform',
                     hasCaption: false,
                     font: { value: null, caption: null },
                     style: { value: null, caption: null }
@@ -32968,10 +33007,8 @@
             if (nextErrorButton) {
                 nextErrorButton.disabled = true;
             }
-            const counterEl = document.getElementById('errorNavCounter');
-            if (counterEl) counterEl.textContent = '';
-            const summaryBar = document.getElementById('errorSummaryBar');
-            if (summaryBar) summaryBar.hidden = true;
+            if (errorNavCounter) errorNavCounter.textContent = '';
+            if (errorSummaryBar) errorSummaryBar.hidden = true;
         }
 
         function updateErrorNavigationFromSelection() {
@@ -33364,7 +33401,7 @@
             const isButton = Boolean(structural.isButton);
             const hasCaption = Boolean(structural.hasCaption);
             if (objectHeightLabel) {
-                objectHeightLabel.textContent = isField ? 'Object Caption height' : 'Object height';
+                objectHeightLabel.textContent = isField ? t('info_caption_height') : t('info_object_height');
             }
             if (objectHeightValue) {
                 if (isField) {
@@ -33383,7 +33420,7 @@
                 }
             }
             if (objectMultilineLabel) {
-                objectMultilineLabel.textContent = isField ? 'Multiline Caption text' : 'Multiline text';
+                objectMultilineLabel.textContent = isField ? t('info_multiline_caption') : t('info_multiline_text');
             }
             if (objectMultilineValue) {
                 if (isField) {
@@ -33396,11 +33433,11 @@
             }
             if (objectValueMultilineLabel && objectValueMultilineContainer && objectValueMultilineValue) {
                 if (isField && !isButton) {
-                    objectValueMultilineLabel.textContent = 'Multiline value';
+                    objectValueMultilineLabel.textContent = t('info_multiline_value');
                     setInfoRowVisibility(objectValueMultilineLabel, objectValueMultilineContainer, true);
                     objectValueMultilineValue.textContent = getMultilineTextDisplay(metadata, { context: 'value' });
                 } else {
-                    objectValueMultilineLabel.textContent = 'Multiline value';
+                    objectValueMultilineLabel.textContent = t('info_multiline_value');
                     setInfoRowVisibility(objectValueMultilineLabel, objectValueMultilineContainer, false);
                     objectValueMultilineValue.textContent = '—';
                 }
@@ -33958,7 +33995,7 @@
 
         // ── Error summary bar ──
         function updateErrorSummary() {
-            const summaryBar = document.getElementById('errorSummaryBar');
+            const summaryBar = errorSummaryBar;
             const critEl = document.getElementById('summaryCountCritical');
             const warnEl = document.getElementById('summaryCountWarning');
             const noticeEl = document.getElementById('summaryCountNotice');
@@ -33997,7 +34034,7 @@
 
         // ── Error navigation counter ──
         function updateErrorNavCounter() {
-            const counterEl = document.getElementById('errorNavCounter');
+            const counterEl = errorNavCounter;
             if (!counterEl) return;
             const total = errorNavigationItems ? errorNavigationItems.length : 0;
             if (total === 0) {
@@ -34928,7 +34965,7 @@
 
         copyObjectNameButton.addEventListener('click', async () => {
             const textToCopy = objectNameValue.textContent.trim();
-            if (!textToCopy || textToCopy === 'Select an object to view details') {
+            if (!textToCopy || textToCopy === t('obj_select_placeholder')) {
                 return;
             }
             try {
@@ -34944,6 +34981,23 @@
                 }, 1500);
             }
         });
+
+        // Apply saved language on first load, then wire the toggle button.
+        applyLanguage();
+        if (langToggleButton) {
+            langToggleButton.addEventListener('click', () => {
+                currentLanguage = currentLanguage === 'en' ? 'fr' : 'en';
+                applyLanguage();
+                // Refresh the selected object's detail panel (meaning/suggestedFix/name).
+                refreshSelectedObjectDetails();
+                // If nothing is selected, redraw placeholders in the new language.
+                if (!selectedTreeItem) {
+                    resetObjectDetails();
+                }
+                // NOTE: recomputeContentErrorAnalysis / updateAllErrorCheckResults are
+                // intentionally NOT called — a language switch must never alter error counts.
+            });
+        }
 
         renderContentErrorSettings();
         initializeErrorCheckUI();
@@ -35054,35 +35108,6 @@
             }
         });
     })();
-    </script>
-
-    <script>
-    // Language toggle wiring (runs after main script defines currentLanguage / applyLanguage)
-    document.addEventListener('DOMContentLoaded', function () {
-        // Apply saved language on first load
-        applyLanguage();
-
-        var langBtn = document.getElementById('langToggleButton');
-        if (langBtn) {
-            langBtn.addEventListener('click', function () {
-                currentLanguage = (currentLanguage === 'en') ? 'fr' : 'en';
-
-                // Repaint all UI text in the new language.
-                applyLanguage();
-
-                // Refresh the selected object's detail panel so meaning /
-                // suggestedFix / name appear in the new language.
-                // getErrorDescription() is language-aware — no re-evaluation needed.
-                if (typeof refreshSelectedObjectDetails === 'function') {
-                    refreshSelectedObjectDetails();
-                }
-
-                // NOTE: recomputeContentErrorAnalysis() and updateAllErrorCheckResults()
-                // are intentionally NOT called here. A UI language switch must never
-                // change error counts — it only repaints labels and descriptions.
-            });
-        }
-    });
     </script>
 </body>
 </html>
