@@ -53,6 +53,8 @@
                 "ppuLineSpacing": 8,
                 "specialCharacterFontSize": 10,
                 "specialCharacterLineSpacing": 11,
+                "bulletFontSize": 10,
+                "bulletLineSpacing": 11,
                 "scheduleNumberFontSizes": [9],
                 "scheduleNumberLineSpacing": 10
             },
@@ -93,6 +95,8 @@
                 "ppuLineSpacing": 9,
                 "specialCharacterFontSize": 10,
                 "specialCharacterLineSpacing": 11,
+                "bulletFontSize": 10,
+                "bulletLineSpacing": 11,
                 "scheduleNumberFontSizes": [9],
                 "scheduleNumberLineSpacing": 10
             },
@@ -133,6 +137,8 @@
                 "ppuLineSpacing": 8,
                 "specialCharacterFontSize": 10,
                 "specialCharacterLineSpacing": 11,
+                "bulletFontSize": 10,
+                "bulletLineSpacing": 11,
                 "scheduleNumberFontSizes": [10],
                 "scheduleNumberLineSpacing": 11
             },
@@ -173,6 +179,8 @@
                 "ppuLineSpacing": 9,
                 "specialCharacterFontSize": 12,
                 "specialCharacterLineSpacing": 12,
+                "bulletFontSize": 12,
+                "bulletLineSpacing": 12,
                 "scheduleNumberFontSizes": [11],
                 "scheduleNumberLineSpacing": 12
             },
@@ -213,6 +221,8 @@
                 "ppuLineSpacing": 9,
                 "specialCharacterFontSize": 12,
                 "specialCharacterLineSpacing": 12,
+                "bulletFontSize": 12,
+                "bulletLineSpacing": 12,
                 "scheduleNumberFontSizes": [11],
                 "scheduleNumberLineSpacing": 12
             },
@@ -253,6 +263,8 @@
                 "ppuLineSpacing": 9,
                 "specialCharacterFontSize": 12,
                 "specialCharacterLineSpacing": 12,
+                "bulletFontSize": 12,
+                "bulletLineSpacing": 12,
                 "scheduleNumberFontSizes": [11],
                 "scheduleNumberLineSpacing": 12
             },
@@ -293,6 +305,8 @@
                 "ppuLineSpacing": 9,
                 "specialCharacterFontSize": 12,
                 "specialCharacterLineSpacing": 12,
+                "bulletFontSize": 12,
+                "bulletLineSpacing": 12,
                 "scheduleNumberFontSizes": [12],
                 "scheduleNumberLineSpacing": 13
             },
@@ -333,6 +347,8 @@
                 "ppuLineSpacing": 9,
                 "specialCharacterFontSize": 12,
                 "specialCharacterLineSpacing": 12,
+                "bulletFontSize": 12,
+                "bulletLineSpacing": 12,
                 "scheduleNumberFontSizes": [12],
                 "scheduleNumberLineSpacing": 13
             },
@@ -373,6 +389,8 @@
                 "ppuLineSpacing": 9,
                 "specialCharacterFontSize": 12,
                 "specialCharacterLineSpacing": 12,
+                "bulletFontSize": 12,
+                "bulletLineSpacing": 12,
                 "scheduleNumberFontSizes": [12, 12],
                 "scheduleNumberLineSpacing": 13
             },
@@ -413,6 +431,8 @@
                 "ppuLineSpacing": 9,
                 "specialCharacterFontSize": 10,
                 "specialCharacterLineSpacing": 11,
+                "bulletFontSize": 10,
+                "bulletLineSpacing": 11,
                 "scheduleNumberFontSizes": [9],
                 "scheduleNumberLineSpacing": 10
             },
@@ -453,6 +473,8 @@
                 "ppuLineSpacing": 9,
                 "specialCharacterFontSize": 10,
                 "specialCharacterLineSpacing": 10,
+                "bulletFontSize": 10,
+                "bulletLineSpacing": 10,
                 "scheduleNumberFontSizes": [9],
                 "scheduleNumberLineSpacing": 10
             },
@@ -493,6 +515,8 @@
                 "ppuLineSpacing": 8,
                 "specialCharacterFontSize": 10,
                 "specialCharacterLineSpacing": 10,
+                "bulletFontSize": 10,
+                "bulletLineSpacing": 10,
                 "scheduleNumberFontSizes": [9],
                 "scheduleNumberLineSpacing": 10
             },
@@ -533,6 +557,8 @@
                 "ppuLineSpacing": 8,
                 "specialCharacterFontSize": 10,
                 "specialCharacterLineSpacing": 10,
+                "bulletFontSize": 10,
+                "bulletLineSpacing": 10,
                 "scheduleNumberFontSizes": [9],
                 "scheduleNumberLineSpacing": 10
             }
@@ -2843,6 +2869,22 @@
                 "shortSummary": "SRT missing on special characters.",
                 "name": "SRT020 – SRT missing on special characters."
             },
+            "PARA009B": {
+                "code": "PARA009B",
+                "severity": "error",
+                "shortSummary": "Bullet line spacing does not match Section Settings.",
+                "meaning": "The line spacing of this bullet object does not match the bullet line spacing defined in the Section Settings.",
+                "suggestedFix": "Adjust the Paragraph settings for the bullet so the line spacing matches the expected bullet line spacing.",
+                "name": "PARA009B – Bullet line spacing does not match Section Settings."
+            },
+            "FONT016B": {
+                "code": "FONT016B",
+                "severity": "error",
+                "shortSummary": "Bullet font size does not match Section Settings.",
+                "meaning": "The font size of this bullet object does not match the bullet font size defined in the Section Settings.",
+                "suggestedFix": "Adjust the font size of the bullet so it matches the expected bullet font size.",
+                "name": "FONT016B – Bullet font size does not match Section Settings."
+            },
             "SRT021": {
                 "code": "SRT021",
                 "severityLabel": "Notice",
@@ -3929,6 +3971,22 @@
                 "meaning": "L'interligne de l'objet numéro d'annexe ne correspond pas à la valeur attendue.",
                 "suggestedFix": "Ouvrez la palette Paragraph et ajustez l'interligne du numéro d'annexe pour qu'il corresponde à la valeur configurée.",
                 "name": "PARA009 – L'interligne du numéro d'annexe est incorrect."
+            },
+            "PARA009B": {
+                "code": "PARA009B",
+                "severity": "error",
+                "shortSummary": "L'interligne du point de puce ne correspond pas aux paramètres de section.",
+                "meaning": "L'interligne de cet objet point de puce ne correspond pas à l'interligne des points de puce défini dans les paramètres de section.",
+                "suggestedFix": "Ajustez les paramètres de paragraphe du point de puce pour que l'interligne corresponde à l'interligne attendu.",
+                "name": "PARA009B – L'interligne du point de puce est incorrect."
+            },
+            "FONT016B": {
+                "code": "FONT016B",
+                "severity": "error",
+                "shortSummary": "La taille de police du point de puce ne correspond pas aux paramètres de section.",
+                "meaning": "La taille de police de cet objet point de puce ne correspond pas à la taille de police des points de puce définie dans les paramètres de section.",
+                "suggestedFix": "Ajustez la taille de police du point de puce pour qu'elle corresponde à la taille attendue.",
+                "name": "FONT016B – La taille de police du point de puce est incorrecte."
             },
             "PARA010": {
                 "shortSummary": "L'espace avant le paragraphe est incorrect.",
@@ -7972,6 +8030,8 @@
                 fld_sl_table_ls:          'Default line spacing for single line (TableText):',
                 fld_ml_table_ls:          'Default line spacing for multiple lines (TableText):',
                 fld_special_char_ls:      'Line spacing for special characters:',
+                fld_bullet_fs:            'Font size for bullets:',
+                fld_bullet_ls:            'Line spacing for bullets:',
                 fld_schedule_fs:          'Font size for Schedule number:',
                 fld_schedule_ls:          'Line spacing for Schedule number:',
                 fld_linenum_fs:           'Font size for Line Number:',
@@ -8236,6 +8296,8 @@
                 fld_sl_table_ls:          'Interligne par défaut ligne simple (tableau)\u00a0:',
                 fld_ml_table_ls:          'Interligne par défaut multiligne (tableau)\u00a0:',
                 fld_special_char_ls:      'Interligne des caractères spéciaux\u00a0:',
+                fld_bullet_fs:            'Taille de police des points de puce\u00a0:',
+                fld_bullet_ls:            'Interligne des points de puce\u00a0:',
                 fld_schedule_fs:          'Taille de police du numéro d\'annexe\u00a0:',
                 fld_schedule_ls:          'Interligne du numéro d\'annexe\u00a0:',
                 fld_linenum_fs:           'Taille de police du numéro de ligne\u00a0:',
@@ -8626,7 +8688,7 @@
         };
         let formPropertiesReady = false;
         const EXPECTED_VALUE_UNIT_SUFFIX = 'pt';
-        const SPECIAL_CHARACTERS = ['>', '<', '√', '≤', '≥', '–', '+', '÷', '×', '=', '≠', '►', '▼', '◄', '▲', '▪', '•', '✓'];
+        const SPECIAL_CHARACTERS = ['>', '<', '√', '≤', '≥', '–', '+', '÷', '×', '=', '≠', '►', '▼', '◄', '▲', '✓'];
         const SPECIAL_CHARACTERS_DISPLAY = SPECIAL_CHARACTERS.join(' ');
         /**
          * Standalone lone-glyph SRT rules (not inside a list item as a list marker).
@@ -8815,6 +8877,30 @@
                 compute: context => (context && Number.isFinite(context.specialCharacterLineSpacing))
                     ? context.specialCharacterLineSpacing
                     : null
+            },
+            expBulletFontSize: {
+                label: 'Font size for bullets:',
+                compute: context => {
+                    if (context && Number.isFinite(context.bulletFontSize)) {
+                        return context.bulletFontSize;
+                    }
+                    if (context && Number.isFinite(context.specialCharacterFontSize)) {
+                        return context.specialCharacterFontSize;
+                    }
+                    return null;
+                }
+            },
+            expBulletLineSpac: {
+                label: 'Line spacing for bullets:',
+                compute: context => {
+                    if (context && Number.isFinite(context.bulletLineSpacing)) {
+                        return context.bulletLineSpacing;
+                    }
+                    if (context && Number.isFinite(context.specialCharacterLineSpacing)) {
+                        return context.specialCharacterLineSpacing;
+                    }
+                    return null;
+                }
             },
             expScheduleNumberFontSize: {
                 label: 'Font size for Schedule number:',
@@ -9108,6 +9194,8 @@
         };
         const EXPECTED_VALUE_CATEGORY_MAP = Object.freeze({
             expSpecCharLineSpac: 'lineSpacing',
+            expBulletFontSize: 'fontSize',
+            expBulletLineSpac: 'lineSpacing',
             expOneLineObjectHeight: 'general',
             expFieldTxtFontSize: 'fontSize',
             expStaticTxtFontSize: 'fontSize',
@@ -9415,6 +9503,8 @@
             'Default line spacing for single line (TableText):':     'fld_sl_table_ls',
             'Default line spacing for multiple lines (TableText):':  'fld_ml_table_ls',
             'Line spacing for special characters:':                  'fld_special_char_ls',
+            'Font size for bullets:':                                 'fld_bullet_fs',
+            'Line spacing for bullets:':                              'fld_bullet_ls',
             'Font size for Schedule number:':                        'fld_schedule_fs',
             'Line spacing for Schedule number:':                     'fld_schedule_ls',
             'Font size for Line Number:':                            'fld_linenum_fs',
@@ -12951,14 +13041,6 @@
         function isBulletLikeMetadata(metadata) {
             if (!metadata) {
                 return false;
-            }
-            const craName = typeof metadata.craObjectName === 'string' ? metadata.craObjectName.toLowerCase() : '';
-            if (craName && craName.includes('bullet')) {
-                return true;
-            }
-            const objectName = typeof metadata.name === 'string' ? metadata.name.toLowerCase() : '';
-            if (objectName && objectName.includes('bullet')) {
-                return true;
             }
             const text = getMetadataTextContent(metadata);
             if (!text) {
@@ -16697,8 +16779,9 @@
 
             const isStaticText = (localName === 'draw' || normalizedTypeLabel === drawLabel) && !isImageObject;
             const collapsedContent = contentText.trim().replace(/\s+/g, '');
-            const isSingleSpecialCharacter = collapsedContent.length === 1
-                && SPECIAL_CHARACTERS.includes(collapsedContent);
+            const isSingleSpecialCharacter = (collapsedContent.length === 1
+                && SPECIAL_CHARACTERS.includes(collapsedContent))
+                || isBulletLikeMetadata({ name: settings.objectName || '', content: contentText, valueText: contentText, craObjectName: '' });
 
             if (isStaticText && hasMeaningfulSrt && !isSingleSpecialCharacter) {
                 const added = addManualContentError(srtErrors, 'SRT014');
@@ -17573,6 +17656,7 @@
             const valueIsSpecialCharacter = isSpecialCharacterText(options.valueText);
             const captionIsSpecialCharacter = isSpecialCharacterText(options.captionText);
             const isSpecialCharacterStaticText = isStaticText && (contentIsSpecialCharacter || valueIsSpecialCharacter);
+            const isBulletStaticText = isStaticText && isBulletLikeMetadata(options.metadataSnapshot || (objectId ? getMetadataById(objectId) : null));
             const isMasterPageButton = isButton && Boolean(structural.isOnMasterPage);
 
             const describeActualFontSizes = (rawValues, numericValues, hasUnknown) => {
@@ -17971,6 +18055,7 @@
                     && !isScheduleNumberTextCandidate
                     && !isWithinTable
                     && !isSpecialCharacterStaticText
+                    && !isBulletStaticText
                     && !isLineNumberObject;
                 if (shouldCheckStaticDefault) {
                     enforceSingleFontSize({
@@ -18169,6 +18254,7 @@
                 && !isScheduleNumberTextCandidate
                 && !isPageNumber
                 && !isSpecialCharacterStaticText
+                && !isBulletStaticText
                 && !(hasCaption && captionIsSpecialCharacter)
                 && !(isField && valueIsSpecialCharacter)
             ) {
@@ -18226,7 +18312,7 @@
             }
 
             const specialCharacterExpectedFontSize = getExpectedValueNumber('expSpecCharFontSize', null);
-            if (isSpecialCharacterStaticText) {
+            if (isSpecialCharacterStaticText && !isBulletStaticText) {
                 enforceSingleFontSize({
                     numericValues: valueFontSizeValues,
                     rawValues: valueFontSizeRawValues,
@@ -18235,6 +18321,18 @@
                     code: 'FONT016',
                     title: 'Special character font size',
                     contextLabel: 'Special character font size'
+                });
+            }
+            const bulletExpectedFontSize = getExpectedValueNumber('expBulletFontSize', null);
+            if (isBulletStaticText) {
+                enforceSingleFontSize({
+                    numericValues: valueFontSizeValues,
+                    rawValues: valueFontSizeRawValues,
+                    hasUnknown: valueFontHasUnknown,
+                    expectedValue: bulletExpectedFontSize,
+                    code: 'FONT016B',
+                    title: 'Bullet font size',
+                    contextLabel: 'Bullet font size'
                 });
             }
             if (hasCaption && captionIsSpecialCharacter) {
@@ -18258,6 +18356,7 @@
                     && !isScheduleNumberTextCandidate
                     && !isWithinTable
                     && !isSpecialCharacterStaticText
+                    && !isBulletStaticText
                     && !isLineNumberObject
                     && !isMasterPageButton;
                 if (shouldProbeHeadingFormatWithoutRole) {
@@ -18419,6 +18518,7 @@
             const valueIsSpecialCharacter = isSpecialCharacterText(options.valueText);
             const captionIsSpecialCharacter = isSpecialCharacterText(options.captionText);
             const isSpecialCharacterStaticText = isStaticText && (contentIsSpecialCharacter || valueIsSpecialCharacter);
+            const isBulletStaticText = isStaticText && isBulletLikeMetadata(options.metadataSnapshot || (objectId ? getMetadataById(objectId) : null));
             const isMasterPageButton = isButton && Boolean(structural.isOnMasterPage);
 
             const metadataStub = {
@@ -18726,6 +18826,7 @@
                 && !isScheduleNumberTextCandidate
                 && !isPageNumber
                 && !isSpecialCharacterStaticText
+                && !isBulletStaticText
             ) {
                 const isSingleLineTableText = determineIsSingleLineObject(metadataStub, structural, { context: 'object' });
                 if (isSingleLineTableText === true) {
@@ -18754,7 +18855,7 @@
             }
 
             const specialCharacterExpectedLineSpacing = getExpectedValueNumber('expSpecCharLineSpac', null);
-            if (isSpecialCharacterStaticText) {
+            if (isSpecialCharacterStaticText && !isBulletStaticText) {
                 enforceSingleLineSpacing({
                     numericValues: valueLineSpacingValues,
                     rawValues: valueLineSpacingRawValues,
@@ -18765,7 +18866,7 @@
                     contextLabel: 'Line spacing for special characters'
                 });
             }
-            if (hasCaption && captionIsSpecialCharacter) {
+            if (hasCaption && captionIsSpecialCharacter && !isBulletStaticText) {
                 enforceSingleLineSpacing({
                     numericValues: captionLineSpacingValues,
                     rawValues: captionLineSpacingRawValues,
@@ -18774,6 +18875,18 @@
                     code: 'PARA009',
                     title: 'Line spacing for special character captions',
                     contextLabel: 'Line spacing for special character captions'
+                });
+            }
+            const bulletExpectedLineSpacing = getExpectedValueNumber('expBulletLineSpac', null);
+            if (isBulletStaticText) {
+                enforceSingleLineSpacing({
+                    numericValues: valueLineSpacingValues,
+                    rawValues: valueLineSpacingRawValues,
+                    hasUnknown: valueLineSpacingHasUnknown,
+                    expectedValue: bulletExpectedLineSpacing,
+                    code: 'PARA009B',
+                    title: 'Line spacing for bullets',
+                    contextLabel: 'Line spacing for bullets'
                 });
             }
 
@@ -18788,6 +18901,7 @@
                 && !isScheduleNumberTextCandidate
                 && !isWithinTable
                 && !isSpecialCharacterStaticText
+                && !isBulletStaticText
                 && !isLineNumberObject
             ) {
                 const isSingleLineText = determineIsSingleLineObject(metadataStub, structural, { context: 'object' });
@@ -21477,6 +21591,24 @@
                 category: 'lineSpacing'
             });
             appendEditableRow(tFieldLabel('Line spacing for special characters:'), 'specialCharacterLineSpacing', {
+                step: '0.5',
+                unitSuffix: 'pt',
+                liveUpdate: true,
+                inputClassName: 'settings-input--compact',
+                onUpdate: () => refreshExpectedValuesDisplayFromConfig(config),
+                triggerReportRefresh: true,
+                category: 'lineSpacing'
+            });
+            appendEditableRow(tFieldLabel('Font size for bullets:'), 'bulletFontSize', {
+                step: '0.5',
+                unitSuffix: 'pt',
+                liveUpdate: true,
+                inputClassName: 'settings-input--compact',
+                onUpdate: () => refreshExpectedValuesDisplayFromConfig(config),
+                triggerReportRefresh: true,
+                category: 'fontSize'
+            });
+            appendEditableRow(tFieldLabel('Line spacing for bullets:'), 'bulletLineSpacing', {
                 step: '0.5',
                 unitSuffix: 'pt',
                 liveUpdate: true,
@@ -27505,8 +27637,7 @@
                     const rawValue = node.nodeValue || '';
                     if (rawValue) {
                         const normalizedValue = String(rawValue)
-                            .replace(/\r\n?/g, '\n')
-                            .replace(/\u00a0/g, ' ');
+                            .replace(/\r\n?/g, '\n');
                         if (normalizedValue.includes('\t')) {
                             const segments = normalizedValue.split('\t');
                             for (let index = 0; index < segments.length; index += 1) {
@@ -31888,6 +32019,9 @@
 
             if (metadataRecord.type === 'Vertical Line') {
                 metadataRecord.typeBadgeLabel = 'VLine';
+            } else if (structural && structural.localName === 'draw' && candidateTexts.length
+                && matchesCandidate(text => isBulletLikeMetadata({ ...metadataRecord, content: text, valueText: text }))) {
+                metadataRecord.typeBadgeLabel = 'Bullet';
             } else if (structural && structural.localName === 'draw' && candidateTexts.length
                 && matchesCandidate(isSpecialCharacterText)) {
                 metadataRecord.typeBadgeLabel = 'SpeChar';
