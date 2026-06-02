@@ -18940,6 +18940,7 @@
                 && !isAvailabilityText
                 && !isFormNumberTextCandidate
                 && !captionIsSpecialCharacter
+                && !isMasterPageButton
             ) {
                 const isSingleLineCaption = determineIsSingleLineObject(metadataStub, structural, { context: 'caption' });
                 if (isSingleLineCaption === true) {
@@ -34665,10 +34666,10 @@
                     return true;
                 }
                 if (lastLoadedFile) {
-                    await processLoadedFile(lastLoadedFile, {
-                        selectionPathKey,
-                        fromReload: true
-                    });
+                    // A bare File object (from drag-and-drop without a FileSystemFileHandle)
+                    // is a frozen snapshot — re-reading it always returns the original bytes.
+                    // Fall back to asking the user to re-drop the file so we get fresh content.
+                    await requestReloadFileSelection(selectionPathKey);
                     return true;
                 }
                 if (currentXdpContent) {
