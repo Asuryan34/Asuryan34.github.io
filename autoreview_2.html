@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22120,6 +22121,8 @@
                 ppuLineSpacing: parseSectionSettingNumber(config.ppuLineSpacing),
                 specialCharacterFontSize: parseSectionSettingNumber(config.specialCharacterFontSize),
                 specialCharacterLineSpacing: parseSectionSettingNumber(config.specialCharacterLineSpacing),
+                bulletFontSize: parseSectionSettingNumber(config.bulletFontSize),
+                bulletLineSpacing: parseSectionSettingNumber(config.bulletLineSpacing),
                 scheduleNumberFontSizes: normalizeScheduleNumberFontSizes(config.scheduleNumberFontSizes),
                 scheduleNumberLineSpacing: parseSectionSettingNumber(config.scheduleNumberLineSpacing),
                 masterPageButtonFontSize: parseSectionSettingNumber(config.masterPageButtonFontSize),
@@ -30161,7 +30164,7 @@
                         const spaceStart = match.index + match[1].length;
                         const spaceEnd   = spaceStart + match[2].length;
                         // Walk each character in the whitespace run; flag only regular
-                        // spaces/tabs — a match that already uses   is compliant.
+                        // spaces/tabs — a match that already uses   is compliant.
                         for (let i = spaceStart; i < spaceEnd; i += 1) {
                             const ch = text[i];
                             if (ch === ' ' || ch === '	') {
