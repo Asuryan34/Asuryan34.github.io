@@ -5,6 +5,14 @@
 <head>
     <!-- Apply saved theme BEFORE first paint to prevent flash -->
     <script>
+    (function() {
+        if (!window.location.search.includes('nocache')) {
+            var url = window.location.href.split('?')[0] + '?nocache=' + Date.now();
+            window.location.replace(url);
+        }
+    })();
+    </script>
+    <script>
     (function(){
         try {
             var t = localStorage.getItem('autoreview-theme');
@@ -34540,24 +34548,14 @@
             //   - xdpStructuralFingerprint already verified above
             //
             // Update element references to point to the fresh XML document.
-            // If any element cannot be resolved in the new document, abort Tier 1
-            // and fall through to a full reload — stale elements would cause
-            // re-extraction to read pre-edit XML and produce incorrect errors.
-            let elementResolutionFailed = false;
             objectElementReferences.forEach((oldElement, objectId) => {
-                if (elementResolutionFailed) { return; }
                 const metadata = objectMetadata.get(objectId);
                 if (!metadata) { return; }
                 const newElement = findElementByPathKey(templateElement, metadata.pathParts || []);
                 if (newElement) {
                     objectElementReferences.set(objectId, newElement);
-                } else {
-                    elementResolutionFailed = true;
                 }
             });
-            if (elementResolutionFailed) {
-                return false; // Fall through to full reload (Tier 2 path)
-            }
 
             // Mark every object as a skeleton so extractAllObjectMetadata
             // re-extracts it with the current expectedValuesState.
