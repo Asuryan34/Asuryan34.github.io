@@ -1,8 +1,17 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Apply saved theme BEFORE first paint to prevent flash -->
+    <script>
+    (function() {
+        if (!window.location.search.includes('nocache')) {
+            var url = window.location.href.split('?')[0] + '?nocache=' + Date.now();
+            window.location.replace(url);
+        }
+    })();
+    </script>
     <script>
     (function(){
         try {
