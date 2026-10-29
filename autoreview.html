@@ -615,8 +615,7 @@
     </script>
     <script id="commonWordsDataset" type="application/json">
         {
-            "english": [
-                "a",
+            "english": [             
                 "about",
                 "account",
                 "address",
@@ -630,23 +629,18 @@
                 "as",
                 "at",
                 "back",
-                "balance",
                 "be",
                 "benefit",
                 "but",
                 "by",
                 "can",
-                "canada",
                 "cancellation",
-				"certification",
                 "checkbox",
                 "claimed",
                 "come",
-                "contact",
                 "could",
                 "credit",
                 "day",
-                "date",
                 "deadline",
                 "deduction",
                 "deductions",
@@ -654,9 +648,6 @@
                 "digit",
                 "digits",
                 "do",
-                "document",
-                "documents",
-                "email",
                 "english",
                 "even",
                 "federal",
@@ -676,8 +667,6 @@
                 "if",
                 "in",
                 "income",
-                "information",
-                "instructions",
                 "into",
                 "it",
                 "its",
@@ -694,14 +683,11 @@
                 "new",
                 "no",
                 "not",
-                "notice",
                 "now",
                 "number",
                 "of",
-                "on",
                 "one",
                 "only",
-                "or",
                 "other",
                 "our",
                 "out",
@@ -724,9 +710,7 @@
                 "section",
                 "security",
                 "see",
-                "signature",
                 "so",
-                "social",
                 "some",
                 "spouse",
                 "statement",
@@ -747,7 +731,6 @@
                 "this",
                 "time",
                 "to",
-                "total",
                 "translation",
                 "up",
                 "want",
@@ -765,61 +748,44 @@
                 "your"
             ],
             "french": [
-                "admissible",
                 "adresse",
                 "agence",
                 "anglais",
-                "annexe",
-                "annexes",
-                "applicable",
                 "après",
-                "attestation",
                 "au",
                 "autorisation",
                 "aux",
                 "avant",
                 "avec",
                 "avis",
-                "canada",
-                "case",
-                "cases",
                 "ceci",
                 "cela",
                 "celle",
                 "celles",
                 "celui",
-                "certification",
                 "ceux",
                 "champ",
                 "champs",
                 "chez",
-                "comment",
                 "compte",
                 "confidentialité",
-                "conjoint",
                 "conjointe",
                 "consentement",
-                "contact",
-                "correction",
                 "corrigé",
                 "courriel",
                 "crédit",
                 "crédits",
                 "dans",
-                "date",
                 "de",
                 "des",
                 "disponible",
                 "divulgation",
-                "document",
-                "documents",
                 "dont",
                 "du",
                 "déclaration",
                 "déclarations",
                 "déduction",
                 "déductions",
-                "en",
                 "entre",
                 "et",
                 "examen",
@@ -832,10 +798,6 @@
                 "imposable",
                 "impôt",
                 "impôts",
-                "inadmissible",
-                "information",
-                "instruction",
-                "instructions",
                 "la",
                 "langue",
                 "le",
@@ -852,8 +814,6 @@
                 "notre",
                 "ou",
                 "où",
-                "page",
-                "pages",
                 "paiement",
                 "paiements",
                 "par",
@@ -861,9 +821,6 @@
                 "pièces",
                 "pour",
                 "pourquoi",
-                "prestation",
-                "prestations",
-                "province",
                 "quand",
                 "que",
                 "qui",
@@ -878,27 +835,19 @@
                 "résident",
                 "résidente",
                 "sa",
-                "sans",
                 "ses",
-                "signature",
-                "signatures",
                 "solde",
-                "son",
                 "soumettre",
-                "sous",
                 "soutien",
                 "sur",
                 "sécurité",
                 "territoire",
-                "total",
                 "totaux",
                 "traduction",
                 "téléphone",
                 "un",
                 "une",
-                "validation",
                 "vers",
-                "version",
                 "vos",
                 "votre"
             ]
@@ -2873,11 +2822,11 @@
                 "code": "SRT020",
                 "severityLabel": "Critical",
                 "severity": 3,
-                "meaning": "Special characters usually contains SRTs.",
-                "suggestedFix": "Add SRTs on special characters.",
+                "meaning": "Lone special-character draws need the CRA-prescribed Custom Screen Reader Text for that glyph (for example Minus for a math minus, Dash for a list dash). Some glyphs must have no SRT.",
+                "suggestedFix": "Set Custom Screen Reader Text to the expected spoken text for this character, or leave it empty when the CRA reference requires no SRT. See Extra details for this object.",
                 "additionalDetail": "",
-                "shortSummary": "SRT missing on special characters.",
-                "name": "SRT020 – SRT missing on special characters."
+                "shortSummary": "Special character SRT incorrect or missing.",
+                "name": "SRT020 – Special character SRT incorrect or missing."
             },
             "PARA009B": {
                 "code": "PARA009B",
@@ -4377,10 +4326,10 @@
                 "name": "SRT019 – Le SRT d'un hyperlien est incorrect."
             },
             "SRT020": {
-                "shortSummary": "Le SRT contient une URL.",
-                "meaning": "Le SRT contient une URL complète plutôt qu'une description textuelle significative.",
-                "suggestedFix": "Remplacez l'URL dans le SRT par un texte descriptif qui explique la destination du lien.",
-                "name": "SRT020 – Le SRT contient une URL."
+                "shortSummary": "SRT incorrect ou manquant sur un caractère spécial.",
+                "meaning": "Les dessins qui ne contiennent qu'un caractère spécial doivent avoir le texte du lecteur d'écran prescrit par l'ARC (par ex. Moins pour un signe moins, Tiret pour un tiret de liste). Certains glyphes ne doivent pas avoir de SRT.",
+                "suggestedFix": "Définissez le texte personnalisé du lecteur d'écran selon la règle pour ce caractère, ou laissez-le vide lorsque la référence de l'ARC n'exige aucun SRT. Voir les détails supplémentaires pour cet objet.",
+                "name": "SRT020 – SRT incorrect ou manquant sur un caractère spécial."
             },
             "SRT021": {
                 "shortSummary": "Le SRT duplique le texte d'une autre partie du formulaire.",
@@ -4794,6 +4743,25 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 0.88rem;
+        }
+
+        .controls-option {
+            font-weight: 500;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.82rem;
+            cursor: pointer;
+            user-select: none;
+            max-width: 18rem;
+            line-height: 1.25;
+        }
+
+        .controls-option input[type="checkbox"] {
+            flex-shrink: 0;
+            margin: 0;
+            cursor: pointer;
         }
 
         select {
@@ -6139,7 +6107,23 @@
             accent-color: #15803d;
         }
 
+        .error-dismiss-toggle.is-readonly,
+        .archived-report .error-dismiss-toggle {
+            color: #64748b;
+            cursor: default;
+        }
+
+        .error-dismiss-toggle.is-readonly input[type="checkbox"],
+        .archived-report .error-dismiss-toggle input[type="checkbox"] {
+            cursor: default;
+        }
+
         .object-error-entry.resolved .error-dismiss-toggle {
+            color: #166534;
+        }
+
+        .object-error-entry.resolved .error-dismiss-toggle.is-readonly,
+        .archived-report .object-error-entry.resolved .error-dismiss-toggle {
             color: #166534;
         }
 
@@ -7413,6 +7397,10 @@
             <label for="teamSelect" class="controls-label"><span data-i18n="team_label">Team</span>
                 <select id="teamSelect"></select>
             </label>
+            <label for="deactivateTypographySizeSpacingToggle" class="controls-option" title="When checked, font size and line spacing checks (except field values) are turned off">
+                <input type="checkbox" id="deactivateTypographySizeSpacingToggle">
+                <span data-i18n="deactivate_typography_checks">Deactivate font size &amp; line spacing checks</span>
+            </label>
         </div>
         <div class="controls-right">
             <button id="reloadXdpButton" type="button" hidden data-i18n="reload_xdp">Reload XDP</button>
@@ -7427,7 +7415,7 @@
             <button id="langToggleButton" class="secondary lang-toggle" type="button" aria-label="Switch to French" title="Basculer en français / Switch to French">FR</button>
             <button id="saveReportButton" data-i18n="save_report">Save report</button>
         </div>
-        <input type="file" id="xdpFileInput" accept=".xdp,.xml,.html,.htm" hidden>
+        <input type="file" id="xdpFileInput" accept=".xdp,.pdf,.xml,.html,.htm" hidden>
     </header>
 
     <div class="tab-buttons-row" role="tablist" aria-label="Report views">
@@ -7471,9 +7459,9 @@
                 <div class="welcome-icon">
                     <svg aria-hidden="true" focusable="false" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
                 </div>
-                <h2 data-i18n="welcome_title">Load an XDP file to begin</h2>
-                <p><span data-i18n="welcome_body">Drag and drop an XDP, XML, or saved report file anywhere on this page, or click below to browse.</span></p>
-                <button id="loadFileCtaButton" class="welcome-cta-btn" type="button" data-i18n="open_xdp">Open XDP file&hellip;</button>
+                <h2 data-i18n="welcome_title">Load an XDP or Designer PDF to begin</h2>
+                <p><span data-i18n="welcome_body">Drag and drop an XDP, Designer PDF, XML, or saved report file anywhere on this page, or click below to browse.</span></p>
+                <button id="loadFileCtaButton" class="welcome-cta-btn" type="button" data-i18n="open_xdp">Open XDP or PDF file&hellip;</button>
             </div>
             <div id="tab-panel-main" class="tab-panel active" data-tab="main" role="tabpanel" aria-labelledby="tab-btn-main" tabindex="0">
                 <div class="panel-card">
@@ -7699,8 +7687,8 @@
 
     <div id="dropOverlay" class="drop-overlay" hidden aria-hidden="true">
         <div class="drop-overlay-message" role="status" aria-live="polite">
-            <span class="drop-overlay-title">Drop XDP/XML or saved report to load</span>
-            <span class="drop-overlay-subtitle">.xdp, .xml, or saved report .html files are supported.</span>
+            <span class="drop-overlay-title">Drop XDP, PDF, XML, or saved report to load</span>
+            <span class="drop-overlay-subtitle">.xdp, compressed Designer PDF, .xml, or saved report .html files are supported.</span>
         </div>
     </div>
 
@@ -7932,6 +7920,7 @@
                 // Header
                 section_label:       'Section',
                 team_label:          'Team',
+                deactivate_typography_checks: 'Deactivate font size & line spacing checks',
                 reload_xdp:          'Reload XDP',
                 see_xdp_code:        'See XDP code',
                 save_report:         'Save report',
@@ -7954,9 +7943,9 @@
                 severity_warning:    'Warning',
                 severity_notice:     'Notice',
                 // Welcome screen
-                welcome_title:       'Load an XDP file to begin',
-                welcome_body:        'Drag and drop an XDP, XML, or saved report file anywhere on this page, or click below to browse.',
-                open_xdp:            'Open XDP file\u2026',
+                welcome_title:       'Load an XDP or Designer PDF to begin',
+                welcome_body:        'Drag and drop an XDP, Designer PDF, XML, or saved report file anywhere on this page, or click below to browse.',
+                open_xdp:            'Open XDP or PDF file\u2026',
                 // File status
                 selected_file:       'Selected file:',
                 none_loaded:         'None loaded',
@@ -8198,6 +8187,7 @@
                 // Header
                 section_label:       'Section',
                 team_label:          'Équipe',
+                deactivate_typography_checks: 'Désactiver les vérifications de taille de police et d’interligne',
                 reload_xdp:          'Recharger le XDP',
                 see_xdp_code:        'Voir le code XDP',
                 save_report:         'Enregistrer le rapport',
@@ -8220,9 +8210,9 @@
                 severity_warning:    'Avertissement',
                 severity_notice:     'Avis',
                 // Welcome screen
-                welcome_title:       'Charger un fichier XDP pour commencer',
-                welcome_body:        'Glissez-déposez un fichier XDP, XML ou un rapport enregistré n\'importe où sur cette page, ou cliquez ci-dessous pour parcourir.',
-                open_xdp:            'Ouvrir un fichier XDP\u2026',
+                welcome_title:       'Charger un fichier XDP ou un PDF Designer pour commencer',
+                welcome_body:        'Glissez-déposez un fichier XDP, un PDF Designer, un XML ou un rapport enregistré n\'importe où sur cette page, ou cliquez ci-dessous pour parcourir.',
+                open_xdp:            'Ouvrir un fichier XDP ou PDF\u2026',
                 // File status
                 selected_file:       'Fichier sélectionné\u00a0:',
                 none_loaded:         'Aucun fichier chargé',
@@ -8593,13 +8583,9 @@
         let desiredSelectionPathKey = null;
         let objectMetadata = new Map();
         let objectRichTextData = new Map();
-        /** Structural fingerprint of the last loaded XDP — used by smart reload (Session 4)
-         *  to determine which pipeline stages can be skipped. */
-        let xdpStructuralFingerprint = null;
-        /** Per-object XML hashes — populated during Stage 2. Maps objectId → hash number.
-         *  Used by Session 4 smart reload to detect which objects changed. */
+        /** Per-object XML hashes — populated during Stage 2. Maps objectId → hash number. */
         let xdpObjectHashes = new Map();
-        /** File identity snapshot for smart reload (Session 4). */
+        /** On-disk identity of the last loaded XDP (from File.lastModified + File.size). */
         let xdpLastModified = null;
         let xdpFileSize    = null;
         /** Set of objectIds whose metadata was (re-)extracted in the most recent Stage 2 run.
@@ -8636,9 +8622,10 @@
 
         const FILE_PICKER_ACCEPT_TYPES = [
             {
-                description: 'XFA, XML, or saved report (HTML) files',
+                description: 'XDP, Designer PDF, XML, or saved report (HTML) files',
                 accept: {
                     'application/vnd.adobe.xdp+xml': ['.xdp'],
+                    'application/pdf': ['.pdf'],
                     'application/xml': ['.xdp', '.xml'],
                     'text/xml': ['.xdp', '.xml'],
                     'text/html': ['.html', '.htm']
@@ -8698,11 +8685,12 @@
         };
         let formPropertiesReady = false;
         const EXPECTED_VALUE_UNIT_SUFFIX = 'pt';
-        const SPECIAL_CHARACTERS = ['>', '<', '√', '≤', '≥', '–', '+', '÷', '×', '=', '≠', '►', '▼', '◄', '▲', '✓'];
+        const SPECIAL_CHARACTERS = ['>', '<', '√', '≤', '≥', '–', '\u2212', '+', '÷', '×', '=', '≠', '►', '▼', '◄', '▲', '✓'];
         const SPECIAL_CHARACTERS_DISPLAY = SPECIAL_CHARACTERS.join(' ');
         /**
          * Standalone lone-glyph SRT rules (not inside a list item as a list marker).
          * List-item lone • / ▪ / dash variants use Bullet/Puce or Dash/Tiret in the SRT020 branch.
+         * En dash / true minus as a math operator require Minus/Moins; list-marker dashes use Dash/Tiret.
          * Reference: Special_character_SRT_reference.docx ("No SRT" => omit custom assist text).
          */
         const SPECIAL_CHARACTER_STANDALONE_SRT_RULES = Object.freeze({
@@ -8723,7 +8711,8 @@
             '▪': { forbid: true },
             '✓': { require: { en: 'Check mark', fr: 'Coche' } },
             '•': { forbid: true },
-            '–': { forbid: true }
+            '–': { require: { en: 'Minus', fr: 'Moins' } },
+            '\u2212': { require: { en: 'Minus', fr: 'Moins' } }
         });
         const PHONE_NUMBER_PATTERN = /(1[ -]?)?(\(? ?\d{3} ?\)?[ -]?)?\d{3}[ -]\d{4}\b/;
         // Pre-compiled flag variants (avoids new RegExp() per call)
@@ -11457,6 +11446,19 @@
         const errorCheckState = new Map();
         const errorCheckElements = new Map();
         const contentErrorPreferences = new Map();
+
+        /** Font-size / line-spacing checks controlled by the header master checkbox.
+         *  Field-value checks (FIELD0003, PARA014, PARA015) are intentionally excluded. */
+        const TYPOGRAPHY_SIZE_SPACING_DEACTIVATABLE_CODES = Object.freeze([
+            'FONT008', 'FONT008_ln', 'FONT009', 'FONT010', 'FONT011', 'FONT012', 'FONT013',
+            'FONT014', 'FONT015', 'FONT016', 'FONT016B', 'FONT017', 'FONT018',
+            'PARA001', 'PARA002', 'PARA003', 'PARA004', 'PARA005', 'PARA006', 'PARA007',
+            'PARA008', 'PARA009', 'PARA009B', 'PARA010', 'PARA011', 'PARA012', 'PARA012_ln',
+            'PARA013', 'PARA016', 'PARA017'
+        ]);
+        const TYPOGRAPHY_SIZE_SPACING_DEACTIVATABLE_CODE_SET = new Set(
+            TYPOGRAPHY_SIZE_SPACING_DEACTIVATABLE_CODES.map(code => String(code).toUpperCase())
+        );
 
         function parseJsonSafe(text, fallback = null) {
             if (!text) {
@@ -14818,8 +14820,15 @@
             if (!code) {
                 return true;
             }
-            if (!contentErrorPreferences.has(code)) {
+            const normalized = String(code).trim().toUpperCase();
+            if (!normalized) {
                 return true;
+            }
+            if (!contentErrorPreferences.has(normalized) && !contentErrorPreferences.has(code)) {
+                return true;
+            }
+            if (contentErrorPreferences.has(normalized)) {
+                return Boolean(contentErrorPreferences.get(normalized));
             }
             return Boolean(contentErrorPreferences.get(code));
         }
@@ -14828,14 +14837,144 @@
             if (!code || isArchivedReport) {
                 return;
             }
+            const normalized = String(code).trim().toUpperCase();
+            if (!normalized) {
+                return;
+            }
             if (isActive) {
+                contentErrorPreferences.delete(normalized);
                 contentErrorPreferences.delete(code);
             } else {
-                contentErrorPreferences.set(code, false);
+                contentErrorPreferences.set(normalized, false);
             }
             if (!options.deferRecompute) {
                 recomputeContentErrorAnalysis();
             }
+        }
+
+        function syncTypographySizeSpacingSettingToggles(isActive) {
+            TYPOGRAPHY_SIZE_SPACING_DEACTIVATABLE_CODES.forEach(code => {
+                const contentToggle = document.getElementById(`${code}-content-toggle`)
+                    || document.getElementById(`${code.toLowerCase()}-content-toggle`);
+                if (contentToggle) {
+                    contentToggle.checked = isActive;
+                }
+            });
+            ERROR_CHECK_DEFINITIONS.forEach(definition => {
+                if (!definition || !definition.code || !definition.id) {
+                    return;
+                }
+                const normalized = String(definition.code).trim().toUpperCase();
+                if (!TYPOGRAPHY_SIZE_SPACING_DEACTIVATABLE_CODE_SET.has(normalized)) {
+                    return;
+                }
+                const elements = errorCheckElements.get(definition.id);
+                if (elements && elements.toggle) {
+                    elements.toggle.checked = isActive;
+                }
+                const state = errorCheckState.get(definition.id) || { active: true, result: null };
+                state.active = isActive;
+                errorCheckState.set(definition.id, state);
+            });
+        }
+
+        function isTypographySizeSpacingDeactivatedFromPreferences() {
+            return TYPOGRAPHY_SIZE_SPACING_DEACTIVATABLE_CODES.every(code => !isContentErrorEnabled(code));
+        }
+
+        function getTypographySizeSpacingDeactivatedState(state) {
+            if (state && typeof state.deactivateTypographySizeSpacing === 'boolean') {
+                return Boolean(state.deactivateTypographySizeSpacing);
+            }
+            const toggle = document.getElementById('deactivateTypographySizeSpacingToggle');
+            if (toggle && !isArchivedReport) {
+                return Boolean(toggle.checked);
+            }
+            return isTypographySizeSpacingDeactivatedFromPreferences();
+        }
+
+        function syncTypographySizeSpacingMasterToggleFromState(state, options = {}) {
+            const toggle = document.getElementById('deactivateTypographySizeSpacingToggle');
+            if (!toggle) {
+                return;
+            }
+            const deactivated = getTypographySizeSpacingDeactivatedState(state);
+            toggle.checked = deactivated;
+            if (deactivated) {
+                toggle.setAttribute('checked', 'checked');
+            } else {
+                toggle.removeAttribute('checked');
+            }
+            const shouldDisable = Boolean(options.disabled) || isArchivedReport;
+            if (shouldDisable) {
+                toggle.disabled = true;
+                toggle.setAttribute('disabled', 'disabled');
+                toggle.setAttribute('aria-disabled', 'true');
+            }
+            if (options.syncSettingToggles) {
+                syncTypographySizeSpacingSettingToggles(!deactivated);
+            }
+        }
+
+        function restoreContentErrorPreferencesFromArchiveState(state) {
+            if (!state || !Array.isArray(state.contentErrorPreferences)) {
+                return false;
+            }
+            contentErrorPreferences.clear();
+            state.contentErrorPreferences.forEach(entry => {
+                if (!Array.isArray(entry) || entry.length < 2) {
+                    return;
+                }
+                const [code, value] = entry;
+                if (!code || Boolean(value)) {
+                    return;
+                }
+                const normalized = String(code).trim().toUpperCase();
+                if (normalized) {
+                    contentErrorPreferences.set(normalized, false);
+                }
+            });
+            return true;
+        }
+
+        function applyTypographySizeSpacingMasterPreference(deactivate) {
+            if (isArchivedReport) {
+                return;
+            }
+            const isActive = !deactivate;
+            TYPOGRAPHY_SIZE_SPACING_DEACTIVATABLE_CODES.forEach(code => {
+                setContentErrorPreference(code, isActive, { deferRecompute: true });
+            });
+            syncTypographySizeSpacingSettingToggles(isActive);
+            // Do not call recomputeContentErrorAnalysis() — that rebuilds baseErrors without
+            // re-running typography extract. Filtering in applyErrorResultsToObjects is enough.
+            applyErrorResultsToObjects();
+            updateAllErrorCheckResults();
+            updateTreeErrorStates();
+            if (selectedTreeItem) {
+                selectTreeItem(selectedTreeItem);
+            } else {
+                refreshSelectedObjectDetails();
+            }
+        }
+
+        function initializeTypographySizeSpacingMasterToggle() {
+            const toggle = document.getElementById('deactivateTypographySizeSpacingToggle');
+            if (!toggle || toggle.dataset.bound === '1') {
+                return;
+            }
+            toggle.dataset.bound = '1';
+            if (isArchivedReport) {
+                syncTypographySizeSpacingMasterToggleFromState(archivedReportState, {
+                    disabled: true,
+                    syncSettingToggles: true
+                });
+                return;
+            }
+            toggle.checked = false;
+            toggle.addEventListener('change', () => {
+                applyTypographySizeSpacingMasterPreference(Boolean(toggle.checked));
+            });
         }
 
         function recomputeContentErrorAnalysis() {
@@ -14869,7 +15008,8 @@
                         ignoreDoubleSpace: isPageNumberObject || ignoreCaptionDoubleSpace,
                         objectId,
                         objectName: metadata.name,
-                        hasBlackBackgroundWhiteFont: Boolean(structural.hasBlackBackgroundWhiteFont)
+                        hasBlackBackgroundWhiteFont: Boolean(structural.hasBlackBackgroundWhiteFont),
+                        structural
                     });
                     baseErrors = Array.isArray(contentAnalysis.errors)
                         ? contentAnalysis.errors.map(entry => ({ ...entry }))
@@ -14919,7 +15059,8 @@
                     isField: isFieldElement,
                     objectId,
                     objectName: metadata.name,
-                    hasBlackBackgroundWhiteFont: Boolean(structural.hasBlackBackgroundWhiteFont)
+                    hasBlackBackgroundWhiteFont: Boolean(structural.hasBlackBackgroundWhiteFont),
+                    structural
                 });
                 const srtErrorsInitial = Array.isArray(srtAnalysis.errors)
                     ? srtAnalysis.errors.map(entry => ({ ...entry }))
@@ -15679,6 +15820,7 @@
                 text: typeof overrides.text === 'string' ? overrides.text : '',
                 contextKey: overrides.contextKey || null,
                 objectId: overrides.objectId || null,
+                isLineNumberObject: Boolean(overrides.isLineNumberObject),
                 typefaceDisplay: overrides.typefaceDisplay || defaultDisplay,
                 typefaceCode: overrides.typefaceCode || (info.typefaceCode || ''),
                 hasBold: Boolean(info.hasBold),
@@ -15720,6 +15862,27 @@
                 maxFontSizeValue: typeof info.maxFontSizeValue === 'number' ? info.maxFontSizeValue : null
             };
             return context;
+        }
+
+        function isLineNumberFontContext(context) {
+            if (!context) {
+                return false;
+            }
+            if (context.isLineNumberObject) {
+                return true;
+            }
+            const objectId = context.objectId;
+            if (!objectId) {
+                return false;
+            }
+            const metadata = typeof getMetadataById === 'function' ? getMetadataById(objectId) : null;
+            if (!metadata) {
+                return false;
+            }
+            if (metadata.type === 'LineNumber') {
+                return true;
+            }
+            return isLineNumberObjectByCriteria(metadata, metadata.structural || {}, objectId);
         }
 
         function evaluateFontContexts(contexts = []) {
@@ -15833,6 +15996,11 @@
                         hasHorizontalUnknown
                         || (Array.isArray(horizontalScaleRawValues) && horizontalScaleRawValues.length > 0)
                     );
+                // Line numbers may use 82% horizontal scaling; treat 82%–<100% as acceptable for them.
+                const lineNumberAllowsHorizontalScale =
+                    isLineNumberFontContext(context)
+                    && minHorizontalScale !== null
+                    && minHorizontalScale >= horizontalScaleCriticalBelow;
                 if (
                     shouldCheckFont006a
                     && hasHorizontalScaling
@@ -15850,6 +16018,7 @@
                     shouldCheckFont006b
                     && hasHorizontalScaling
                     && (horizontalScalingWarnBand || horizontalScalingUnknownBand)
+                    && !lineNumberAllowsHorizontalScale
                 ) {
                     const entry = createContentErrorEntry('FONT006b', 1);
                     let scalingMessage;
@@ -16808,12 +16977,14 @@
                     ? (formLanguageKey === 'french' ? 'Puce' : 'Bullet')
                     : (formLanguageKey === 'french' ? 'Tiret' : 'Dash');
                 const expectedNorm = normalizeSrtValueForComparison(expectedSrtExact);
+                const listMarkerSolution = `Set Custom Screen Reader Text to "${expectedSrtExact}" (<assist><speak>${expectedSrtExact}</speak></assist>) for this list-item ${listMarkerKind}.`;
                 if (!hasMeaningfulSrt) {
                     if (addManualContentError(srtErrors, 'SRT020')) {
                         const entry = srtErrors.find(item => item && item.code === 'SRT020');
                         if (entry) {
                             const localeLabel = formLanguageKey === 'french' ? 'French (fr_CA)' : 'English (en_CA)';
                             entry.context = `This draw contains only a ${listMarkerKind} symbol inside a list item; add SRT with <assist><speak>${expectedSrtExact}</speak></assist> (${localeLabel} form).`;
+                            entry.solutionOverride = listMarkerSolution;
                         }
                     }
                 } else if (normalizedSrtForComparison !== expectedNorm) {
@@ -16821,6 +16992,7 @@
                         const entry = srtErrors.find(item => item && item.code === 'SRT020');
                         if (entry) {
                             entry.context = `Expected SRT "${expectedSrtExact}" (<speak> inside <assist>) for this lone ${listMarkerKind} in a list item; current SRT is "${trimmedSrt}".`;
+                            entry.solutionOverride = listMarkerSolution;
                         }
                     }
                     markup = wrapMarkupWithHighlight(markup, srtText, 'SRT020');
@@ -16842,6 +17014,7 @@
                                 const entry = srtErrors.find(item => item && item.code === 'SRT020');
                                 if (entry) {
                                     entry.context = `This draw is only the "${collapsedContent}" special character; leave Custom Screen Reader Text empty per CRA reference (no SRT). Current SRT: "${trimmedSrt}".`;
+                                    entry.solutionOverride = 'Leave Custom Screen Reader Text empty for this special character (no SRT).';
                                 }
                             }
                             markup = wrapMarkupWithHighlight(markup, srtText, 'SRT020');
@@ -16851,11 +17024,13 @@
                             ? standaloneRule.require.fr
                             : standaloneRule.require.en;
                         const expectedNorm = normalizeSrtValueForComparison(expectedExact);
+                        const requireSolution = `Set Custom Screen Reader Text to "${expectedExact}" (<assist><speak>${expectedExact}</speak></assist>).`;
                         if (!hasMeaningfulSrt) {
                             if (addManualContentError(srtErrors, 'SRT020')) {
                                 const entry = srtErrors.find(item => item && item.code === 'SRT020');
                                 if (entry) {
                                     entry.context = `This draw is only the "${collapsedContent}" character; add SRT with <assist><speak>${expectedExact}</speak></assist> (${localeLabel} form).`;
+                                    entry.solutionOverride = requireSolution;
                                 }
                             }
                         } else if (normalizedSrtForComparison !== expectedNorm) {
@@ -16863,6 +17038,7 @@
                                 const entry = srtErrors.find(item => item && item.code === 'SRT020');
                                 if (entry) {
                                     entry.context = `Expected <speak> text "${expectedExact}" for this lone special character (${localeLabel}); current SRT is "${trimmedSrt}".`;
+                                    entry.solutionOverride = requireSolution;
                                 }
                             }
                             markup = wrapMarkupWithHighlight(markup, srtText, 'SRT020');
@@ -17018,7 +17194,10 @@
                         if (Boolean(value)) {
                             return;
                         }
-                        contentErrorPreferences.set(code, false);
+                        const normalized = String(code).trim().toUpperCase();
+                        if (normalized) {
+                            contentErrorPreferences.set(normalized, false);
+                        }
                     });
                 }
                 if (typeof state.currentGridUnit === 'string') {
@@ -17153,11 +17332,49 @@
             return craName.trim().toLowerCase().startsWith('linenumber_');
         }
 
+        /**
+         * Raw numericEdit values (<float>/<integer>) are never display text; thousands
+         * separators come from the picture clause. Skip TXT-E006 / TXT-F004 on those values.
+         */
+        function isNumericEditFieldForThousandsSkip(metadata, structural) {
+            const structuralLocalName = structural && structural.localName
+                ? String(structural.localName).toLowerCase()
+                : '';
+            const metadataLocalName = metadata && metadata.localName
+                ? String(metadata.localName).toLowerCase()
+                : '';
+            const isField = Boolean(structural && structural.isField)
+                || structuralLocalName === 'field'
+                || metadataLocalName === 'field';
+            if (!isField) {
+                return false;
+            }
+            const fieldUi = (structural && structural.fieldUi) || {};
+            const uiType = typeof fieldUi.type === 'string' ? fieldUi.type.trim().toLowerCase() : '';
+            return uiType === 'numericedit';
+        }
+
         function isLineNumberObjectByCriteria(metadata, structural, objectId) {
             if (!structural) {
                 return false;
             }
-            
+
+            // Line numbers are always static text (draw), never fields.
+            const isField = Boolean(structural.isField);
+            const structuralLocalName = structural.localName ? structural.localName.toLowerCase() : '';
+            const metadataLocalName = metadata && metadata.localName ? metadata.localName.toLowerCase() : '';
+            if (isField || structuralLocalName === 'field' || metadataLocalName === 'field') {
+                return false;
+            }
+
+            const isLineNumberType = metadata && metadata.type === 'LineNumber';
+            const isDraw = structuralLocalName === 'draw'
+                || metadataLocalName === 'draw'
+                || (metadata && metadata.type === TYPE_LABELS.draw);
+            if (!isDraw && !isLineNumberType) {
+                return false;
+            }
+
             const valueText = (metadata && (metadata.valueText || metadata.content)) || '';
             const trimmedValue = typeof valueText === 'string' ? valueText.trim() : '';
             const valueMatchesLineNumberPattern = Boolean(trimmedValue && matchesLineNumberValuePattern(trimmedValue));
@@ -17165,7 +17382,7 @@
             // Check if object name ends with _ln, _bn, or _amnt
             const objectName = metadata && typeof metadata.name === 'string' ? metadata.name.toLowerCase() : '';
             const isNamedLineNumber = objectName && (objectName.endsWith('_ln') || objectName.endsWith('_bn') || objectName.endsWith('_amnt'));
-            
+
             if (isNamedLineNumber) {
                 return true;
             }
@@ -17175,27 +17392,18 @@
             if (isCraLibraryLineNumberTemplateName(craObjectNameResolved) && valueMatchesLineNumberPattern) {
                 return true;
             }
-            
-            // Field or draw (static text) with line-number styling and allowed value pattern
-            const isField = Boolean(structural.isField);
-            const structuralLocalName = structural.localName ? structural.localName.toLowerCase() : '';
-            const metadataLocalName = metadata && metadata.localName ? metadata.localName.toLowerCase() : '';
-            const isLineNumberType = metadata && metadata.type === 'LineNumber';
-            const isDraw = structuralLocalName === 'draw' || metadataLocalName === 'draw' || (metadata && metadata.type === TYPE_LABELS.draw);
-            if (!isField && !isDraw && !isLineNumberType) {
-                return false;
-            }
-            
+
+            // Draw (static text) with line-number styling and allowed value pattern
             const hasBlackBgWhiteFont = Boolean(structural.hasBlackBackgroundWhiteFont);
             const hasWhiteBgBlackFont = Boolean(structural.hasWhiteBackgroundBlackFont);
             if (!hasBlackBgWhiteFont && !hasWhiteBgBlackFont) {
                 return false;
             }
-            
+
             if (!trimmedValue || !valueMatchesLineNumberPattern) {
                 return false;
             }
-            
+
             return true;
         }
 
@@ -17692,6 +17900,9 @@
                 title,
                 contextLabel
             }) => {
+                if (!isContentErrorEnabled(code)) {
+                    return;
+                }
                 if (!Number.isFinite(expectedValue)) {
                     return;
                 }
@@ -17724,6 +17935,9 @@
                 title,
                 contextLabel
             }) => {
+                if (!isContentErrorEnabled(code)) {
+                    return;
+                }
                 const expectedList = Array.isArray(expectedValues)
                     ? expectedValues.filter(value => Number.isFinite(value))
                     : [];
@@ -18032,7 +18246,7 @@
             const defaultStaticFontSize = getExpectedValueNumber('expStaticTxtFontSize', null);
             const defaultCaptionFontSize = getExpectedValueNumber('expCaptionTxtFontSize', null);
 
-            // Check if object is a line number (_ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
+            // Check if object is a line number (draw only: _ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
             // Use metadataSnapshot if available (created before metadataRecord is registered), otherwise try getMetadataById
             let metadata = (options.metadataSnapshot && typeof options.metadataSnapshot === 'object') ? options.metadataSnapshot : (objectId ? getMetadataById(objectId) : null);
             // If metadata still not available, create minimal metadata from available info
@@ -18376,17 +18590,33 @@
                     const finiteValueSizes = Array.isArray(valueFontSizeValues)
                         ? valueFontSizeValues.filter(value => Number.isFinite(value))
                         : [];
+                    // Body-sized (or smaller) bold text is not treated as a missing heading.
+                    const defaultBodyFontSize = getExpectedValueNumber('expStaticTxtFontSize', null);
+                    const sizesLargerThanBody = Number.isFinite(defaultBodyFontSize)
+                        ? finiteValueSizes.filter(
+                            value => value > defaultBodyFontSize + FONT_SIZE_COMPARISON_EPSILON
+                        )
+                        : finiteValueSizes;
                     const valueSizeMatchesLevel = level => {
                         const exp = getExpectedValueNumber(`expHeading${level}FontSize`, null);
                         if (!Number.isFinite(exp)) {
                             return false;
                         }
-                        return finiteValueSizes.some(value => Math.abs(value - exp) <= FONT_SIZE_COMPARISON_EPSILON);
+                        // Heading size itself must also be larger than body text.
+                        if (Number.isFinite(defaultBodyFontSize)
+                            && exp <= defaultBodyFontSize + FONT_SIZE_COMPARISON_EPSILON) {
+                            return false;
+                        }
+                        return sizesLargerThanBody.some(
+                            value => Math.abs(value - exp) <= FONT_SIZE_COMPARISON_EPSILON
+                        );
                     };
                     const matchedLevels = [];
-                    for (let level = 1; level <= 4; level += 1) {
-                        if (staticBodyTrimmed && valueSizeMatchesLevel(level) && structural.valueFontAllBold) {
-                            matchedLevels.push(level);
+                    if (sizesLargerThanBody.length) {
+                        for (let level = 1; level <= 4; level += 1) {
+                            if (staticBodyTrimmed && valueSizeMatchesLevel(level) && structural.valueFontAllBold) {
+                                matchedLevels.push(level);
+                            }
                         }
                     }
                     if (matchedLevels.length) {
@@ -18536,7 +18766,7 @@
                 geometry: options.geometry || null
             };
 
-            // Check if object is a line number (_ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
+            // Check if object is a line number (draw only: _ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
             // Use metadataSnapshot if available (created before metadataRecord is registered), otherwise try getMetadataById
             let metadata = (options.metadataSnapshot && typeof options.metadataSnapshot === 'object') ? options.metadataSnapshot : (objectId ? getMetadataById(objectId) : null);
             // If metadata still not available, create minimal metadata from available info
@@ -18597,6 +18827,9 @@
                 title,
                 contextLabel
             }) => {
+                if (!isContentErrorEnabled(code)) {
+                    return;
+                }
                 if (!Number.isFinite(expectedValue)) {
                     return;
                 }
@@ -18638,6 +18871,9 @@
                 title,
                 contextLabel
             }) => {
+                if (!isContentErrorEnabled(code)) {
+                    return;
+                }
                 const expectedList = Array.isArray(expectedValues)
                     ? expectedValues.filter(value => Number.isFinite(value))
                     : [];
@@ -19672,6 +19908,11 @@
                 }
                 return;
             }
+            // Preserve "Not an error" acknowledgements across rebuilds (including archived restore).
+            const dismissedKeysByObjectId = new Map();
+            objectMetadata.forEach((metadata, objectId) => {
+                dismissedKeysByObjectId.set(objectId, collectDismissedErrorKeys(metadata && metadata.errors));
+            });
             // Session 5: null = full load (all objects dirty); Set = smart reload.
             const allDirty = (dirtyObjectIds === null);
             const globalStructuralMap = evaluateGlobalStructuralChecks();
@@ -19681,10 +19922,14 @@
             objectMetadata.forEach((metadata, objectId) => {
                 const isDirty = allDirty || dirtyObjectIds.has(objectId);
                 const contentErrors = Array.isArray(metadata.baseErrors)
-                    ? metadata.baseErrors.map(entry => ({ ...entry }))
+                    ? metadata.baseErrors
+                        .filter(entry => entry && isContentErrorEnabled(entry.code))
+                        .map(entry => ({ ...entry }))
                     : [];
                 const srtErrors = Array.isArray(metadata.srtErrors)
-                    ? metadata.srtErrors.map(entry => ({ ...entry }))
+                    ? metadata.srtErrors
+                        .filter(entry => entry && isContentErrorEnabled(entry.code))
+                        .map(entry => ({ ...entry }))
                     : [];
                 // Per-object structural check: only re-run for objects re-extracted
                 // in this Stage 2 cycle; reuse the cached result for unchanged objects.
@@ -19884,14 +20129,15 @@
             }
             applyLanguageAvailabilityFormatChecks();
             applyLanguageLocaleErrorChecks();
-            objectMetadata.forEach(metadata => {
+            objectMetadata.forEach((metadata, objectId) => {
                 if (!metadata) {
                     return;
                 }
                 const currentErrors = Array.isArray(metadata.errors) ? metadata.errors : [];
                 const dedupedErrors = deduplicateCaptionContentErrors(currentErrors);
+                reapplyDismissedErrorFlags(dedupedErrors, dismissedKeysByObjectId.get(objectId));
                 metadata.errors = dedupedErrors;
-                metadata.hasErrors = dedupedErrors.length > 0;
+                metadata.hasErrors = dedupedErrors.some(entry => entry && !entry.dismissed);
             });
             refreshFileNameConventionBanner();
             updateTreeErrorStates();
@@ -20545,6 +20791,13 @@
         function collectArchiveStateForExport() {
             const metadataEntries = Array.from(objectMetadata.entries()).map(([id, metadata]) => [id, deepCloneData(metadata)]);
             const errorEntries = Array.from(errorCheckState.entries()).map(([id, entry]) => [id, deepCloneData(entry)]);
+            const dismissedErrorEntries = [];
+            objectMetadata.forEach((metadata, objectId) => {
+                const keys = Array.from(collectDismissedErrorKeys(metadata && metadata.errors));
+                if (keys.length) {
+                    dismissedErrorEntries.push([objectId, keys]);
+                }
+            });
             return {
                 currentTab,
                 lastReportTab,
@@ -20566,7 +20819,9 @@
                 gridRows: deepCloneData(gridRows),
                 errorCheckState: errorEntries,
                 expectedValuesState: deepCloneData(expectedValuesState),
-                contentErrorPreferences: Array.from(contentErrorPreferences.entries())
+                contentErrorPreferences: Array.from(contentErrorPreferences.entries()),
+                dismissedErrors: dismissedErrorEntries,
+                deactivateTypographySizeSpacing: getTypographySizeSpacingDeactivatedState(null)
             };
         }
 
@@ -20641,6 +20896,76 @@
                 toggle.disabled = true;
                 toggle.setAttribute('aria-disabled', 'true');
             });
+            disableArchivedDismissToggles();
+        }
+
+        function disableArchivedDismissToggles() {
+            document.querySelectorAll('.error-dismiss-toggle input[type="checkbox"]').forEach(toggle => {
+                toggle.disabled = true;
+                toggle.setAttribute('aria-disabled', 'true');
+                const label = toggle.closest('.error-dismiss-toggle');
+                if (label) {
+                    label.classList.add('is-readonly');
+                }
+            });
+        }
+
+        function applyArchivedDismissedErrors(state) {
+            restoreDismissedErrorsFromArchiveState(state);
+        }
+
+        function restoreDismissedErrorsFromArchiveState(state) {
+            if (!state || !objectMetadata || !objectMetadata.size) {
+                return false;
+            }
+            const dismissedByObjectId = new Map();
+            if (Array.isArray(state.dismissedErrors)) {
+                state.dismissedErrors.forEach(entry => {
+                    if (!Array.isArray(entry) || entry.length < 2) {
+                        return;
+                    }
+                    const [objectId, keys] = entry;
+                    if (!objectId || !Array.isArray(keys) || !keys.length) {
+                        return;
+                    }
+                    dismissedByObjectId.set(objectId, new Set(keys));
+                });
+            }
+            // Also harvest dismissed flags from the saved metadata snapshot.
+            if (Array.isArray(state.objectMetadata)) {
+                state.objectMetadata.forEach(entry => {
+                    if (!Array.isArray(entry) || entry.length < 2) {
+                        return;
+                    }
+                    const [objectId, metadata] = entry;
+                    const keys = collectDismissedErrorKeys(metadata && metadata.errors);
+                    if (!keys.size) {
+                        return;
+                    }
+                    if (!dismissedByObjectId.has(objectId)) {
+                        dismissedByObjectId.set(objectId, keys);
+                    } else {
+                        keys.forEach(key => dismissedByObjectId.get(objectId).add(key));
+                    }
+                });
+            }
+            if (!dismissedByObjectId.size) {
+                return false;
+            }
+            let applied = false;
+            dismissedByObjectId.forEach((keys, objectId) => {
+                const metadata = objectMetadata.get(objectId);
+                if (!metadata || !Array.isArray(metadata.errors) || !metadata.errors.length) {
+                    return;
+                }
+                reapplyDismissedErrorFlags(metadata.errors, keys);
+                applied = true;
+            });
+            if (applied) {
+                updateTreeErrorStates({ expandAncestors: false });
+                refreshSelectedObjectDetails();
+            }
+            return applied;
         }
 
         function lockArchivedSectionSelect() {
@@ -20686,7 +21011,14 @@
             }
             applyArchivedErrorToggleState(archivedReportState);
             restoreTreeInteractionsFromDom();
-            applyErrorResultsToObjects();
+            // Saved reports are snapshots: keep the exported errors (including
+            // "Not an error" / green resolved state). Do not rebuild from scratch.
+            applyArchivedDismissedErrors(archivedReportState);
+            syncTypographySizeSpacingMasterToggleFromState(archivedReportState, {
+                disabled: true,
+                syncSettingToggles: true
+            });
+            updateTreeErrorStates({ expandAncestors: false });
             disableArchivedErrorControls();
             lockArchivedSectionSelect();
             showTab(targetTab);
@@ -20701,6 +21033,7 @@
             if (selectedTreeItem) {
                 refreshSelectedObjectDetails();
             }
+            disableArchivedDismissToggles();
             updateFormPropertiesView();
         }
 
@@ -22541,9 +22874,13 @@
 
             // Resolve meaning and solution at render time from the live (language-aware)
             // description, falling back to the baked-in entry values.
+            // Instance solutionOverride (set by a check) wins so branch-specific guidance
+            // is not replaced by the generic catalog suggestedFix.
             const liveEntryDesc = entry.code ? getErrorDescription(entry.code) : null;
             const liveMeaning  = (liveEntryDesc && liveEntryDesc.meaning)  || entry.meaning  || '';
-            const liveSolution = (liveEntryDesc && liveEntryDesc.suggestedFix) || entry.solution || '';
+            const liveSolution = (typeof entry.solutionOverride === 'string' && entry.solutionOverride.trim())
+                ? entry.solutionOverride.trim()
+                : ((liveEntryDesc && liveEntryDesc.suggestedFix) || entry.solution || '');
             appendRow(t('err_meaning'), liveMeaning);
             appendRow(t('err_suggested_fix'), liveSolution);
             const extraDetails = buildExtraDetailsContent(entry);
@@ -22624,6 +22961,69 @@
             return `${prefix}-${errorEntryIdCounter}`;
         }
 
+        function buildDismissedErrorKey(entry) {
+            if (!entry || typeof entry !== 'object') {
+                return '';
+            }
+            const code = entry.code !== undefined && entry.code !== null ? String(entry.code) : '';
+            const context = entry.context !== undefined && entry.context !== null ? String(entry.context) : '';
+            // Match on code + context only — titles can differ after rebuild/language refresh.
+            return `${code}\u0001${context}`;
+        }
+
+        function collectDismissedErrorKeys(errors) {
+            const keys = new Set();
+            if (!Array.isArray(errors)) {
+                return keys;
+            }
+            errors.forEach(entry => {
+                if (!entry || !entry.dismissed) {
+                    return;
+                }
+                const key = buildDismissedErrorKey(entry);
+                if (key) {
+                    keys.add(key);
+                }
+                // Also keep a code-only key as a fallback when context text drifts.
+                if (entry.code) {
+                    keys.add(`code:${String(entry.code)}`);
+                }
+            });
+            return keys;
+        }
+
+        function reapplyDismissedErrorFlags(errors, dismissedKeys) {
+            if (!Array.isArray(errors) || !dismissedKeys || !dismissedKeys.size) {
+                return errors;
+            }
+            const codeCounts = new Map();
+            errors.forEach(entry => {
+                if (!entry || !entry.code) {
+                    return;
+                }
+                const code = String(entry.code);
+                codeCounts.set(code, (codeCounts.get(code) || 0) + 1);
+            });
+            errors.forEach(entry => {
+                if (!entry) {
+                    return;
+                }
+                const fullKey = buildDismissedErrorKey(entry);
+                if (fullKey && dismissedKeys.has(fullKey)) {
+                    entry.dismissed = true;
+                    return;
+                }
+                // Fallback: if this code was dismissed and appears only once, restore it.
+                if (entry.code) {
+                    const code = String(entry.code);
+                    if (dismissedKeys.has(`code:${code}`) && codeCounts.get(code) === 1) {
+                        entry.dismissed = true;
+                    }
+                }
+            });
+            return errors;
+        }
+
         function normalizeErrorEntry(entry) {
             if (!entry || typeof entry !== 'object') {
                 return null;
@@ -22691,16 +23091,22 @@
                 checkbox.type = 'checkbox';
                 checkbox.id = toggleId;
                 checkbox.checked = entry.dismissed;
-                checkbox.addEventListener('change', () => {
-                    const isDismissed = checkbox.checked;
-                    entry.dismissed = isDismissed;
-                    if (isDismissed) {
-                        section.classList.add('resolved');
-                    } else {
-                        section.classList.remove('resolved');
-                    }
-                    updateTreeErrorStates({ expandAncestors: false });
-                });
+                if (isArchivedReport) {
+                    checkbox.disabled = true;
+                    checkbox.setAttribute('aria-disabled', 'true');
+                    toggleLabel.classList.add('is-readonly');
+                } else {
+                    checkbox.addEventListener('change', () => {
+                        const isDismissed = checkbox.checked;
+                        entry.dismissed = isDismissed;
+                        if (isDismissed) {
+                            section.classList.add('resolved');
+                        } else {
+                            section.classList.remove('resolved');
+                        }
+                        updateTreeErrorStates({ expandAncestors: false });
+                    });
+                }
                 toggleLabel.appendChild(checkbox);
                 toggleLabel.appendChild(document.createTextNode(t('err_not_an_error')));
                 header.appendChild(toggleLabel);
@@ -24115,9 +24521,15 @@
                     const childStructural = (childMetadata && childMetadata.structural) || {};
                     const childLocalName = (childMetadata && childMetadata.localName)
                         ? childMetadata.localName.toLowerCase() : '';
+                    const childType = (childMetadata && childMetadata.type)
+                        ? String(childMetadata.type) : '';
                     const childIsLineNumber = isLineNumberObjectByCriteria(childMetadata, childStructural, childId);
                     // Line number objects are never subject to TABLE003 (body or header rows)
                     if (childIsLineNumber) {
+                        return;
+                    }
+                    // Vertical / horizontal line draws (VLine, Line) are never subject to TABLE003
+                    if (childType === 'Vertical Line' || childType === 'Line') {
                         return;
                     }
                     // In a header row, only the main static text draw is checked;
@@ -26951,6 +27363,42 @@
             return nodes.map(node => cleanTextContent(node && node.textContent ? node.textContent : ''));
         }
 
+        // Designer serializes dot-leader tabs as <span style="xfa-tab-count:N">…</span> filled with NBSP/spaces.
+        // Those fillers are not real double spaces (TXT008) and must become tab placeholders before analysis.
+        const XFA_TAB_COUNT_SPAN_FILLER = '[\\s\\u00a0\\u1680\\u2000-\\u200b\\u202f\\u205f\\u3000\\ufeff]*';
+        const XFA_TAB_COUNT_SPAN_STYLE_RE = new RegExp(
+            `<span\\b[^>]*\\bxfa-tab-count\\s*:\\s*(\\d+)[^>]*>${XFA_TAB_COUNT_SPAN_FILLER}<\\/span>`,
+            'gi'
+        );
+        const XFA_TAB_COUNT_SPAN_ATTR_RE = new RegExp(
+            `<span\\b[^>]*\\bxfa-tab-count\\s*=\\s*["']?(\\d+)["']?[^>]*>${XFA_TAB_COUNT_SPAN_FILLER}<\\/span>`,
+            'gi'
+        );
+
+        function tabPlaceholdersFromXfaTabCount(countRaw) {
+            const parsed = Number.parseInt(countRaw, 10);
+            const tabCount = Number.isFinite(parsed) && parsed > 0 ? Math.min(parsed, 64) : 1;
+            return '\t'.repeat(tabCount);
+        }
+
+        function replaceXfaTabCountSpansWithTabs(content) {
+            if (!content) {
+                return '';
+            }
+            let working = String(content);
+            working = working.replace(XFA_TAB_COUNT_SPAN_STYLE_RE, (full, countRaw) => tabPlaceholdersFromXfaTabCount(countRaw));
+            working = working.replace(XFA_TAB_COUNT_SPAN_ATTR_RE, (full, countRaw) => tabPlaceholdersFromXfaTabCount(countRaw));
+            return working;
+        }
+
+        function isTabOrWhitespaceOnlyText(text) {
+            if (typeof text !== 'string' || !text) {
+                return false;
+            }
+            // Leader-only objects often resolve to tabs and/or Designer filler spaces with no real glyphs.
+            return !/[^\t\s\u00a0\u1680\u2000-\u200b\u202f\u205f\u3000\ufeff]/.test(text);
+        }
+
         function convertHtmlMarkupToPlainText(content) {
             if (!content) {
                 return '';
@@ -26958,21 +27406,7 @@
             let working = String(content);
             working = working.replace(/<\s*br\s*\/?>/gi, '\n');
             working = working.replace(/<\s*\/p\s*>/gi, '\n');
-            /*
-             * Designer dot-leader tabs serialize as <span style="xfa-tab-count:N">…</span> with filler NBSP/spaces.
-             * Stripping tags verbatim turns that into apparent "double spaces" (TXT008). Emit tab placeholders first,
-             * matching collectTextRunsFromNode / extractNodeTextWithBreaks semantics.
-             */
-            working = working.replace(/<span\b[^>]*\bxfa-tab-count\s*:\s*(\d+)[^>]*>[\s\u00a0]*<\/span>/gi, (full, countRaw) => {
-                const parsed = Number.parseInt(countRaw, 10);
-                const tabCount = Number.isFinite(parsed) && parsed > 0 ? Math.min(parsed, 64) : 1;
-                return '\t'.repeat(tabCount);
-            });
-            working = working.replace(/<span\b[^>]*\bxfa-tab-count\s*=\s*["']?(\d+)["']?[^>]*>[\s\u00a0]*<\/span>/gi, (full, countRaw) => {
-                const parsed = Number.parseInt(countRaw, 10);
-                const tabCount = Number.isFinite(parsed) && parsed > 0 ? Math.min(parsed, 64) : 1;
-                return '\t'.repeat(tabCount);
-            });
+            working = replaceXfaTabCountSpansWithTabs(working);
             working = working.replace(/<[^>]+>/g, '');
             const cleaned = cleanTextContentForAnalysis(working);
             return cleaned.replace(/\n+$/, '');
@@ -28355,7 +28789,7 @@
             return Array.from(element.children || []).filter(child => child.localName && child.localName.toLowerCase() === lowerTag);
         }
 
-        function isVerticalLineDraw(element) {
+        function isLineDraw(element) {
             if (!element || !element.localName || element.localName.toLowerCase() !== 'draw') {
                 return false;
             }
@@ -28363,7 +28797,15 @@
             if (!valueElement) {
                 return false;
             }
-            const lineElement = getDirectChild(valueElement, 'line');
+            return Boolean(getDirectChild(valueElement, 'line'));
+        }
+
+        function isVerticalLineDraw(element) {
+            if (!isLineDraw(element)) {
+                return false;
+            }
+            const valueElement = getDirectChild(element, 'value');
+            const lineElement = valueElement ? getDirectChild(valueElement, 'line') : null;
             if (!lineElement) {
                 return false;
             }
@@ -28592,6 +29034,10 @@
                 if (isVerticalLineDraw(element)) {
                     return 'Vertical Line';
                 }
+                if (isLineDraw(element)) {
+                    // Horizontal/generic line graphics have no font; do not treat as Static Text
+                    return 'Line';
+                }
                 if (isImageDraw(element)) {
                     return 'Image';
                 }
@@ -28644,6 +29090,9 @@
                 if (!rawContent) {
                     rawContent = exDataNode.textContent || '';
                 }
+                // Replace Designer xfa-tab-count filler spans with tabs before HTML parse/analysis
+                // so NBSP/space padding never surfaces as TXT008 double spaces.
+                rawContent = replaceXfaTabCountSpansWithTabs(rawContent);
                 const contentType = exDataNode.getAttribute ? (exDataNode.getAttribute('contentType') || '') : '';
                 if (contentType.toLowerCase().includes('html')) {
                     const parser = new DOMParser();
@@ -29827,7 +30276,10 @@
             const markers = new Array(length);
             const occurrenceCounts = new Map();
             const ignoreDoubleSpace = Boolean(options && options.ignoreDoubleSpace);
-            const effectiveIgnoreDoubleSpace = ignoreDoubleSpace || isPageNumberDoubleSpaceText(text);
+            const effectiveIgnoreDoubleSpace = ignoreDoubleSpace
+                || isPageNumberDoubleSpaceText(text)
+                // Dot-leader-only objects: Designer stores xfa-tab-count fillers as NBSP/spaces.
+                || isTabOrWhitespaceOnlyText(text);
 
             const markRangeInternal = (start, end, effectiveCode) => {
                 if (!effectiveCode && effectiveCode !== 0) {
@@ -29915,7 +30367,7 @@
             };
 
             const applyEnglishThousandsSeparatorChecks = () => {
-                // Check if object is a line number (_ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
+                // Check if object is a line number (draw only: _ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
                     const objectId = options && options.objectId;
                 // Use metadataSnapshot if available (created before metadataRecord is registered), otherwise try getMetadataById
                 let metadata = (options.metadataSnapshot && typeof options.metadataSnapshot === 'object') ? options.metadataSnapshot : (objectId ? getMetadataById(objectId) : null);
@@ -29936,6 +30388,11 @@
                 
                 // Skip if this is a line number object
                 if (isLineNumberObject) {
+                    return;
+                }
+
+                // Skip raw numericEdit values (picture clause formats display). Still check SRT.
+                if (!isSrtContext && isNumericEditFieldForThousandsSkip(metadata, structural)) {
                     return;
                 }
                 
@@ -29991,7 +30448,7 @@
             };
 
             const applyFrenchThousandsSeparatorChecks = () => {
-                // Check if object is a line number (_ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
+                // Check if object is a line number (draw only: _ln/_bn/_amnt suffix, CRA desc LineNumber_*, or CRA black/white box styling)
                     const objectId = options && options.objectId;
                 // Use metadataSnapshot if available (created before metadataRecord is registered), otherwise try getMetadataById
                 let metadata = (options.metadataSnapshot && typeof options.metadataSnapshot === 'object') ? options.metadataSnapshot : (objectId ? getMetadataById(objectId) : null);
@@ -30012,6 +30469,11 @@
                 
                 // Skip if this is a line number object
                 if (isLineNumberObject) {
+                    return;
+                }
+
+                // Skip raw numericEdit values (picture clause formats display). Still check SRT.
+                if (!isSrtContext && isNumericEditFieldForThousandsSkip(metadata, structural)) {
                     return;
                 }
                 
@@ -32032,6 +32494,8 @@
 
             if (metadataRecord.type === 'Vertical Line') {
                 metadataRecord.typeBadgeLabel = 'VLine';
+            } else if (metadataRecord.type === 'Line') {
+                metadataRecord.typeBadgeLabel = 'Line';
             } else if (structural && structural.localName === 'draw' && candidateTexts.length
                 && matchesCandidate(text => isBulletLikeMetadata({ ...metadataRecord, content: text, valueText: text }))) {
                 metadataRecord.typeBadgeLabel = 'Bullet';
@@ -32725,6 +33189,18 @@
                 : [];
             // Skip font, typography, and content validation for background rectangles (they only need grid checks)
             if (!isBackgroundRectangle) {
+                const isLineNumberForFonts = isLineNumberObjectByCriteria(
+                    metadataSnapshot,
+                    structuralState,
+                    objectId
+                );
+                if (isLineNumberForFonts && Array.isArray(fontValidationContexts)) {
+                    fontValidationContexts.forEach(context => {
+                        if (context) {
+                            context.isLineNumberObject = true;
+                        }
+                    });
+                }
                 const fontErrors = evaluateFontContexts(fontValidationContexts);
                 if (fontErrors.length) {
                     baseErrors.push(...fontErrors.map(entry => ({ ...entry })));
@@ -32741,7 +33217,8 @@
                 ignoreDoubleSpace: shouldIgnoreDoubleSpace,
                 objectId,
                 objectName: displayName,
-                hasBlackBackgroundWhiteFont: hasBlackBgWhiteFont
+                hasBlackBackgroundWhiteFont: hasBlackBgWhiteFont,
+                structural: structuralState
             });
             const srtErrorsInitial = Array.isArray(srtAnalysis.errors)
                 ? srtAnalysis.errors.map(entry => ({ ...entry }))
@@ -33177,17 +33654,94 @@
             const toggleSpan = document.createElement('span');
             toggleSpan.className = 'tree-toggle';
             toggleSpan.setAttribute('aria-hidden', 'true'); // Hidden from screen readers since summary handles accessibility
+            bindTreeToggleState(detailsElement, toggleSpan);
+            return toggleSpan;
+        }
 
+        function bindTreeToggleState(detailsElement, toggleSpan) {
+            if (!detailsElement || !toggleSpan || toggleSpan.__treeToggleBound) {
+                return;
+            }
             const updateToggleState = () => {
                 const isOpen = detailsElement.hasAttribute('open');
                 toggleSpan.textContent = isOpen ? '−' : '+';
             };
-
-            // Handle toggle via summary click, not button click
             detailsElement.addEventListener('toggle', updateToggleState);
             updateToggleState();
+            toggleSpan.__treeToggleBound = true;
+        }
 
-            return toggleSpan;
+        function restoreTreeBranchInteractions(detailsElement) {
+            if (!detailsElement || detailsElement.__treeBranchBound) {
+                return;
+            }
+            const summary = detailsElement.querySelector(':scope > summary');
+            if (!summary) {
+                return;
+            }
+            const toggleSpan = summary.querySelector(':scope > .tree-toggle');
+            const label = summary.querySelector(':scope > .tree-item[data-object-id]');
+            if (toggleSpan) {
+                bindTreeToggleState(detailsElement, toggleSpan);
+            }
+            if (label) {
+                const displayName = (label.textContent || '').trim() || 'object';
+                const updateSummaryAria = () => {
+                    const isOpen = detailsElement.hasAttribute('open');
+                    summary.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    summary.setAttribute(
+                        'aria-label',
+                        `${displayName} - ${isOpen ? 'Collapse' : 'Expand'} children`
+                    );
+                };
+                detailsElement.addEventListener('toggle', updateSummaryAria);
+                updateSummaryAria();
+
+                label.addEventListener('mousedown', (event) => {
+                    event.stopPropagation();
+                });
+                label.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    const wasOpenBeforeClick = detailsElement.hasAttribute('open');
+                    selectTreeItem(label);
+                    requestAnimationFrame(() => {
+                        const isOpenAfterClick = detailsElement.hasAttribute('open');
+                        if (wasOpenBeforeClick !== isOpenAfterClick) {
+                            if (wasOpenBeforeClick) {
+                                detailsElement.setAttribute('open', '');
+                            } else {
+                                detailsElement.removeAttribute('open');
+                            }
+                        }
+                    });
+                });
+
+                summary.addEventListener('click', (event) => {
+                    if (event.target === label || label.contains(event.target)) {
+                        return;
+                    }
+                    if (toggleSpan && (event.target === toggleSpan || toggleSpan.contains(event.target))) {
+                        setTimeout(() => {
+                            selectTreeItem(label);
+                        }, 0);
+                        return;
+                    }
+                    if (event.target === summary) {
+                        setTimeout(() => {
+                            selectTreeItem(label);
+                        }, 0);
+                    }
+                });
+                summary.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        setTimeout(() => {
+                            selectTreeItem(label);
+                        }, 0);
+                    }
+                });
+            }
+            detailsElement.__treeBranchBound = true;
         }
 
         function createTreeLabel(text, typeLabel, objectId, isInsideSummary = false) {
@@ -33235,7 +33789,14 @@
                         label.removeAttribute('data-type-label');
                     }
                 }
-                bindTreeItemInteractions(label);
+                const insideSummary = Boolean(label.closest('summary'));
+                if (!insideSummary) {
+                    bindTreeItemInteractions(label);
+                }
+            });
+            // Rebind +/- expand markers and summary handlers lost when cloning for Save report.
+            objectTreeContainer.querySelectorAll('details').forEach(detailsElement => {
+                restoreTreeBranchInteractions(detailsElement);
             });
         }
 
@@ -33857,22 +34418,6 @@
         }
         // ─────────────────────────────────────────────────────────────────────
 
-        // ── Structural fingerprint (for smart reload in Session 4) ────────────
-        // A lightweight string that identifies the object tree shape. If this
-        // matches between two XDP loads, we know the hierarchy is unchanged and
-        // can skip Stage 1 on reload.
-        function computeStructuralFingerprint() {
-            if (!objectMetadata || !objectMetadata.size) {
-                return '';
-            }
-            const parts = [];
-            objectMetadata.forEach((metadata) => {
-                parts.push(`${metadata.type}|${metadata.name}|${(metadata.pathParts || []).join('/')}`);
-            });
-            return parts.join('\n');
-        }
-        // ─────────────────────────────────────────────────────────────────────
-
         async function populateObjectTreeFromTemplate(templateElement) {
             objectTreeContainer.innerHTML = '';
             clearErrorNavigationState();
@@ -33906,7 +34451,6 @@
             loadProgress.show(0, t('progress_hierarchy'));
             await yieldToBrowser();
             buildTree(templateElement, treeRoot, [], null);
-            xdpStructuralFingerprint = computeStructuralFingerprint();
             loadProgress.show(15, t('progress_ready'));
 
             // Commit tree to DOM now so the user sees it immediately.
@@ -34448,6 +34992,8 @@
             currentXdpContent = '';
             desiredSelectionPathKey = null;
             currentSelectionPathKey = null;
+            xdpLastModified = null;
+            xdpFileSize = null;
             if (reloadXdpButton) {
                 reloadXdpButton.disabled = true;
                 reloadXdpButton.hidden = true;
@@ -34486,6 +35032,675 @@
             setWelcomeScreenVisible(false);
         }
 
+        // BEGIN_PDF_XDP_EXTRACTOR
+        // Designer PDFs store the XDP as Flate-compressed /XFA packets.
+        // Packets and config nodes written only for the PDF container are removed:
+        // the XFA form DOM, the expanded data skeleton, and PDF save settings
+        // (output path, Acrobat block, viewer/compression options).
+        const PDF_RENDER_JOB_NODES = new Set([
+            'creator', 'producer', 'scriptModel', 'interactive', 'compression',
+            'linearized', 'silentPrint', 'viewerPreferences'
+        ]);
+
+        function pdfUserError(message) {
+            const error = new Error(message);
+            error.userMessage = message;
+            error.placeholder = 'This PDF could not be opened.';
+            return error;
+        }
+
+        function decodeLatin1(bytes) {
+            return new TextDecoder('iso-8859-1').decode(bytes);
+        }
+
+        async function inflateFlate(compressed) {
+            if (typeof DecompressionStream !== 'function') {
+                throw pdfUserError('This browser cannot decompress PDF streams.');
+            }
+            try {
+                const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('deflate'));
+                return new Uint8Array(await new Response(stream).arrayBuffer());
+            } catch (error) {
+                if (error && error.userMessage) {
+                    throw error;
+                }
+                throw pdfUserError('Could not decompress this PDF. Only compressed, unencrypted Designer PDFs can be opened.');
+            }
+        }
+
+        function parseDictAt(text, index) {
+            if (text.slice(index, index + 2) !== '<<') {
+                throw pdfUserError('Could not read a PDF dictionary.');
+            }
+            const start = index;
+            let depth = 0;
+            let i = index;
+            while (i < text.length) {
+                const ch = text[i];
+                if (ch === '(') {
+                    i += 1;
+                    let nest = 1;
+                    while (i < text.length && nest > 0) {
+                        if (text[i] === '\\') {
+                            i += 2;
+                            continue;
+                        }
+                        if (text[i] === '(') nest += 1;
+                        else if (text[i] === ')') nest -= 1;
+                        i += 1;
+                    }
+                    continue;
+                }
+                if (ch === '<' && text[i + 1] === '<') {
+                    depth += 1;
+                    i += 2;
+                    continue;
+                }
+                if (ch === '<' && text[i + 1] !== '<') {
+                    const end = text.indexOf('>', i);
+                    i = end < 0 ? text.length : end + 1;
+                    continue;
+                }
+                if (ch === '>' && text[i + 1] === '>') {
+                    depth -= 1;
+                    i += 2;
+                    if (depth === 0) {
+                        return { dictText: text.slice(start, i), end: i };
+                    }
+                    continue;
+                }
+                i += 1;
+            }
+            throw pdfUserError('Could not read a PDF dictionary.');
+        }
+
+        function readBe(data, offset, width) {
+            let value = 0;
+            for (let i = 0; i < width; i += 1) {
+                value = (value * 256) + data[offset + i];
+            }
+            return value;
+        }
+
+        function decodePngUp(data, columns) {
+            const rowSize = columns + 1;
+            if (!columns || data.length % rowSize !== 0) {
+                throw pdfUserError('Could not read this PDF cross-reference stream.');
+            }
+            const out = new Uint8Array(data.length - (data.length / rowSize));
+            const prev = new Uint8Array(columns);
+            let written = 0;
+            for (let i = 0; i < data.length; i += rowSize) {
+                for (let c = 0; c < columns; c += 1) {
+                    const value = (data[i + 1 + c] + prev[c]) & 255;
+                    prev[c] = value;
+                    out[written] = value;
+                    written += 1;
+                }
+            }
+            return out;
+        }
+
+        function findLastStartxref(text) {
+            const idx = text.lastIndexOf('startxref');
+            if (idx < 0) {
+                throw pdfUserError('This PDF has no cross-reference table.');
+            }
+            const match = /(\d+)/.exec(text.slice(idx + 9, idx + 40));
+            if (!match) {
+                throw pdfUserError('This PDF has no cross-reference table.');
+            }
+            return Number(match[1]);
+        }
+
+        function rememberXrefEntry(xref, objNum, entry) {
+            if (!xref.has(objNum)) {
+                xref.set(objNum, entry);
+            }
+        }
+
+        function parseClassicXref(text, offset, xref) {
+            let pos = offset + 4;
+            const trailerAt = text.indexOf('trailer', pos);
+            if (trailerAt < 0) {
+                throw pdfUserError('Could not read this PDF cross-reference table.');
+            }
+            const lines = text.slice(pos, trailerAt).split(/\r?\n/);
+            let i = 0;
+            while (i < lines.length && !lines[i].trim()) i += 1;
+            while (i < lines.length) {
+                const head = lines[i].trim().split(/\s+/);
+                if (head.length !== 2 || !/^\d+$/.test(head[0])) break;
+                const first = Number(head[0]);
+                const count = Number(head[1]);
+                i += 1;
+                for (let n = 0; n < count; n += 1) {
+                    const parts = (lines[i] || '').trim().split(/\s+/);
+                    i += 1;
+                    if (parts.length < 3) continue;
+                    const kind = parts[2];
+                    rememberXrefEntry(xref, first + n, {
+                        type: kind === 'n' ? 1 : 0,
+                        a: Number(parts[0]),
+                        b: Number(parts[1])
+                    });
+                }
+            }
+            const trailer = text.slice(trailerAt, trailerAt + 4000);
+            const prev = /\/Prev\s+(\d+)/.exec(trailer);
+            const root = /\/Root\s+(\d+)\s+0\s+R/.exec(trailer);
+            return {
+                prev: prev ? Number(prev[1]) : null,
+                root: root ? Number(root[1]) : null,
+                encrypt: /\/Encrypt\s+(\d+\s+\d+\s+R|<<)/.test(trailer)
+            };
+        }
+
+        async function parseXrefStream(state, offset, xref) {
+            const head = state.text.slice(offset, offset + 40);
+            const objMatch = /^\d+\s+\d+\s+obj\s*/.exec(head);
+            let pos = offset + (objMatch ? objMatch[0].length : 0);
+            while (pos < state.text.length && ' \r\n'.includes(state.text[pos])) pos += 1;
+            const parsed = parseDictAt(state.text, pos);
+            const dictText = parsed.dictText;
+            if (!/\/Type\s*\/XRef/.test(dictText)) {
+                throw pdfUserError('Could not read this PDF cross-reference stream.');
+            }
+            pos = parsed.end;
+            const streamMatch = /stream\r?\n/.exec(state.text.slice(pos, pos + 30));
+            if (!streamMatch) {
+                throw pdfUserError('Could not read this PDF cross-reference stream.');
+            }
+            const lengthMatch = /\/Length\s+(\d+)/.exec(dictText);
+            if (!lengthMatch) {
+                throw pdfUserError('Could not read this PDF cross-reference stream.');
+            }
+            const streamStart = pos + streamMatch.index + streamMatch[0].length;
+            const length = Number(lengthMatch[1]);
+            let decoded = await inflateFlate(state.bytes.subarray(streamStart, streamStart + length));
+            const predictorMatch = /\/Predictor\s+(\d+)/.exec(dictText);
+            const predictor = predictorMatch ? Number(predictorMatch[1]) : 1;
+            if (predictor >= 10) {
+                const columnsMatch = /\/Columns\s+(\d+)/.exec(dictText);
+                decoded = decodePngUp(decoded, columnsMatch ? Number(columnsMatch[1]) : 0);
+            }
+            const widthMatch = /\/W\s*\[\s*(\d+)\s+(\d+)\s+(\d+)\s*\]/.exec(dictText);
+            if (!widthMatch) {
+                throw pdfUserError('Could not read this PDF cross-reference stream.');
+            }
+            const widths = [Number(widthMatch[1]), Number(widthMatch[2]), Number(widthMatch[3])];
+            const stride = widths[0] + widths[1] + widths[2];
+            const sizeMatch = /\/Size\s+(\d+)/.exec(dictText);
+            const size = sizeMatch ? Number(sizeMatch[1]) : 0;
+            const indexMatch = /\/Index\s*\[([^\]]+)\]/.exec(dictText);
+            const indexNums = indexMatch ? indexMatch[1].trim().split(/\s+/).map(Number) : [0, size];
+            let cursor = 0;
+            for (let s = 0; s < indexNums.length; s += 2) {
+                const first = indexNums[s];
+                const count = indexNums[s + 1];
+                for (let n = 0; n < count; n += 1) {
+                    const fields = widths.map(width => {
+                        const value = width ? readBe(decoded, cursor, width) : 0;
+                        cursor += width;
+                        return value;
+                    });
+                    if (cursor > decoded.length) break;
+                    rememberXrefEntry(xref, first + n, { type: fields[0], a: fields[1], b: fields[2] });
+                }
+            }
+            if (stride <= 0) {
+                throw pdfUserError('Could not read this PDF cross-reference stream.');
+            }
+            const prev = /\/Prev\s+(\d+)/.exec(dictText);
+            const root = /\/Root\s+(\d+)\s+0\s+R/.exec(dictText);
+            return {
+                prev: prev ? Number(prev[1]) : null,
+                root: root ? Number(root[1]) : null,
+                encrypt: /\/Encrypt\b/.test(dictText)
+            };
+        }
+
+        async function loadPdfXref(state) {
+            const xref = new Map();
+            let root = null;
+            let offset = findLastStartxref(state.text);
+            const seen = new Set();
+            while (offset && !seen.has(offset)) {
+                seen.add(offset);
+                const meta = state.text.slice(offset, offset + 4) === 'xref'
+                    ? parseClassicXref(state.text, offset, xref)
+                    : await parseXrefStream(state, offset, xref);
+                if (meta.encrypt) {
+                    throw pdfUserError('This PDF is encrypted. Only unencrypted Designer PDFs can be opened.');
+                }
+                if (meta.root && root == null) root = meta.root;
+                offset = meta.prev;
+            }
+            if (!root) {
+                throw pdfUserError('This PDF has no catalog, so its XFA package could not be read.');
+            }
+            state.xref = xref;
+            return root;
+        }
+
+        function readStreamLength(dictText) {
+            const indirect = /\/Length\s+(\d+)\s+\d+\s+R/.exec(dictText);
+            if (indirect) return { indirect: Number(indirect[1]) };
+            const direct = /\/Length\s+(\d+)/.exec(dictText);
+            if (direct) return { direct: Number(direct[1]) };
+            return null;
+        }
+
+        async function readPdfObjectAt(state, offset) {
+            const head = state.text.slice(offset, offset + 32);
+            const objMatch = /^(\d+)\s+(\d+)\s+obj\s*/.exec(head);
+            if (!objMatch) {
+                throw pdfUserError('Could not read an object in this PDF.');
+            }
+            let pos = offset + objMatch[0].length;
+            let dictText = '';
+            if (state.text.slice(pos, pos + 2) === '<<') {
+                const parsed = parseDictAt(state.text, pos);
+                dictText = parsed.dictText;
+                pos = parsed.end;
+            }
+            while (pos < state.text.length && ' \r\n'.includes(state.text[pos])) {
+                if (state.text.startsWith('stream', pos)) break;
+                pos += 1;
+            }
+            if (!state.text.startsWith('stream', pos)) {
+                const end = state.text.indexOf('endobj', pos);
+                const body = state.text.slice(pos, end < 0 ? state.text.length : end);
+                return { dictText: dictText || body, streamBytes: null };
+            }
+            pos += 6;
+            if (state.text.slice(pos, pos + 2) === '\r\n') pos += 2;
+            else if (state.text[pos] === '\n' || state.text[pos] === '\r') pos += 1;
+            const lengthInfo = readStreamLength(dictText);
+            if (!lengthInfo) {
+                throw pdfUserError('Could not read a compressed stream in this PDF.');
+            }
+            let length = lengthInfo.direct;
+            if (lengthInfo.indirect) {
+                const lengthObject = await resolvePdfObject(state, lengthInfo.indirect);
+                const numberMatch = /(\d+)/.exec(lengthObject.dictText);
+                if (!numberMatch) {
+                    throw pdfUserError('Could not read a compressed stream in this PDF.');
+                }
+                length = Number(numberMatch[1]);
+            }
+            return {
+                dictText,
+                streamBytes: state.bytes.subarray(pos, pos + length)
+            };
+        }
+
+        async function readObjectStreamMap(state, objStmNumber) {
+            if (state.objStmCache.has(objStmNumber)) {
+                return state.objStmCache.get(objStmNumber);
+            }
+            const entry = state.xref.get(objStmNumber);
+            if (!entry || entry.type !== 1) {
+                throw pdfUserError('Could not read an object stream in this PDF.');
+            }
+            const obj = await readPdfObjectAt(state, entry.a);
+            if (!/\/FlateDecode/.test(obj.dictText) || !obj.streamBytes) {
+                throw pdfUserError('Could not read an object stream in this PDF.');
+            }
+            const inflated = decodeLatin1(await inflateFlate(obj.streamBytes));
+            const countMatch = /\/N\s+(\d+)/.exec(obj.dictText);
+            const firstMatch = /\/First\s+(\d+)/.exec(obj.dictText);
+            if (!countMatch || !firstMatch) {
+                throw pdfUserError('Could not read an object stream in this PDF.');
+            }
+            const count = Number(countMatch[1]);
+            const first = Number(firstMatch[1]);
+            const header = inflated.slice(0, first).trim().split(/\s+/);
+            const pairs = [];
+            for (let i = 0; i + 1 < header.length && pairs.length < count; i += 2) {
+                pairs.push([Number(header[i]), Number(header[i + 1])]);
+            }
+            const objects = new Map();
+            pairs.forEach((pair, index) => {
+                const start = first + pair[1];
+                const end = index + 1 < pairs.length ? first + pairs[index + 1][1] : inflated.length;
+                objects.set(pair[0], inflated.slice(start, end));
+            });
+            state.objStmCache.set(objStmNumber, objects);
+            return objects;
+        }
+
+        async function resolvePdfObject(state, objNum) {
+            if (state.resolved && state.resolved.has(objNum)) {
+                return state.resolved.get(objNum);
+            }
+            const entry = state.xref.get(objNum);
+            if (!entry || entry.type === 0) {
+                throw pdfUserError('This PDF is missing part of its XFA package.');
+            }
+            let resolved;
+            if (entry.type === 1) {
+                resolved = await readPdfObjectAt(state, entry.a);
+            } else if (entry.type === 2) {
+                const objects = await readObjectStreamMap(state, entry.a);
+                const body = objects.get(objNum);
+                if (typeof body !== 'string') {
+                    throw pdfUserError('This PDF is missing part of its XFA package.');
+                }
+                resolved = { dictText: body, streamBytes: null };
+            } else {
+                throw pdfUserError('This PDF is missing part of its XFA package.');
+            }
+            if (!state.resolved) state.resolved = new Map();
+            state.resolved.set(objNum, resolved);
+            return resolved;
+        }
+
+        function parseXfaPacketArray(dictText) {
+            const arrayStart = /\/XFA\s*\[/.exec(dictText);
+            if (arrayStart) {
+                const packets = [];
+                let i = arrayStart.index + arrayStart[0].length;
+                while (i < dictText.length) {
+                    while (i < dictText.length && ' \r\n\t'.includes(dictText[i])) i += 1;
+                    if (i >= dictText.length || dictText[i] === ']') break;
+                    let name = '';
+                    if (dictText[i] === '(') {
+                        i += 1;
+                        while (i < dictText.length) {
+                            if (dictText[i] === '\\') {
+                                name += dictText[i + 1] || '';
+                                i += 2;
+                                continue;
+                            }
+                            if (dictText[i] === ')') {
+                                i += 1;
+                                break;
+                            }
+                            name += dictText[i];
+                            i += 1;
+                        }
+                    } else if (dictText[i] === '<') {
+                        const end = dictText.indexOf('>', i);
+                        const hex = dictText.slice(i + 1, end).replace(/\s+/g, '');
+                        for (let h = 0; h + 1 < hex.length; h += 2) {
+                            name += String.fromCharCode(parseInt(hex.slice(h, h + 2), 16));
+                        }
+                        i = end + 1;
+                    } else {
+                        break;
+                    }
+                    const ref = /\s*(\d+)\s+0\s+R/.exec(dictText.slice(i));
+                    if (!ref) break;
+                    packets.push({ name, num: Number(ref[1]) });
+                    i += ref[0].length;
+                }
+                return packets;
+            }
+            const single = /\/XFA\s+(\d+)\s+0\s+R/.exec(dictText);
+            if (single) {
+                return [{ name: 'xdp', num: Number(single[1]) }];
+            }
+            return null;
+        }
+
+        function findTagEnd(xml, start) {
+            let quote = '';
+            for (let i = start; i < xml.length; i += 1) {
+                const ch = xml[i];
+                if (quote) {
+                    if (ch === quote) quote = '';
+                    continue;
+                }
+                if (ch === '"' || ch === "'") {
+                    quote = ch;
+                    continue;
+                }
+                if (ch === '>') return i;
+            }
+            return -1;
+        }
+
+        function skipXmlElement(xml, openStart) {
+            let depth = 0;
+            let i = openStart;
+            while (i < xml.length) {
+                if (xml[i] !== '<') {
+                    i += 1;
+                    continue;
+                }
+                if (xml.startsWith('<?', i) || xml.startsWith('<!', i)) {
+                    const end = findTagEnd(xml, i);
+                    i = end < 0 ? xml.length : end + 1;
+                    continue;
+                }
+                const end = findTagEnd(xml, i);
+                if (end < 0) return xml.length;
+                const raw = xml.slice(i, end + 1);
+                const closing = raw[1] === '/';
+                const selfClosing = /\/\s*>$/.test(raw);
+                if (closing) {
+                    depth -= 1;
+                    i = end + 1;
+                    if (depth === 0) return i;
+                    continue;
+                }
+                if (!selfClosing) depth += 1;
+                i = end + 1;
+                if (selfClosing && depth === 0) return i;
+            }
+            return xml.length;
+        }
+
+        function localXmlName(qname) {
+            const colon = qname.lastIndexOf(':');
+            return colon < 0 ? qname : qname.slice(colon + 1);
+        }
+
+        function shouldDropPdfAddedConfigNode(stack, local) {
+            const parent = stack.length ? stack[stack.length - 1] : '';
+            if (parent === 'config' && local === 'acrobat') return true;
+            if (parent === 'present' && local === 'output') return true;
+            if (parent === 'common' && stack.includes('present') && (local === 'log' || local === 'template')) return true;
+            if (parent === 'pdf' && stack.includes('present') && PDF_RENDER_JOB_NODES.has(local)) return true;
+            return false;
+        }
+
+        function stripPdfAddedConfig(xml) {
+            let out = '';
+            const stack = [];
+            let i = 0;
+            while (i < xml.length) {
+                if (xml[i] !== '<') {
+                    out += xml[i];
+                    i += 1;
+                    continue;
+                }
+                if (xml.startsWith('<?', i) || xml.startsWith('<!', i)) {
+                    const end = findTagEnd(xml, i);
+                    const next = end < 0 ? xml.length : end + 1;
+                    out += xml.slice(i, next);
+                    i = next;
+                    continue;
+                }
+                const end = findTagEnd(xml, i);
+                if (end < 0) {
+                    out += xml.slice(i);
+                    break;
+                }
+                const raw = xml.slice(i, end + 1);
+                const closing = raw[1] === '/';
+                const selfClosing = /\/\s*>$/.test(raw);
+                const nameMatch = /<\/?\s*([^\s/>]+)/.exec(raw);
+                const local = nameMatch ? localXmlName(nameMatch[1]) : '';
+                if (closing) {
+                    stack.pop();
+                    out += raw;
+                    i = end + 1;
+                    continue;
+                }
+                if (shouldDropPdfAddedConfigNode(stack, local)) {
+                    i = selfClosing ? end + 1 : skipXmlElement(xml, i);
+                    continue;
+                }
+                out += raw;
+                i = end + 1;
+                if (!selfClosing) stack.push(local);
+            }
+            return out;
+        }
+
+        function isPdfGeneratedDatasets(xml) {
+            // Designer writes an expanded data DOM when it saves a PDF, including
+            // default field values. The authored XDP datasets packet is only an
+            // empty <xfa:data/>. Any child elements under xfa:data were added then.
+            const open = /<xfa:data\b[^>]*>/i.exec(xml);
+            if (!open) return false;
+            if (/\/\s*>$/.test(open[0])) return false;
+            const close = /<\/xfa:data\s*>/i.exec(xml.slice(open.index + open[0].length));
+            if (!close) return false;
+            const inner = xml.slice(open.index + open[0].length, open.index + open[0].length + close.index);
+            return /<[A-Za-z_]/.test(inner);
+        }
+
+        async function readCompressedXfaPacket(state, objNum) {
+            const obj = await resolvePdfObject(state, objNum);
+            if (!obj.streamBytes) {
+                throw pdfUserError('This PDF does not contain a compressed XDP. Only compressed, unencrypted Designer PDFs can be opened.');
+            }
+            if (/\/Crypt\b|\/AESV2\b|\/AESV3\b/.test(obj.dictText)) {
+                throw pdfUserError('This PDF is encrypted. Only unencrypted Designer PDFs can be opened.');
+            }
+            if (!/\/FlateDecode/.test(obj.dictText)) {
+                throw pdfUserError('This PDF embeds the XDP without compression. Only compressed, unencrypted Designer PDFs can be opened.');
+            }
+            const xmlBytes = await inflateFlate(obj.streamBytes);
+            return new TextDecoder('utf-8').decode(xmlBytes);
+        }
+
+        async function extractOriginalXdpFromDesignerPdf(inputBytes) {
+            const bytes = inputBytes instanceof Uint8Array ? inputBytes : new Uint8Array(inputBytes);
+            const text = decodeLatin1(bytes);
+            if (!text.startsWith('%PDF-')) {
+                throw pdfUserError('This file is not a PDF.');
+            }
+            const state = { bytes, text, xref: new Map(), objStmCache: new Map(), resolved: new Map() };
+            const root = await loadPdfXref(state);
+            const catalog = await resolvePdfObject(state, root);
+            const acroMatch = /\/AcroForm\s+(\d+)\s+0\s+R/.exec(catalog.dictText);
+            if (!acroMatch) {
+                throw pdfUserError('This PDF has no XFA form. Only Designer PDFs with an embedded XDP can be opened.');
+            }
+            const acroForm = await resolvePdfObject(state, Number(acroMatch[1]));
+            const packets = parseXfaPacketArray(acroForm.dictText);
+            if (!packets || !packets.length) {
+                throw pdfUserError('This PDF has no embedded XDP. Only compressed, unencrypted Designer PDFs can be opened.');
+            }
+            const chunks = [];
+            let sawTemplate = false;
+            for (const packet of packets) {
+                const packetName = String(packet.name || '').toLowerCase();
+                if (packetName === 'form') continue;
+                const xml = await readCompressedXfaPacket(state, packet.num);
+                if (packetName === 'template' || (packetName === 'xdp' && /<template[\s>]/.test(xml))) {
+                    sawTemplate = true;
+                }
+                if (packetName === 'datasets') {
+                    if (!isPdfGeneratedDatasets(xml)) chunks.push(xml);
+                    continue;
+                }
+                if (packetName === 'xdp') {
+                    chunks.push(stripGeneratedDatasetsElement(xml));
+                    continue;
+                }
+                chunks.push(packetName === 'config' ? stripPdfAddedConfig(xml) : xml);
+            }
+            if (!sawTemplate) {
+                throw pdfUserError('This PDF does not contain a compressed XFA template.');
+            }
+            const xdp = chunks.join('');
+            if (!/<template[\s>]/.test(xdp) || !/<\/template\s*>/.test(xdp)) {
+                throw pdfUserError('The XDP embedded in this PDF could not be reassembled.');
+            }
+            return xdp;
+        }
+
+        function stripGeneratedDatasetsElement(xml) {
+            if (!isPdfGeneratedDatasets(xml)) return stripPdfAddedConfig(xml);
+            let out = '';
+            const stack = [];
+            let i = 0;
+            while (i < xml.length) {
+                if (xml[i] !== '<') {
+                    out += xml[i];
+                    i += 1;
+                    continue;
+                }
+                if (xml.startsWith('<?', i) || xml.startsWith('<!', i)) {
+                    const end = findTagEnd(xml, i);
+                    const next = end < 0 ? xml.length : end + 1;
+                    out += xml.slice(i, next);
+                    i = next;
+                    continue;
+                }
+                const end = findTagEnd(xml, i);
+                if (end < 0) {
+                    out += xml.slice(i);
+                    break;
+                }
+                const raw = xml.slice(i, end + 1);
+                const closing = raw[1] === '/';
+                const selfClosing = /\/\s*>$/.test(raw);
+                const nameMatch = /<\/?\s*([^\s/>]+)/.exec(raw);
+                const local = nameMatch ? localXmlName(nameMatch[1]) : '';
+                if (closing) {
+                    stack.pop();
+                    out += raw;
+                    i = end + 1;
+                    continue;
+                }
+                const parent = stack.length ? stack[stack.length - 1] : '';
+                if (local === 'datasets' && (parent === 'xdp' || parent === '')) {
+                    const elementEnd = selfClosing ? end + 1 : skipXmlElement(xml, i);
+                    const element = xml.slice(i, elementEnd);
+                    if (isPdfGeneratedDatasets(element)) {
+                        i = elementEnd;
+                        continue;
+                    }
+                }
+                out += raw;
+                i = end + 1;
+                if (!selfClosing) stack.push(local);
+            }
+            return stripPdfAddedConfig(out);
+        }
+        // END_PDF_XDP_EXTRACTOR
+
+        function isPdfFile(file) {
+            const name = (file && file.name ? file.name : '').toLowerCase();
+            if (name.endsWith('.pdf')) return true;
+            return ((file && file.type) || '').toLowerCase() === 'application/pdf';
+        }
+
+        function readFileArrayBuffer(file) {
+            if (!file) {
+                return Promise.reject(new Error('No file provided.'));
+            }
+            if (typeof file.arrayBuffer === 'function') {
+                return file.arrayBuffer().then(buffer => new Uint8Array(buffer));
+            }
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(new Uint8Array(reader.result));
+                reader.onerror = () => reject(reader.error || new Error('Failed to read file.'));
+                try {
+                    reader.readAsArrayBuffer(file);
+                } catch (error) {
+                    reject(error);
+                }
+            });
+        }
+
         function readFileText(file) {
             if (!file) {
                 return Promise.reject(new Error('No file provided.'));
@@ -34505,60 +35720,32 @@
             });
         }
 
-        // ── Session 4: smart reload ───────────────────────────────────────────
-        // Determines which pipeline stages can be skipped based on what changed.
-        //
-        //  Tier 0 – file identity unchanged (same lastModified + size)
-        //           → settings-only change was already handled; nothing to do
-        //  Tier 1 – file identity changed, structural fingerprint matches
-        //           → skip Stage 1; detect changed objects; run Stage 2 (partial) + Stage 3
-        //  Tier 2 – structural fingerprint changed (objects added/removed/renamed)
-        //           → full reload: Stage 1 + Stage 2 + Stage 3
+        // ── Reload: on-disk identity check ───────────────────────────────────
+        // Same lastModified + size → do not re-read the XDP; re-apply the
+        // currently selected rules against the already-loaded document.
+        // Different identity → full read + parse + analysis.
 
-        async function smartReloadFromFile(file, templateElement, selectionPathKey) {
-            const newLastModified = file ? file.lastModified : null;
-            const newSize         = file ? file.size        : null;
+        function captureLoadedFileIdentity(file) {
+            xdpLastModified = file && typeof file.lastModified === 'number' ? file.lastModified : null;
+            xdpFileSize = file && typeof file.size === 'number' ? file.size : null;
+        }
 
-            // Compute new structural fingerprint for comparison (fast, no DOM writes).
-            const newFingerprint = computeStructuralFingerprintFromElement(templateElement);
+        function doesFileMatchLoadedIdentity(file) {
+            if (!file || xdpLastModified === null || xdpFileSize === null) {
+                return false;
+            }
+            return file.lastModified === xdpLastModified && file.size === xdpFileSize;
+        }
 
-            // ── Tier 2: structure changed → full reload ───────────────────────
-            // If objects were added, removed or renamed, we must rebuild the DOM
-            // tree (Stage 1) — fall through to full parseXdpAndPopulateTree.
-            if (xdpStructuralFingerprint === null
-                || newFingerprint !== xdpStructuralFingerprint) {
+        async function reanalyzeLoadedXdpInPlace(selectionPathKey) {
+            if (!objectMetadata || !objectMetadata.size) {
                 return false;
             }
 
-            // ── Tier 0 / Tier 1: same object structure ────────────────────────
-            // We always re-run Stage 2 + Stage 3 here.
-            //
-            // Why we cannot skip Stage 2 even when the file bytes are unchanged:
-            //   evaluateTypographyFontSizeChecks() is called inside
-            //   registerObjectMetadata and reads expectedValuesState (the current
-            //   team's font-size rules) at extraction time.  Its results are baked
-            //   into metadata.baseErrors — they are NOT recalculated by Stage 3
-            //   alone.  When the team changes, Stage 2 must re-run against the new
-            //   expectedValuesState so that every object's baseErrors reflects the
-            //   new expected sizes.
-            //
-            // What we DO save by skipping Stage 1:
-            //   - No objectTreeContainer.innerHTML = '' flash
-            //   - No DOM tree rebuild (600+ nodes for this form)
-            //   - xdpStructuralFingerprint already verified above
-            //
-            // Update element references to point to the fresh XML document.
-            objectElementReferences.forEach((oldElement, objectId) => {
-                const metadata = objectMetadata.get(objectId);
-                if (!metadata) { return; }
-                const newElement = findElementByPathKey(templateElement, metadata.pathParts || []);
-                if (newElement) {
-                    objectElementReferences.set(objectId, newElement);
-                }
-            });
-
             // Mark every object as a skeleton so extractAllObjectMetadata
-            // re-extracts it with the current expectedValuesState.
+            // re-extracts it with the current expectedValuesState / selected rules.
+            // Typography size checks are baked into metadata.baseErrors at
+            // extraction time, so Stage 2 must re-run even when the XDP is unchanged.
             objectMetadata.forEach((metadata, objectId) => {
                 if (metadata) {
                     objectMetadata.set(objectId, {
@@ -34577,30 +35764,22 @@
                 }
             });
 
-            // Reset accumulators that Stage 2 / Stage 3 maintain.
             xdpObjectHashes = new Map();
-            dirtyObjectIds = new Set(); // fresh set; extractAllObjectMetadata fills it
+            dirtyObjectIds = new Set();
             url001LinkedUrlKeysAccumulator = new Set();
             textContextAnalysisCache.clear();
             subformObjectIds = new Map();
             gridRows = [];
 
-            // ── Stage 2: re-extract all metadata with current settings ────────
             loadProgress.show(15, t('progress_re_extract'));
             await yieldToBrowser();
             await extractAllObjectMetadata();
             restoreTreeInteractionsFromDom();
 
-            // ── Stage 3: re-evaluate rules ────────────────────────────────────
             loadProgress.show(75, t('progress_re_eval'));
             await yieldToBrowser();
             updateAllErrorCheckResults();
             updateTreeErrorStates();
-
-            // Update identity for next reload comparison.
-            xdpLastModified          = newLastModified;
-            xdpFileSize              = newSize;
-            xdpStructuralFingerprint = newFingerprint;
 
             loadProgress.show(100, t('progress_done'));
             await yieldToBrowser();
@@ -34615,39 +35794,6 @@
                 if (!handled) { selectFirstTreeItem(); }
             }
             return true;
-        }
-
-        /** Compute structural fingerprint from a templateElement without modifying
-         *  any module state — used for comparison during smart reload. */
-        function computeStructuralFingerprintFromElement(templateElement) {
-            if (!templateElement) { return ''; }
-            const parts = [];
-            function walk(element, pathParts) {
-                if (!element || !isRelevantNode(element)) { return; }
-                const typeLabel   = determineTypeLabel(element);
-                const displayName = getDisplayName(element);
-                const childPath   = [...pathParts, displayName];
-                parts.push(`${typeLabel}|${displayName}|${childPath.join('/')}`);
-                getChildElements(element).filter(isRelevantNode).forEach(child => walk(child, childPath));
-            }
-            getChildElements(templateElement).filter(isRelevantNode)
-                .forEach(child => walk(child, []));
-            return parts.join('\n');
-        }
-
-        /** Find an element in a (new) templateElement by matching pathParts names.
-         *  Returns the matching element node, or null if not found. */
-        function findElementByPathKey(templateElement, pathParts) {
-            if (!pathParts || pathParts.length === 0) { return null; }
-            let candidates = getChildElements(templateElement).filter(isRelevantNode);
-            for (let depth = 0; depth < pathParts.length; depth++) {
-                const name = pathParts[depth];
-                const match = candidates.find(el => getDisplayName(el) === name);
-                if (!match) { return null; }
-                if (depth === pathParts.length - 1) { return match; }
-                candidates = getChildElements(match).filter(isRelevantNode);
-            }
-            return null;
         }
         // ─────────────────────────────────────────────────────────────────────
 
@@ -34667,6 +35813,11 @@
                         return false;
                     }
                     const freshFile = await lastLoadedFileHandle.getFile();
+                    lastLoadedFile = freshFile;
+                    if (doesFileMatchLoadedIdentity(freshFile) && objectMetadata && objectMetadata.size) {
+                        await reanalyzeLoadedXdpInPlace(selectionPathKey);
+                        return true;
+                    }
                     await processLoadedFile(freshFile, {
                         selectionPathKey,
                         fileHandle: lastLoadedFileHandle,
@@ -34704,8 +35855,10 @@
             }
             const { selectionPathKey = null, fileHandle, fromReload = false } = options;
             try {
-                const fileContents = await readFileText(file);
                 const rawFileName = file.name || loadedFileName || 'Unnamed file';
+                const fileContents = isPdfFile(file)
+                    ? await extractOriginalXdpFromDesignerPdf(await readFileArrayBuffer(file))
+                    : await readFileText(file);
                 lastLoadedFile = file;
                 if (typeof fileHandle !== 'undefined') {
                     lastLoadedFileHandle = fileHandle;
@@ -34735,11 +35888,16 @@
                     if (xdpCodeViewer) {
                         xdpCodeViewer.value = stripRenderCacheInstructions(embeddedXdp);
                     }
+                    // Restore check preferences before re-parsing so filtered checks stay off.
+                    restoreContentErrorPreferencesFromArchiveState(state);
                     if (selectionPathKey) {
                         await parseXdpAndPopulateTree(embeddedXdp, { selectionPathKey });
                     } else {
                         await parseXdpAndPopulateTree(embeddedXdp);
                     }
+                    // Re-apply "Not an error" acknowledgements from the saved report snapshot.
+                    restoreDismissedErrorsFromArchiveState(state);
+                    syncTypographySizeSpacingMasterToggleFromState(state, { syncSettingToggles: true });
                     return true;
                 }
 
@@ -34756,34 +35914,12 @@
                     xdpCodeViewer.value = stripRenderCacheInstructions(fileContents);
                 }
 
-                // ── Smart reload (Session 4) ──────────────────────────────────
-                // On reload, attempt to skip stages that aren't needed.
-                if (fromReload && xdpStructuralFingerprint !== null) {
-                    const parser2 = new DOMParser();
-                    const xmlDoc2 = parser2.parseFromString(fileContents, 'application/xml');
-                    const tplEl2  = Array.from(xmlDoc2.getElementsByTagName('*'))
-                        .find(el => el.localName && el.localName.toLowerCase() === 'template');
-                    if (tplEl2) {
-                        const handled = await smartReloadFromFile(file, tplEl2, selectionPathKey);
-                        if (handled) {
-                            xdpLastModified = file ? file.lastModified : null;
-                            xdpFileSize     = file ? file.size        : null;
-                            currentXdpContent = fileContents;
-                            return true;
-                        }
-                    }
-                    // Fall through to full reload (Tier 2: structure changed)
-                }
-                // ─────────────────────────────────────────────────────────────
-
                 if (selectionPathKey) {
                     await parseXdpAndPopulateTree(fileContents, { selectionPathKey });
                 } else {
                     await parseXdpAndPopulateTree(fileContents);
                 }
-                // Capture file identity for next smart reload comparison
-                xdpLastModified = file ? file.lastModified : null;
-                xdpFileSize     = file ? file.size        : null;
+                captureLoadedFileIdentity(file);
                 return true;
             } catch (error) {
                 console.error('Failed to read the selected file.', error);
@@ -34927,11 +36063,11 @@
                     return false;
                 }
                 const name = (file.name || '').toLowerCase();
-                if (name.endsWith('.xdp') || name.endsWith('.xml') || name.endsWith('.html') || name.endsWith('.htm')) {
+                if (name.endsWith('.xdp') || name.endsWith('.pdf') || name.endsWith('.xml') || name.endsWith('.html') || name.endsWith('.htm')) {
                     return true;
                 }
                 const type = (file.type || '').toLowerCase();
-                if (type === 'text/html' || type === 'application/xhtml+xml') {
+                if (type === 'text/html' || type === 'application/xhtml+xml' || type === 'application/pdf') {
                     return true;
                 }
                 return type === 'application/vnd.adobe.xdp+xml' || type === 'application/xml' || type === 'text/xml';
@@ -35030,7 +36166,7 @@
                 }
                 const file = files[0];
                 if (!isSupportedTemplateFile(file)) {
-                    showTemporaryMessage('Unsupported file type. Please drop an XDP, XML, or saved report HTML file.');
+                    showTemporaryMessage('Unsupported file type. Please drop an XDP, Designer PDF, XML, or saved report HTML file.');
                     return;
                 }
                 let suppliedHandle = null;
@@ -35190,6 +36326,30 @@
                     toggle.setAttribute('disabled', 'disabled');
                     toggle.setAttribute('aria-disabled', 'true');
                 });
+                const archivedDismissToggles = archivedRoot.querySelectorAll('.error-dismiss-toggle input[type="checkbox"]');
+                archivedDismissToggles.forEach(toggle => {
+                    toggle.setAttribute('disabled', 'disabled');
+                    toggle.setAttribute('aria-disabled', 'true');
+                    const label = toggle.closest('.error-dismiss-toggle');
+                    if (label) {
+                        label.classList.add('is-readonly');
+                    }
+                });
+                const liveTypoToggle = document.getElementById('deactivateTypographySizeSpacingToggle');
+                const archivedTypoToggle = archivedRoot.querySelector('#deactivateTypographySizeSpacingToggle');
+                if (archivedTypoToggle) {
+                    const deactivated = liveTypoToggle
+                        ? Boolean(liveTypoToggle.checked)
+                        : getTypographySizeSpacingDeactivatedState(archivedState);
+                    archivedTypoToggle.checked = deactivated;
+                    if (deactivated) {
+                        archivedTypoToggle.setAttribute('checked', 'checked');
+                    } else {
+                        archivedTypoToggle.removeAttribute('checked');
+                    }
+                    archivedTypoToggle.setAttribute('disabled', 'disabled');
+                    archivedTypoToggle.setAttribute('aria-disabled', 'true');
+                }
                 const archivedHtml = `${docTypeString}\n${archivedRoot.outerHTML}`;
                 const blob = new Blob([archivedHtml], { type: 'text/html' });
                 const downloadLink = document.createElement('a');
@@ -35242,6 +36402,7 @@
 
         renderContentErrorSettings();
         initializeErrorCheckUI();
+        initializeTypographySizeSpacingMasterToggle();
         initializeErrorsCheckedSearch();
 
         const exportErrorCatalogButton = document.getElementById('exportErrorCatalogButton');
